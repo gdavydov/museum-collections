@@ -1,0 +1,11 @@
+<webscript>
+	<shortname>Artifact media attachment upload</shortname>
+	<description>Creates new attachment in artifact media folder
+	</description>
+	<url>/ucm/media</url>
+	<url>/ucm/media.json</url>
+	<format default="json" />
+	<authentication>user</authentication>
+	<transaction>required</transaction>
+	<lifecycle>internal</lifecycle>
+</webscript>

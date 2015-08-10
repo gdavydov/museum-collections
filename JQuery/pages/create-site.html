@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Site</title>
+  <link rel="stylesheet" href="simpleFilePreview.css">
+  <style type="text/css">
+  h1 {
+	font-size: x-large;
+	color: #9CD4C6;
+}
+h2 {
+	font-size: large;
+	color: #9CD4C6;
+}
+h3 {
+	font-size: large;
+	color: #2ACF47;
+	background-color:#DFEBE8;
+}
+#container{
+   width:750px; /* The width is fixed by pixels */
+/*                           height:800px; /* The height is fixed by pixels*/
+  color:#000000;
+/*  background-color:#DFEBE8; /*lightblue;*/
+ }
+
+</style>
+
+<script>  
+function addOption(theSel, theText, theValue)
+{
+  var newOpt = new Option(theText, theValue);
+  var selLength = theSel.length;
+  theSel.options[selLength] = newOpt;
+}
+
+function deleteOption(theSel, theIndex)
+{ 
+  var selLength = theSel.length;
+  if(selLength>0) {
+  	 theSel.options[theIndex] = null;
+  }
+}
+
+function moveOptions(from, to)
+{
+  
+  theSelFrom = document.getElementById(from);
+  theSelTo = document.getElementById(to);
+  
+  var selLength = theSelFrom.length;
+  var selectedText = new Array();
+  var selectedValues = new Array();
+  var selectedCount = 0;
+  
+  var i;
+  
+  // Find the selected Options in reverse order
+  // and delete them from the 'from' Select.
+  for(i=selLength-1; i>=0; i--)
+  {
+		if(theSelFrom.options[i].selected) {
+		  selectedText[selectedCount] = theSelFrom.options[i].text;
+		  selectedValues[selectedCount] = theSelFrom.options[i].value;
+		  deleteOption(theSelFrom, i);
+		  selectedCount++;
+		}
+  }
+  
+  // Add the selected text/values in reverse order.
+  // This will add the Options to the 'to' Select
+  // in the same order as they were in the 'from' Select.
+  for(i=selectedCount-1; i>=0; i--) {
+    addOption(theSelTo, selectedText[i], selectedValues[i]);
+  }
+  
+}
+</script>    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+<script src="js/jquery.simpleFilePreview.js"></script>
+	  
+</head>
+<body>
+<div id="container">
+ 
+  <h1>Create Site</h1>
+<h3>Site</h3>
+  <div>
+  	<fieldset>
+  		<legend>Site</legend>
+				Site Name * : <input type="text" name="sitename" id="sitename" required>
+                	<script>
+						$("#sitename").change(function() {
+
+							$("#savesite").css('visibility', 'visible');
+						});
+					</script>
+                    <br>
+			  	<fieldset style="width:inherit">
+				    		<legend>Logo</legend>
+                        <input type='file' id='ex1' name='ex1' onchange='#'/><br>
+											<script>
+													$('input[type=file]').simpleFilePreview();
+												</script>
+				<div id='colldiv'>	
+                        <input type='button' value='Save' id='savesite' style="visibility:hidden"/> <em>(Note: Submit to the server here!)</em>
+                        <script>
+                        	  $( "#savesite" ).click(function() {
+									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
+							  });
+                        </script>	
+                </div>
+            </fieldset>                  
+  </fieldset>	
+</div>
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <link rel="stylesheet" href="css/simpleFilePreview.css">
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+
+<div id="accordion">
+  <h3>Collection and Site folders</h3>
+  <div>
+	  	<fieldset>
+				<legend>Collection</legend>
+		  	<fieldset>
+					 Collection Name *: <input type="text">
+					 Collection ID : <input type="text">
+		    </fieldset>
+		    <fieldset>
+					<legend>Collection Organization <img src="icon_info.gif" width="21" height="17" alt="info" id="corg" onClick="#"/></legend>
+					 Add 'Letter Folders' to organize collection :<input type="checkbox" name="checkbox2" id="checkbox2"><br>
+		    </fieldset>
+		 </fieldset>
+		 <fieldset>
+				<legend>Additional Site Folders <img src="icon_info.gif" width="21" height="17" alt="info" id="asf" onClick="#"/></legend>
+	            <table width="38%" border="0" cellspacing="0" cellpadding="0">
+	               <tr>
+	                 <td width="47%" align="center">
+	                 <select name="options" id="options"  size="9" style="width:200px;margin:5px 0 5px 0;">
+	                    <option>Exhibitions</option>
+	                   <option>Learn</option>
+	                   <option>Blogs</option>
+	                   <option>About the museum</option>
+	                 </select></td>
+	                 <td width="6%" align="center" valign="middle"><input type="button" name="selectUsers" id="selectUsers"  value="&gt;&gt;"  class="smallButton" onclick="moveOptions('options', 'selectedOptions')" />
+	                     <input type="button" name="unSelectUsers" id="unSelectUsers"  value="&lt;&lt;"  class="smallButton" onclick="moveOptions('selectedOptions', 'options')" />        </td>
+	                 <td width="47%" align="center" >
+	                   <select name="selectedOptions" id="selectedOptions"  size="9" style="width:200px;margin:5px 0 5px 0;">
+	                    <option>Home</option>
+	                   <option>Visit</option>
+	                   <option>Collections</option>
+	                   <option>Learn</option>
+	                  </select>        
+	                  </td>
+	               </tr>
+	           </table>         
+		 </fieldset>
+         <br>
+                        <input type='button' value='Save' id='savecoll'> <em>(Note: Submit to the server here!)</em>
+                        <script>
+                        	  $( "#savecoll" ).click(function() {
+									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
+							  });
+                        </script>	
+</div>
+  <h3>Museum</h3>
+  <div>
+    <p>
+          <fieldset>
+            <legend >Museum</legend>
+            Name: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
+            Address: <input type="text"><br>
+            Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
+            Phone: &nbsp;&nbsp;&nbsp;<input type="text">
+            Fax: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text">
+          </fieldset>
+          <br>
+                        <input type='button' value='Save' id='savemuseum' /> <em>(Note: Submit to the server here!)</em>
+                        <script>
+                        	  $( "#savemuseum" ).click(function() {
+									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
+							  });
+                        </script>	
+    </p>
+  </div>
+  <h3>Copywrite</h3>
+  <div>
+    <p>
+          <fieldset>
+            <textarea name="cptextarea" id="cptextarea" cols="100" rows="15"></textarea>
+          </fieldset>
+          <br>
+                        <input type='button' value='Save' id='savecw' /> <em>(Note: Submit to the server here!)</em>
+                        <script>
+                        	  $( "#savecw" ).click(function() {
+									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
+							  });
+                        </script>	
+   </div>
+  <h3>Section</h3>
+  <div>
+    <p>
+			something could be here    
+		</p>
+  </div>
+</div>
+</div>
+</body>
+
+ 

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>Create Custom Content</title>
+   <title-id>page.ucmCreateContent.title</title-id>
+   <description>Create text-based content</description>
+   <description-id>page.ucmCreateContent.description</description-id>
+   <template-instance>ucm-create-content</template-instance>
+   <authentication>user</authentication>
+</page>

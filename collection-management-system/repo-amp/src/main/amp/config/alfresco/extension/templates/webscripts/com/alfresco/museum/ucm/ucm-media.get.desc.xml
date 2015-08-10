@@ -1,0 +1,14 @@
+<webscript>
+	<shortname>Artifact media attachments</shortname>
+	<description>Returns list of media attachments associated with artifact
+	</description>
+	<url>/ucm/media?nodeRef={nodeRef}</url>
+	<url>/ucm/media.json?nodeRef={nodeRef}</url>
+	<arg>
+		<shortname>nodeRef</shortname>
+		<description><![CDATA[Reference to the artifact node.]]></description>
+	</arg>
+	<format default="json">extension</format>
+	<authentication>guest</authentication>
+	<transaction>none</transaction>
+</webscript>

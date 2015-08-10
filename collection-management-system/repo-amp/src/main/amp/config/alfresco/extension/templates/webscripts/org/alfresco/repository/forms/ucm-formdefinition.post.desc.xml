@@ -1,0 +1,26 @@
+<webscript>
+  <shortname>Custom Form Definitions (UCM)</shortname>
+  <description><![CDATA[
+  Returns a form definition for the requested item.
+  The body of the post should be in the following form:-
+  <pre>
+  {
+     "itemKind" : item kind,
+     "itemId" : item id,
+     "fields" : [fields],
+     "force" : [force],
+     "inherit" : id of item to inherit property values from
+  }
+  </pre>
+  Returns the form model.
+  If "itemKind" is type and "inherit" property is defined,
+  then fields are pre-populated with values
+  of corresponding properties of "inherit" node. 
+  ]]>
+  </description>
+  <url>/api/ucm-formdefinitions</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <lifecycle>internal</lifecycle>
+</webscript>

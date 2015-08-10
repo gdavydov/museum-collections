@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Extended Form Component (UCM)</shortname>
+  <description>Component that renders a form based on a repository form model and has property inheritance support (UCM)</description>
+  <url>/components/ucm-form</url>
+</webscript>

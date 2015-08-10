@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This is a sample configuration file from Alfresco Community 4.2.b - 
+	Please adapt to your version -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hz="http://www.hazelcast.com/schema/config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.hazelcast.com/schema/config
+                http://www.hazelcast.com/schema/config/hazelcast-spring.xsd">
+
+	<bean id="ucm.resources"
+		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+		<property name="resourceBundles">
+			<list>
+				<value>alfresco.web-extension.messages.ucm-site</value>
+				<value>alfresco.web-extension.messages.ucm-model</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="evaluator.doclib.metadata.isArtifact" parent="evaluator.doclib.action.nodeType">
+		<property name="allowSubtypes" value="false"/>
+		<property name="types">
+			<list>
+				<value>ucm:artifact</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="webscript.org.alfresco.components.form.ucm-form.get" class="org.alfresco.web.scripts.forms.UCMFormUIGet" parent="webscript.org.alfresco.components.form.form.get"/>
+</beans>

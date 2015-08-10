@@ -1,0 +1,106 @@
+.fs-upload-target {
+	width: 504px;
+	height: 60px;
+	padding: 3px;
+}
+
+.fs-upload-input {
+	display: none;
+}
+
+.ucm-media-wrapper {
+	height: 25px;
+	width: 504px;
+	overflow: hidden;
+	margin-top:3px;
+	margin-bottom:3px;
+    color: blue;
+    font-style: italic;
+	
+}
+
+.ucm-media-wrapper.ucm-audio-wrapper {
+	height: 22px;
+}
+
+.ucm-media-wrapper:hover {
+	background-color: #f0f0f0;
+}
+
+.ucm-media-audio {
+	width: 230px;
+	display: #888888;
+	color: #888888;
+}
+
+.ucm-media-file-delete-button {
+	border: 0px;
+	padding: 1px;
+	background: inherit;
+	vertical-align: middle;
+	float: right;
+	margin-left:8px;
+}
+
+.ucm-media-file-delete-button:hover {
+	color: red;
+	border: 0px;
+}
+
+.ucm-media-file-edit-button {
+	border: 0px;
+	padding: 1px;
+	background: inherit;
+	vertical-align: middle;
+	float: right;
+	margin-left:8px;
+}
+
+.ucm-media-file-edit-button:hover {
+	color: red;
+	border: 0px;
+}
+.ucm-media-dialog.ui-dialog-content.ui-widget-content {
+	overflow: hidden;
+}
+
+.ucm-media-frame {
+	border: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.ucm-media-pdf, .ucm-media-video, .ucm-media-link, .ucm-media-other {
+	color: blue;
+}
+
+.ucm-media-pdf:hover, .ucm-media-video:hover:hover, .ucm-media-link, .ucm-media-other:hover {
+	text-decoration: none;
+	color: blue;
+	font-weight: bold !important;
+}
+
+.ucm-media-url-button {
+	background-image: url(/images/buttons/remove.png);
+	height: 25px;
+	border-width: 1px !important;
+	vertical-align: baseline;
+}
+
+.ucm-media-url-input {
+	width: 400px !important;
+	height: 25px;
+}
+
+.inline-input-description {
+	color: #666666;
+	font-style: italic;	
+}
+
+.ucm-media-right {
+	float: right;
+	margin-right: 1px;
+}
+.ucm-delete_media-right {
+	float: right;
+}

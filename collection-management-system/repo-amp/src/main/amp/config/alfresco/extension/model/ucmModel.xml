@@ -1,0 +1,1031 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="ucm:data-model" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<description>Museum collection management system data model</description>
+	<author>Greg Davydov</author>
+	<version>2.0</version>
+
+	<!-- TODO: Create additional property value constraints, like UID constraint? -->
+	<!-- TODO: Adjust index settings (e.g. for ID properties) -->
+	<!-- TODO: References to attachments and references to attachment owners 
+		should be kept in sync -->
+		
+ <!-- 
+ 	TODO look on these sites	
+ 	http://collection-online.moa.ubc.ca/collection-online/explore
+ 	
+ -->
+
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<namespaces>
+		<namespace uri="http://www.ucm.org/model/1.0" prefix="ucm" />
+	</namespaces>
+
+	<!-- Types definitions -->
+	<types>
+		<type name="ucm:folder">
+			<title>CM folder</title>
+			<parent>cm:folder</parent>
+			<!-- TODO: create child-association for "ucm:documents"? -->
+			<associations>
+				<!-- Generic UCM Document -->
+				<child-association name="ucm:documents">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>ucm:document</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+			</associations>
+
+		</type>
+
+		<type name="ucm:site">
+			<title>CM site</title>
+			<parent>ucm:folder</parent>
+			<mandatory-aspects>
+				<aspect>ucm:site_aspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="ucm:collection">
+			<title>Collection</title>
+			<parent>ucm:site</parent>
+			<properties>
+				<property name="ucm:collection_id">
+					<title>Collection ID</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="ucm:curator">
+					<title>Curator</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+
+			<!-- Collection may contain: -->
+			<associations>
+
+				<!-- Artist (as it is child type of type cm:folder) -->
+				<child-association name="ucm:collectionArtists">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>ucm:artist</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+
+				
+
+				<!-- Artifact (as it is child type of type cm:folder) -->
+				<child-association name="ucm:collectionArtifacts">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>ucm:artifact</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+				
+				<!-- TODO: this may require changes if implementation of ucm:artifact 
+					would change -->
+
+				<!-- Generic UCM Document -->
+				<child-association name="ucm:collectionDocuments">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>ucm:document</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+			</associations>
+<!-- 
+			<mandatory-aspects>
+				<aspect>ucm:site_aspect</aspect>
+			</mandatory-aspects>
+ -->	
+		</type>
+
+		<type name="ucm:artist">
+			<title>Artist</title>
+			<parent>ucm:collection</parent>
+
+			<properties>
+				<property name="ucm:about_artist_artifact_reference">
+					<title>Artist artifact</title>
+					<type>d:text</type> <!-- TODO: d:noderef ? -->
+					<mandatory>false</mandatory>
+					<multiple>false</multiple>
+				</property>
+			</properties>
+
+			<!-- Artist collection may contain: -->
+			<associations>
+
+				<!-- Artifact (as it is child type of type cm:folder) -->
+
+				<!-- Document (for the future references) -->
+				<child-association name="ucm:artistArtifacts">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+<!--						<class>ucm:document</class> -->
+						<class>ucm:artifact</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+
+				<!-- Generic UCM Document -->
+				<child-association name="ucm:artistDocuments">
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>ucm:document</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+			</associations>
+
+
+			<mandatory-aspects>
+				<aspect>ucm:artist_aspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="ucm:content">
+			<title>UCM Content</title>
+			<parent>cm:content</parent>
+		</type>
+
+		<type name="ucm:document">
+			<title>Document</title>
+			<parent>ucm:content</parent>
+		</type>
+
+		<type name="ucm:attached_file">
+			<title>Attachment file</title>
+			<parent>ucm:content</parent>
+
+			<properties>
+				<property name="ucm:attached_file_type">
+					<title>Type</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+<!--					
+            		<default>Media</default> 
+					<constraints>
+						<constraint name="ucm:allowed_attach_types" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Artifact</value>
+									<value>Media</value>
+									<value>Document</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+-->
+				</property>
+
+				<property name="ucm:attached_file_language">
+					<title>Language</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<multiple>false</multiple>
+            		<default>English</default> 
+					<constraints>
+						<constraint name="ucm:attachment_language" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>English</value>
+									<value>German</value>
+									<value>French</value>
+									<value>Italian</value>
+									<value>Dutch</value>
+									<value>Spanish</value>
+									<value>Polish</value>
+									<value>Russian</value>
+									<value>Arabic</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:attached_file_sequence">
+					<title>Order</title>
+					<type>d:int</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:attached_file_location">
+					<title>Location in ECM</title>
+					<type>d:noderef</type>
+					<mandatory>true</mandatory>
+				</property>
+<!--
+				<property name="ucm:attached_file_referenced_to">
+					<title>Referenced to</title>
+					<type>d:noderef</type>
+					<mandatory>true</mandatory>
+					<multiple>true</multiple>
+				</property>
+-->
+			</properties>
+
+		</type>
+
+		<type name="ucm:artifact">
+			<title>Artifact</title>
+			<parent>ucm:document</parent> <!-- TODO: ucm:folder or sys:container? -->
+
+			<properties>
+				<property name="ucm:artifact_name">
+					<title>Title</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_date">
+					<title>Created on Date</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_medium">
+					<title>Medium</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<constraints>
+						<!-- TODO: change constraint in order to load list of allowed values 
+							dynamically -->
+						<constraint name="ucm:allowed_mediums" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value></value>
+									<value>Photo</value>
+									<value>Video</value>
+									<value>Audio</value>
+									<value>Oil on canvas</value>
+									<value>Acrylic on paper</value>
+									<value>Gold</value>
+									<value>Silver</value>
+									<value>Bronze</value>
+									<value>Cast Iron</value>
+									<value>Stoneware</value>
+									<value>Other</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:artifact_technique">
+					<title>Technique</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_dimension">
+					<title>Dimension</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_status">
+					<title>Status</title>
+					<type>d:text</type>
+					<mandatory enforced="false">false</mandatory>
+					<constraints>
+						 <!--TODO: change constraint in order to load list of allowed values 
+							dynamically--> 
+						<constraint name="ucm:allowed_statuses" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Exhibition</value>
+									<value>Restoration</value>
+									<value>Loan</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+
+				</property>
+
+				<property name="ucm:artifact_location">
+					<title>Current Location</title>
+					<type>d:text</type>
+				</property>
+
+				<property name="ucm:artifact_collection">
+					<title>Belongs to Collection</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_acquisition_type">
+					<title>Acquisition Type</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<constraints>
+						<constraint name="ucm:allowed_acquisition_types" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>N/A</value>
+									<value>Purchased</value>
+									<value>Donated</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:artifact_type">
+					<title>Type</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<constraints>
+						<!-- TODO: change constraint in order to load list of allowed values 
+							dynamically -->
+						<constraint name="ucm:allowed_artifact_types" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value></value>
+									<value>Portrait</value>
+									<value>Landscape</value>
+									<value>Naturmort</value>
+									<value>Gobelen</value>
+									<value>Fresco</value>
+									<value>Statue</value>
+									<value>Jar</value>
+									<value>Sarcophagus</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:artifact_on_display">
+					<title>On display</title>
+					<type>d:boolean</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artifact_comments">
+					<title>Comments</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+			</properties>
+
+			<associations>
+				<!-- Artifact may contain attached files -->
+				<child-association name="ucm:artifact_contains">
+					<source>
+						<mandatory>true</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:folder</class> <!-- TODO: ucm:attached_file ?  -->
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+					<duplicate>false</duplicate>
+					<propagateTimestamps>true</propagateTimestamps>
+				</child-association>
+			</associations>
+
+			<mandatory-aspects>
+				<aspect>ucm:artist_aspect</aspect>
+				<aspect>ucm:museum_artifact_aspect</aspect>
+<!--
+				<aspect>cm:geographic</aspect>
+				<aspect>ucm:indoor_artifact_aspect</aspect>
+				<aspect>ucm:archeological_aspect</aspect>
+				<aspect>ucm:artifact_donor</aspect>
+
+-->
+			</mandatory-aspects>
+		</type>
+
+		<type name="ucm:about_artist_artifact">
+			<title>About Artist</title>
+			<parent>ucm:artifact</parent> 
+		</type>
+		
+		<type name="ucm:license_file">
+			<title>Reference file</title>
+			<parent>ucm:content</parent> <!-- TODO: no instructions in specification! -->
+
+			<properties>
+				<property name="ucm:license_document_language">
+					<title>Document Language</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:license_document_language_length"
+							type="LENGTH">
+							<parameter name="minLength">
+								<value>3</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>3</value>
+							</parameter>
+						</constraint>
+						<!-- TODO: restrict set of languages according to ISO 639-3 -->
+					</constraints>
+				</property>
+
+				<property name="ucm:license_other_language">
+					<title>Other Language</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:license_other_language_length"
+							type="LENGTH">
+							<parameter name="minLength">
+								<value>3</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>3</value>
+							</parameter>
+						</constraint>
+						<!-- TODO: restrict set of languages according to ISO 639-3 -->
+					</constraints>
+				</property>
+
+				<property name="ucm:license_document_type">
+					<title>Document Type</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:license_document_type_length"
+							type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>32</value>
+							</parameter>
+						</constraint>
+						<!-- TODO: Add constraint to allow only specified set of types -->
+					</constraints>
+				</property>
+
+				<property name="ucm:license_other_type">
+					<title>Other Type</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:license_other_type_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>32</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:license_supplier">
+					<title>Supplier</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:license_supplier_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>64</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:license_description">
+					<title>Description</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:license_ownership_category">
+					<title>Ownership Category</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:allowed_license_ownership_categories"
+							type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Museum Material</value>
+									<value>Third Party Material</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:license_expiration_date">
+					<title>Expiration Date</title>
+					<type>d:date</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:license_term">
+					<title>License Term</title> <!-- TODO: field name is absent in specification! -->
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:allowed_license_terms" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>In Perpetuity</value>
+									<value>Life</value>
+									<value>Production</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:license_region">
+					<title>Region of Permission</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:license_in_use">
+					<title>Is in Use</title><!-- In Use or No Longer in Use -->
+					<type>d:boolean</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:license_rights_granted">
+					<title>Rights Granted</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:allowed_license_rights" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Audio Tour</value>
+									<value>Multimedia Tour</value>
+									<value>Online</value>
+									<value>Download</value>
+									<value>Performance</value>
+									<value>Broadcast</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:license_other_notes">
+					<title>Other Rights Notes</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+			</properties>
+		</type>
+
+		<type name="ucm:value_assist">
+			<title>LBS Value Assistance Object</title>
+			<parent>cm:cmobject</parent>
+
+			<properties>
+				<property name="ucm:object_type">
+					<title>Object Type</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:object_type_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>32</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:attribute_name">
+					<title>Attribute Name</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:attribute_name_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>50</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:val_code">
+					<title>Attribute Value</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:val_code_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>32</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:sort_order">
+					<title>Sort Order</title>
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:parent_object_type">
+					<title>Parent Object Name</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:parent_object_type_length" type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>32</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:parent_attribute_name">
+					<title>Parent Object Attribute</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:parent_attribute_name_length"
+							type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>50</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:parent_attribute_val">
+					<title>Parent Object Attribute Val</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<constraints>
+						<constraint name="ucm:parent_attribute_val_length"
+							type="LENGTH">
+							<parameter name="minLength">
+								<value>1</value>
+							</parameter>
+							<parameter name="maxLength">
+								<value>100</value>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+		</type>
+	</types>
+
+	<aspects>
+		<aspect name="ucm:site_aspect">
+			<title>Site Aspect</title>
+			<properties>
+				<property name="ucm:site_name">
+					<title>Site Name</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<!-- TODO: constraints? -->
+				</property>
+
+				<property name="ucm:site_address">
+					<title>Museum Address</title>
+					<type>d:text</type>
+					<!-- TODO: constraints? -->
+				</property>
+				<property name="ucm:site_buildYear">
+					<title>Build Year</title>
+					<type>d:text</type>
+					<!-- TODO: add constraints? -->
+				</property>
+
+				<property name="ucm:site_aspect_type">
+					<title>Site Type</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<constraints>
+						<!-- TODO: change constraint in order to load list of allowed values 
+							dynamically -->
+						<constraint name="ucm:site_aspect_allowed_types" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>All</value>
+									<value>Modern</value>
+									<value>Classical</value>
+									<value>Sculpture only</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:site_aspect_contact_person">
+					<title>Contact Person</title>
+					<type>d:text</type>
+					<!-- TODO: add constraint? -->
+				</property>
+
+				<property name="ucm:site_aspect_contact_email">
+					<title>Contact Email</title>
+					<type>d:text</type>
+					<!-- TODO: add constraints -->
+				</property>
+
+				<property name="ucm:site_aspect_contact_tweed">
+					<title>Contact Tweed</title>
+					<type>d:text</type>
+					<!-- TODO: constraints? -->
+				</property>
+				
+				
+				<property name="ucm:site_aspect_contact_phone">
+					<title>Contact Phone</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:indoor_artifact_aspect">
+			<title>Indoor Artifact Aspect</title>
+			<properties>
+				<property name="ucm:indoor_artifact_beacon_id">
+					<title>Location ID</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<default>ID-00</default>
+				</property>
+
+				<property name="ucm:indoor_artifact_beacon_threshhold_value">
+					<title>Threshhold</title>
+					<type>d:double</type>
+					<mandatory>true</mandatory>
+					<default>0.0</default>
+				</property>
+
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:archeological_aspect">
+			<title>Archeological Aspect</title>
+			<parent>cm:geographic</parent>
+			<properties>
+				<property name="ucm:archeological_aspect_excavated_by">
+					<title>Excavated by</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<!-- TODO: constraints? -->
+				</property>
+
+				<property name="ucm:archeological_aspect_excavated_date">
+					<title>Excavated Date</title>
+					<!-- TODO: text date? -->
+					<type>d:date</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:archeological_aspect_excavated_place">
+					<title>Excavated Place</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+<!-- 
+				<property name="ucm:archeological_aspect_excavated_lat">
+					<title>Excavated Lat.</title>
+					<type>d:double</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:archeological_aspect_excavated_lon">
+					<title>Excavated Lon.</title>
+					<type>d:double</type>
+					<mandatory>false</mandatory>
+				</property>
+-->
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:museum_artifact_aspect">
+			<title>Museum Artifact Aspect</title>
+			<properties>
+				<property name="ucm:museum_number">
+					<title>Museum Number</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<!-- TODO: constraints. E.g. "260:1 to 3-1877" -->
+				</property>
+
+				<property name="ucm:museum_artifact_gallery_location">
+					<title>Gallery Location</title>
+					<type>d:text</type>
+					<!-- TODO: constraints. E.g. "room 146, case 6, shelf 1" -->
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:artist_aspect">
+			<title>Artist Aspect</title>
+			<properties>
+				<property name="ucm:artist_name">
+					<title>Artist Name</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:artist_nickname">
+					<title>Artist Nick Name</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artist_dob">
+					<title>Date of Birth</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artist_birth_place">
+					<title>Birth Place</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<!-- TODO: constraints? -->
+				</property>
+
+				<property name="ucm:artist_dod">
+					<title>Date of Death</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="ucm:artist_death_place">
+					<title>Death Place</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<!-- TODO: constraints? -->
+				</property>
+
+				<property name="ucm:artist_study_workshop">
+					<title>Studied at Workshop</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<multiple>true</multiple>
+				</property>
+
+				<property name="ucm:artist_live_city">
+					<title>Lived Cities</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory> <!-- TODO: true? -->
+					<multiple>true</multiple>
+				</property>
+
+				<property name="ucm:artist_period">
+					<title>Period</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<multiple>false</multiple>
+					<constraints>
+						<!-- TODO: check if this constraint works fine with multiple = true -->
+						<!-- TODO: change constraint in order to load list of allowed values 
+							dynamically -->
+						<constraint name="ucm:allowed_art_periods" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>N/A</value>
+									<value>Stone Age</value>
+									<value>Mesopotamian</value>
+									<value>Egyptian</value>
+									<value>Greek and Hellenistic</value>
+									<value>Roman</value>
+									<value>Byzantine and Islamic</value>
+									<value>Middle Ages</value>
+									<value>Classicism</value>
+									<value>Pre-Renaissance</value>
+									<value>Renaissance</value>
+									<value>Venetian and Northern Renaissance</value>
+									<value>Mannerism </value>
+									<value>Neoclassical</value>
+									<value>Romanticism</value>
+									<value>Realism</value>
+									<value>Impressionism</value>
+									<value>Post-Impressionism</value>
+									<value>Fauvism and Expressionism</value>
+									<value>Cubism, Futurism, Supremativism, Constructivism, De Stijl</value>
+									<value>Art Deco</value>
+									<value>Dada and Surrealism</value>
+									<value>Abstract Expressionism</value>
+									<value>Modern Art</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+
+				<property name="ucm:artist_comments">
+					<title>Comments</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:project_aspect">
+			<title>Project Aspect</title>
+			<properties>
+				<property name="ucm:project_name">
+					<title>Project Name</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+
+				<property name="ucm:project_id">
+					<title>Project ID</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<!-- TODO: constraints? -->
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="ucm:artifact_donor"> 
+			<title>Artifact Donor</title>
+			<properties>
+				<property name="ucm:donor_name">
+					<title>Donor Name</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="ucm:donation_date">
+					<title>Donated</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+			</properties>
+		</aspect>
+		
+	</aspects>
+</model>

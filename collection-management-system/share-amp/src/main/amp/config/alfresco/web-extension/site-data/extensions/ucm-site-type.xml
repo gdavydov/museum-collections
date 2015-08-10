@@ -1,0 +1,14 @@
+<extension>
+    <modules>
+        <module>
+            <id>ucm-site-preset</id>
+            <auto-deploy>true</auto-deploy>
+            <customizations>
+                <customization>
+                    <sourcePackageRoot>com.alfresco.museum.ucm</sourcePackageRoot>
+                    <targetPackageRoot>org.alfresco.modules</targetPackageRoot>
+                </customization>
+            </customizations>
+        </module>
+    </modules>
+</extension>
