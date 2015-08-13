@@ -66,8 +66,10 @@ public class UCMCreateArtifact extends UCMGenericFilter<TypeDefinition> {
 		String artistName = artistNameValue.toString();
 		String artifactName = artifactNameValue.toString();
 
-		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
-		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
+		NodeRef systemFolder = getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
+		
+//		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
+//		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
 		/*
 		 * NodeRef systemFolder = getOrCreateFolder(site,
 		 * UCMConstants.SYSTEM_FOLDER_NAME, true);

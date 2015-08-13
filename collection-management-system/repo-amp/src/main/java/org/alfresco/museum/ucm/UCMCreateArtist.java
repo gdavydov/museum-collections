@@ -64,6 +64,7 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 					// save reference to artist artifact in artist property
 					this.getNodeService().setProperty(persistedObject, PROP_UCM_ARTIST_ARTIFACT_QNAME,
 							artistArtifact);
+/*					
 					if (this.getNodeService().getAspects(artistArtifact).contains(ASPECT_GEOGRAPHICAL_QNAME)) {
 						Serializable lat = this.getNodeService().getProperty(artistArtifact, ContentModel.PROP_LATITUDE); 
 						Serializable lon = this.getNodeService().getProperty(artistArtifact, ContentModel.PROP_LONGITUDE);
@@ -72,6 +73,7 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 						geoProps.put(ContentModel.PROP_LONGITUDE, lon);
 						this.getNodeService().addAspect(persistedObject, ASPECT_GEOGRAPHICAL_QNAME, geoProps);
 					}
+*/
 				}
 			}
 		}
