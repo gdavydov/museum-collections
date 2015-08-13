@@ -228,6 +228,10 @@
          {
         	 actionUrls.documentDetailsUrl = fnPageURL("artifact-details?nodeRef=" + strNodeRef);
          }
+         if (record.node.type === "ucm:about_artist_artifact")
+         {
+        	 actionUrls.documentDetailsUrl = fnPageURL("artist-details?nodeRef=" + strNodeRef);
+         }
          actionUrls.sourceRepositoryUrl = this.viewInSourceRepositoryURL(record, actionUrls) + "\" target=\"_blank";
 
          return actionUrls;

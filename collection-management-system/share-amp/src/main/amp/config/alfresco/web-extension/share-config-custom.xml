@@ -639,11 +639,12 @@
 			<form>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<field-visibility>
+<!--					
 					<show id="cm:name" />
 					<show id="cm:title" />
-					
+-->					
 <!--					<show id="cm:content" />  -->
-<!--					<show id="ucm:artifact_name"/> -->
+					<show id="ucm:artifact_name"/>
 					<show id="ucm:artist_name" />
 
 					<!-- show id="ucm:artifact_contains" /-->
@@ -658,8 +659,9 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artist_comments" />
-					<show id="ucm:museum_artifact_gallery_location" />
+					<show id="ucm:artifact_comments" />
+					
+<!--					<show id="ucm:museum_artifact_gallery_location" /> -->
 					
 					<!-- cm:geographic aspect -->
 <!--
@@ -669,21 +671,23 @@
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 				</field-visibility>
 				<appearance>
-					<set id="artistMain" appearance="fieldset" label="Artist" />
+					<set id="artistMain" appearance="fieldset" label="About Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
+<!--					
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
+-->
 <!--										
-					<field id="cm:title" />
 					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-					<field id="ucm:artist_name" set="artistMain" label="Birth Name"/>
+					<field id="ucm:artifact_name" label="Known As (Name)"/>
+					<field id="ucm:artist_name" set="artistMain" label="Given Name"/>
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
@@ -706,8 +710,7 @@
 					<field id="ucm:artist_study_workshop" set="artistMain" />
 					<field id="ucm:artist_live_city" set="artistMain" />
 					<field id="ucm:artist_period" set="artistMain" />
-					<field id="ucm:museum_artifact_gallery_location" set="artistMain" />
-					<field id="cm:title" set="artistMain" />
+<!--					<field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
 					<field id="ucm:artifact_comments" set="artistMain" />
 <!--					
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
@@ -720,11 +723,12 @@
 			<form id="doclib-simple-metadata">
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<field-visibility>
+<!--					
 					<show id="cm:name" />
 					<show id="cm:title" />
-					
+-->					
 <!--					<show id="cm:content" />  -->
-<!--					<show id="ucm:artifact_name"/> -->
+					<show id="ucm:artifact_name"/>
 					<show id="ucm:artist_name" />
 
 					<!-- show id="ucm:artifact_contains" /-->
@@ -739,8 +743,8 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artist_comments" />
-					<show id="ucm:museum_artifact_gallery_location" />
+					<show id="ucm:artifact_comments" />
+<!--					<show id="ucm:museum_artifact_gallery_location" /> -->
 					
 					<!-- cm:geographic aspect -->
 <!--
@@ -753,18 +757,21 @@
 					<set id="artistMain" appearance="fieldset" label="Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
+<!--					
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
+-->
 <!--										
 					<field id="cm:title" />
 					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-					<field id="ucm:artist_name" set="artistMain" label="Birth Name"/>
+					<field id="ucm:artifact_name" label="Known As (Name)"/>
+					<field id="ucm:artist_name" set="artistMain" label="Given Name"/>
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
@@ -788,7 +795,7 @@
 					<field id="ucm:artist_live_city" set="artistMain" />
 					<field id="ucm:artist_period" set="artistMain" />
 					<field id="ucm:museum_artifact_gallery_location" set="artistMain" />
-					<field id="cm:title" set="artistMain" />
+					<field id="cm:title" set="artistMain" label="Comments" />
 					<field id="ucm:artifact_comments" set="artistMain" />
 <!--					
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />

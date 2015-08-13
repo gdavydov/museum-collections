@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>Artist Details</title>
+   <title-id>page.ucmArtifactDetails.title</title-id>
+   <description>Artifact details</description>
+   <description-id>page.ucmArtifactDetails.description</description-id>
+   <template-instance>ucm-artist-details</template-instance>
+   <authentication>user</authentication>
+</page>
