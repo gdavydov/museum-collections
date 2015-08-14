@@ -43,6 +43,11 @@
 		parent="ucmBaseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
+ 
+	<bean id="ucmEditArtistArtifactFilter" class="org.alfresco.museum.ucm.UCMEditArtistArtifact"
+		parent="ucmBaseFormFilter">
+		<property name="filterRegistry" ref="nodeFilterRegistry" />
+	</bean>
 
 	<!-- TODO: explicitly override typeFormProcessor -->
 	<!-- TODO: explicitly override FileFolderServiceImpl -->

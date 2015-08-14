@@ -74,19 +74,25 @@ public class UCMEditArtistArtifact extends UCMGenericFilter<TypeDefinition> {
 	protected NodeRef updateArtist(FormData data, NodeRef artistArtifactRef, String artistName) 
 	{
 		// TODO: LOG
-	
-		NodeRef artistNodeRef = this.getNodeService().getPrimaryParent(artistArtifactRef).getParentRef();
-		
-		FileInfo artistImageFile = this.getFileFolderService().getFileInfo(artistNodeRef);
-		TypeDefinition artistType = this.getDictionaryService().getType(TYPE_UCM_ARTIST_QNAME);
-		
-		inheritProperties(artistType, artistArtifactRef, artistNodeRef);
-		
-/*
-	TODO - Do we need update artist image there?
-		writeContent(artistType, data, artistNodeRef);
+		NodeRef artistNodeRef = null;
+		try {
+			artistNodeRef = this.getNodeService().getPrimaryParent(artistArtifactRef).getParentRef();
+			
+			FileInfo artistImageFile = this.getFileFolderService().getFileInfo(artistNodeRef);
+			TypeDefinition artistType = this.getDictionaryService().getType(TYPE_UCM_ARTIST_QNAME);
+			
+			inheritProperties(artistType, artistArtifactRef, artistNodeRef);
+			
+/**
+		TODO - Do we need update artist image there?
+			writeContent(artistType, data, artistNodeRef);
 */	
-		fillMandatoryProperties(artistType, artistNodeRef, MANDATORY_PROP_FILLER);
+			fillMandatoryProperties(artistType, artistNodeRef, MANDATORY_PROP_FILLER);
+		}
+		catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			e.printStackTrace();
+		}
 		return artistNodeRef;
 	}
 }
