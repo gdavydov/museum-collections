@@ -37,6 +37,11 @@ Desired event sequence is:
 	(function() {
 		require(["jquery"], function($) {
 			jQuery = $;
+			
+			//Prevent calling default handler on documentlibrary page
+			var stub = function(e){e.stopPropagation();};
+			$("#${fieldHtmlId}").bind('dragstart', stub).bind('dragover', stub).bind('dragenter', stub);
+
 			require(["${url.context}/res/js/jquery.simple-file-preview.js"], function() {
 			//TODO: Don't show file picker if artifact creation was initiated via file uploading
 				//if (typeof SoftwareLoop == 'undefined') {

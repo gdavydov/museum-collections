@@ -1,98 +1,57 @@
 package org.alfresco.museum.ucm;
 
-import static org.alfresco.museum.ucm.UCMConstants.MANDATORY_PROP_FILLER;
-import static org.alfresco.museum.ucm.UCMConstants.PROP_UCM_ARTIST_ARTIFACT_QNAME;
-import static org.alfresco.museum.ucm.UCMConstants.PROP_UCM_ARTIST_QNAME;
+import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME;
 import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_QNAME;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.alfresco.model.ContentModel;
 import org.alfresco.repo.forms.FormData;
-import org.alfresco.repo.forms.FormData.FieldData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
-import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.springframework.util.StringUtils;
+import org.alfresco.service.namespace.QName;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
- * Handle custom operations during artist creation. Such as creating 'about'
- * folder and artist artifact, which contains image of artist. Artist artifact
- * extends ucm:artifact and thus is cm:content. Artist node contains reference
- * to artist artifact. This is necessary because artist artifact's thumbnail is
- * used also as thumbnail for artist node.
+ * Handle artist artifact editing. Artist artifact properties should be
+ * synchronized with artist properties.
  */
-public class UCMEditArtistArtifact extends UCMGenericFilter<TypeDefinition> {
-	/**
-	 * Fill artist name field. Handle possible file name collisions.
-	 */
-	@Override
-	public void beforePersist(TypeDefinition item, FormData data) {
-		resolvePossibleFilenameConflict(item, data);
-	}
+public class UCMEditArtistArtifact extends UCMGenericFilter<NodeRef> {
+	private static Log logger = LogFactory.getLog(UCMEditArtistArtifact.class);
 
 	/**
-	 * Store "cm:content" property value, which is ignored by default handler.<br/>
-	 * See
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#persistNode(NodeRef, FormData)
-	 * persistNode},
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processPropertyPersist(NodeRef, Map,FieldData, Map, FormData)
-	 * processPropertyPersist},
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processContentPropertyPersist(NodeRef, FieldData, Map, FormData)
-	 * processContentPropertyPersist} and <a href=
-	 * "https://forums.alfresco.com/forum/developer-discussions/alfresco-share-development/file-upload-create-content-06282010-2333"
-	 * >discussion thread</a>
+	 * Filter out non-artist artifact nodes.
 	 */
 	@Override
-	public void afterPersist(TypeDefinition item, FormData data, NodeRef persistedObject) {
-		boolean isArtist = item.getName().equals(TYPE_UCM_ARTIST_QNAME);
-		if (isArtist) {
-			Serializable artistNameValue = this.getNodeService().getProperty(persistedObject,
-					PROP_UCM_ARTIST_QNAME);
-			if (!StringUtils.isEmpty(artistNameValue)) {
-				String artistName = artistNameValue.toString();
-
-				NodeRef artistArtifact = updateArtist(data, persistedObject, artistName);
-
-				if (artistArtifact != null) {
-					// save reference to artist artifact in artist property
-					this.getNodeService().setProperty(persistedObject, PROP_UCM_ARTIST_ARTIFACT_QNAME,
-							artistArtifact);
-				}
-			}
+	public void afterPersist(NodeRef item, FormData data, NodeRef persistedObject) {
+		QName nodeType = this.getNodeService().getType(persistedObject);
+		boolean isArtistArtifact = nodeType.equals(TYPE_UCM_ARTIST_ARTIFACT_QNAME);
+		if (isArtistArtifact) {
+			TypeDefinition artistArtifactType = this.getDictionaryService().getType(
+					UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
+			writeContent(artistArtifactType, data, persistedObject);
+			updateArtist(data, persistedObject);
 		}
 	}
 
 	/**
 	 * Retroactively update artist if about artist got changed.
+	 * 
 	 * @param data
 	 * @param artistArtifactRef
-	 * @param artistName
-	 * @return artistNode
 	 */
-	protected NodeRef updateArtist(FormData data, NodeRef artistArtifactRef, String artistName) 
-	{
+	protected void updateArtist(FormData data, NodeRef artistArtifactRef) {
 		// TODO: LOG
-		NodeRef artistNodeRef = null;
-		try {
-			artistNodeRef = this.getNodeService().getPrimaryParent(artistArtifactRef).getParentRef();
-			
-			FileInfo artistImageFile = this.getFileFolderService().getFileInfo(artistNodeRef);
-			TypeDefinition artistType = this.getDictionaryService().getType(TYPE_UCM_ARTIST_QNAME);
-			
-			inheritProperties(artistType, artistArtifactRef, artistNodeRef);
-			
-/**
-		TODO - Do we need update artist image there?
-			writeContent(artistType, data, artistNodeRef);
-*/	
-			fillMandatoryProperties(artistType, artistNodeRef, MANDATORY_PROP_FILLER);
-		}
-		catch(Exception e) {
-			System.out.println(e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-		return artistNodeRef;
+		NodeRef artistNodeRef = this.getNodeService().getPrimaryParent(artistArtifactRef).getParentRef();
+		// TODO: what to do with lat/lon?
+		synchronizeUCMPropertyValues(artistArtifactRef, artistNodeRef, UCMConstants.NOT_SYNC_PROPERTIES);
 	}
 }

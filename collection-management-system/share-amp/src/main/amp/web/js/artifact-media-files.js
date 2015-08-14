@@ -45,65 +45,73 @@ function ucmMediaServiceUrl() {
 	return result;
 }
 
-
-// !!!! TODO create custom jquery player 
+// !!!! TODO create custom jquery player
 // (https://www.theparticlelab.com/building-a-custom-html5-audio-player-with-jquery/)
 // https://serversideup.net/style-the-html-5-audio-element/
 // http://webdesign.tutsplus.com/tutorials/create-a-customized-html5-audio-player--webdesign-7081
-//http://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
-function ucmCreateMediaFile(mediaFile) {
+// http://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
+function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 	var url = ucmMediaServiceUrl();
 	var wrapper = $('<div class="ucm-media-wrapper"/>');
 
 	var name = mediaFile.name;
-	var title = mediaFile.title;
 	var lang = mediaFile.language;
+	var nameWithLang = name + ' (' + lang + ')';
+	var title = mediaFile.title;
 
-/*
-    var deleteButton = "&nbsp;";
-    var deleteButton = "&nbsp;";
+	/*
+	 * var deleteButton = "&nbsp;"; var deleteButton = "&nbsp;";
+	 * 
+	 * if (mediaFile.permission="write") {
+	 * 
+	 * deleteButton = $('<button class="ucm-media-file-delete-button"><img
+	 * src="/share/images/delete-16-red.png"/></button>' ).click(function() {
+	 * ucmDeleteFile(mediaFile.nodeRef, wrapper); });
+	 * 
+	 * editButton = $('<button class="ucm-media-file-edit-button"><img
+	 * src="/share/images/edit-16.png"/></button>' ).click(function() {
+	 * ucmEditFile(mediaFile.nodeRef, wrapper); }); }
+	 * 
+	 */
 
-	if (mediaFile.permission="write") {
-	
-		deleteButton = $('<button class="ucm-media-file-delete-button"><img src="/share/images/delete-16-red.png"/></button>'
-		).click(function() {
-			ucmDeleteFile(mediaFile.nodeRef, wrapper);
-		});
-	
-		editButton = $('<button class="ucm-media-file-edit-button"><img src="/share/images/edit-16.png"/></button>'
-		).click(function() {
-			ucmEditFile(mediaFile.nodeRef, wrapper);
-		});
-	}
+	var deleteButton = $(
+			'<button class="ucm-media-file-delete-button"><img src="/share/images/delete-16-red.png"/></button>')
+			.click(
+					function() {
+						ucmDeleteFile(mediaFile, wrapper,
+								containerSelector, parentNodeRef);
+					});
 
- */
-	
-	var deleteButton = $('<button class="ucm-media-file-delete-button"><img src="/share/images/delete-16-red.png"/></button>'
-	).click(function() {
-		ucmDeleteFile(mediaFile.nodeRef, wrapper);
-	});
-
-	var editButton = $('<button class="ucm-media-file-edit-button"><img src="/share/images/edit-16.png"/></button>'
-	).click(function() {
-		ucmEditFile(mediaFile.nodeRef, wrapper);
-	});
+	var editButton = $(
+			'<button class="ucm-media-file-edit-button"><img src="/share/images/edit-16.png"/></button>')
+			.click(
+					function() {
+						ucmEditFile(mediaFile, wrapper,
+								containerSelector, parentNodeRef);
+					});
 
 	var contentLink = appContext + '/proxy/alfresco/api/node' + mediaFile.link
 			+ '/content';
-	
+
 	switch (mediaFile.type) {
 	case 'audio/mpeg':
 	case 'audio/mp3':
 		wrapper.addClass('ucm-audio-wrapper');
-		wrapper.append(name+' ('+lang+')'+
-				     '<span class="ucm-media-right">'+'<audio src="' + contentLink
-				+ '" class="ucm-media-audio" preload="none" controls/>'+deleteButton.get(0).outerHTML+editButton.get(0).outerHTML+"</span>");
+		wrapper.append(nameWithLang);
+		var audioSpan = $('<span>', {
+			'class' : 'ucm-media-right'
+		})
+		audioSpan.append('<audio src="' + contentLink
+				+ '" class="ucm-media-audio" preload="none" controls/>')
+		audioSpan.append(deleteButton);
+		audioSpan.append(editButton);
+		wrapper.append(audioSpan);
 		break;
 	case 'application/pdf':
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-pdf'
-		}).html(name+' ('+lang+')').click(function(e) {
+		}).html(nameWithLang).click(function(e) {
 			e.preventDefault();
 			ucmShowDialog(contentLink, 600, 600, name);
 		});
@@ -117,7 +125,7 @@ function ucmCreateMediaFile(mediaFile) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-pdf'
-		}).html(name+' ('+lang+')').click(function(e) {
+		}).html(nameWithLang).click(function(e) {
 			e.preventDefault();
 			ucmShowDialog(contentLink, 600, 600, name);
 		});
@@ -129,7 +137,7 @@ function ucmCreateMediaFile(mediaFile) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-video'
-		}).html(name+' ('+lang+')' +'. Video.').click(function(e) {
+		}).html(nameWithLang + '. Video.').click(function(e) {
 			e.preventDefault();
 			ucmShowVideo(contentLink, 600, 600, name);
 		});
@@ -142,7 +150,7 @@ function ucmCreateMediaFile(mediaFile) {
 			href : mediaFile.title,
 			'class' : 'ucm-media-link',
 			target : '_blank',
-			text : mediaFile.name+" ("+lang+")"
+			text : nameWithLang
 		});
 		// Some sites can't be opened inside frame.
 		/*
@@ -170,37 +178,71 @@ function ucmCreateMediaFile(mediaFile) {
 	return wrapper;
 }
 
-function ucmEditFile(nodeRef, element) {
-	require(
-			[ "jquery" ],
-			function($) {
-				jQuery = $;
-				var editUrl = appContext
-						+ "/proxy/alfresco/slingshot/doclib/action/files?alf_method=edit";
-/* TODO needs proper implementation !!!!!!!!
-				var headers = {};
-				headers[Alfresco.util.CSRFPolicy.getParameter()] = Alfresco.util.CSRFPolicy
-						.getToken();
+function ucmEditFile(mediaFile, element, containerSelector, parentNodeRef) {
+	// Intercept before dialog show
+	//TODO: i18n
+	var doBeforeDialogShow = function ucm_onEditMedia_doBeforeDialogShow(
+			p_form, p_dialog) {
+		// Dialog title
+		Alfresco.util.populateHTML([ p_dialog.id + "-dialogTitle",
+				'Edit Properties: <span class="light">' + Alfresco.util.encodeHTML(mediaFile.name || "") + '</span>' ]);
 
-				var request = $.ajax({
-					url : deleteUrl,
-					method : 'POST',
-					contentType : 'application/json',
-					headers : headers,
-					data : JSON.stringify({
-						nodeRefs : [ nodeRef ]
-					}),
-					dataType : 'json'
+		// Edit metadata link button
+		Alfresco.util.ComponentManager.findFirst('Alfresco.module.SimpleDialog').editMetadata = Alfresco.util.createYUIButton(p_dialog,
+				"editMetadata", null, {
+					type : "link",
+					label : "All properties",
+					href : Alfresco.util.siteURL("edit-metadata?nodeRef=" + mediaFile.nodeRef)
 				});
-/*
-				request.done(function(msg) {
-					element.remove();
+	};
+
+	var templateUrl = YAHOO.lang
+			.substitute(
+					Alfresco.constants.URL_SERVICECONTEXT
+							+ "components/form?itemKind={itemKind}&itemId={itemId}&destination={destination}&mode={mode}&submitType={submitType}&formId={formId}&showCancelButton=true",
+					{
+						itemKind : "node",
+						itemId : mediaFile.nodeRef,
+						mode : "edit",
+						submitType : "json",
+						formId : "doclib-simple-metadata"
+					});
+
+	// Using Forms Service, so always create new instance
+	var editMedia = new Alfresco.module.SimpleDialog(this.id + "-editDetails-"
+			+ Alfresco.util.generateDomId());
+
+	//TODO: scope: editMedia ?
+	editMedia.setOptions({
+		width : "auto",
+		templateUrl : templateUrl,
+		actionUrl : null,
+		destroyOnHide : true,
+		doBeforeDialogShow : {
+			fn : doBeforeDialogShow,
+			scope : this
+		},
+		onSuccess : {
+			fn : function ucm_onEditMedia_success(response) {
+				ucmAjaxRefreshMediaFileList(containerSelector, parentNodeRef);
+			},
+			scope : this
+		},
+		onFailure : {
+			fn : function ucm_onEditMedia_failure(response) {
+				Alfresco.util.PopupManager.displayMessage({
+					text : "Edit failed!"
 				});
-*/	
-			});
+				editMedia.widgets.cancelButton.set("disabled", false);
+			},
+			scope : this
+		}
+	});
+	editMedia.show();
+	return editMedia;
 }
 
-function ucmDeleteFile(nodeRef, element) {
+function ucmDeleteFile(mediaFile, element, containerSelector, parentNodeRef) {
 	require(
 			[ "jquery" ],
 			function($) {
@@ -217,7 +259,7 @@ function ucmDeleteFile(nodeRef, element) {
 					contentType : 'application/json',
 					headers : headers,
 					data : JSON.stringify({
-						nodeRefs : [ nodeRef ]
+						nodeRefs : [ mediaFile.nodeRef ]
 					}),
 					dataType : 'json'
 				});
@@ -232,7 +274,7 @@ function isAudioFile(file) {
 	return (file.type === 'audio/mpeg' || file.type === 'audio/mp3');
 }
 
-function ucmRefreshMediaFileList(containerSelector, mediaFiles) {
+function ucmRefreshMediaFileList(containerSelector, mediaFiles, nodeRef) {
 	require([ "jquery" ], function($) {
 		jQuery = $;
 		var container = $(containerSelector);
@@ -242,13 +284,38 @@ function ucmRefreshMediaFileList(containerSelector, mediaFiles) {
 		var rest = $.grep($(mediaFiles), isAudioFile, true);
 
 		$.each($.merge(audio, rest), function(idx, file) {
-			ucmCreateMediaFile(file).appendTo(container);
+			ucmCreateMediaFile(file, containerSelector, nodeRef).appendTo(
+					container);
 		});
 	});
 }
 
-function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) 
-{
+function ucmAjaxRefreshMediaFileList(containerSelector, nodeRef) {
+	// TODO: sync: true ?
+	require([ "jquery" ], function($) {
+		jQuery = $;
+		$.ajax(ucmMediaServiceUrl(), {
+			method : 'GET',
+			contentType : false,
+			processData : true,
+			data : {
+				nodeRef : nodeRef
+			},
+			success : function(e, file, response) {
+				ucmRefreshMediaFileList(containerSelector,
+						response.responseJSON.mediaFiles, nodeRef);
+			},
+			error : function(xhr, status, error) {
+				console.error("Media file list update error: " + error);
+				Alfresco.util.PopupManager.displayMessage({
+					text : "Error: can't update list of attachments!"
+				});
+			}
+		});
+	});
+}
+
+function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 	// TODO Add security here (permision==write) otherwise do not do the rest
 	require([ "jquery" ], function($) {
 		jQuery = $;
@@ -286,7 +353,7 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef)
 					var containerSelector = '#' + elementIdPrefix
 							+ "-body.document-ucm-media-files";
 					ucmRefreshMediaFileList(containerSelector,
-							response.mediaFiles);
+							response.mediaFiles, nodeRef);
 				}
 				function onFileError(e, file, error) {
 					console.error("File Error: " + error);
@@ -423,7 +490,7 @@ function ucmSubmitMediaUrl(elementIdPrefix, nodeRef, url) {
 					var containerSelector = '#' + elementIdPrefix
 							+ "-body.document-ucm-media-files";
 					ucmRefreshMediaFileList(containerSelector,
-							response.responseJSON.mediaFiles);
+							response.responseJSON.mediaFiles, nodeRef);
 				},
 				error : function(xhr, status, error) {
 					console.error("URL Error: " + error);

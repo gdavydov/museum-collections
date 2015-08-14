@@ -1,6 +1,5 @@
 package org.alfresco.museum.ucm;
 
-import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME;
 import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_QNAME;
 
 import org.alfresco.repo.forms.FormData;
@@ -15,7 +14,7 @@ import org.springframework.util.StringUtils;
  */
 public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 	/**
-	 * Store "cm:content" property value, which is ignored by default handler.<br/>
+	 * Store "cm:content" property value, which is ignored by default handler.
 	 */
 	@Override
 	public void afterPersist(NodeRef item, FormData data, NodeRef persistedObject) {
@@ -29,15 +28,19 @@ public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 				TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 						UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
 				writeContent(artistArtifactType, data, artistArtifactRef);
+				updateArtistArtifact(data, persistedObject, artistArtifactRef);
 			}
 		}
-		else {
-			boolean isArtistArtifact = nodeType.equals(TYPE_UCM_ARTIST_ARTIFACT_QNAME);
-			if (isArtistArtifact) {
-				TypeDefinition artistArtifactType = this.getDictionaryService().getType(
-						UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
-				writeContent(artistArtifactType, data, persistedObject);
-			}
-		}
+	}
+	
+	/**
+	 * Update artist artifact if artist got changed.
+	 * 
+	 * @param data
+	 * @param artistRef
+	 */
+	protected void updateArtistArtifact(FormData data, NodeRef artistRef, NodeRef artistArtifactRef) {
+		// TODO: what to do with lat/lon?
+		synchronizeUCMPropertyValues(artistRef, artistArtifactRef, UCMConstants.NOT_SYNC_PROPERTIES);
 	}
 }

@@ -846,6 +846,7 @@
 	            </appearance>
             </form>
             <form id="doclib-simple-metadata">
+				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
 				<field-visibility>
 					<show id="cm:name"/>
 					<show id="ucm:attached_file_type"/>

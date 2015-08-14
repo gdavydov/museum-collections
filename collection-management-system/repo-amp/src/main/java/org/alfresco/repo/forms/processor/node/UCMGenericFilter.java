@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.FormData.FieldData;
@@ -304,6 +305,32 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 				}
 			}
 		}
+	}
+	
+	protected void synchronizeUCMPropertyValues(NodeRef from, NodeRef to, Set<QName> exclude) {
+		QName fromType = this.getNodeService().getType(from);
+		QName toType = this.getNodeService().getType(to);
+		
+		Set<QName> fromProps = getAllProperties(fromType).keySet();
+		Set<QName> toProps = getAllProperties(toType).keySet();
+		
+		Set<QName> commonProps = new HashSet<QName>(fromProps);
+		commonProps.retainAll(toProps);
+		commonProps.removeAll(exclude);
+		
+		for (QName propQname : commonProps) {
+			if (UCMConstants.UCM_NAMESPACE.equals(propQname.getNamespaceURI())) {
+				Serializable value = this.getNodeService().getProperty(from, propQname);
+				if (value != null) {
+					this.getNodeService().setProperty(to, propQname, value);
+				}
+			}
+		}
+	}
+	
+	public HashMap<QName, PropertyDefinition> getAllProperties(QName typeQname) {
+		TypeDefinition typeDef = this.getDictionaryService().getType(typeQname);
+		return getAllProperties(typeDef);
 	}
 	
 	public static HashMap<QName, PropertyDefinition> getAllProperties(TypeDefinition type) {

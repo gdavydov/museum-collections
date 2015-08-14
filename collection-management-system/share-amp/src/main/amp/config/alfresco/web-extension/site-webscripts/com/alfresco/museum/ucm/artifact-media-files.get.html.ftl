@@ -26,7 +26,7 @@
       <script type="text/javascript">
          var containerSelector = "#${el}-body.document-ucm-media-files";
          var mediaFiles = JSON.parse("${response?js_string}").mediaFiles;
-         ucmRefreshMediaFileList(containerSelector, mediaFiles);
+         ucmRefreshMediaFileList(containerSelector, mediaFiles, "${nodeRef}");
       </script>
    </@>
 </@>
