@@ -25,6 +25,7 @@ import org.alfresco.repo.forms.FormData.FieldData;
 import org.alfresco.repo.forms.FormException;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.AbstractFormProcessor;
+import org.alfresco.repo.site.SiteModel;
 import org.alfresco.service.cmr.dictionary.AspectDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
@@ -144,33 +145,35 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 			// if we have a property definition attempt the persist
 			PropertyDefinition propDef = item.getProperties().get(ContentModel.PROP_CONTENT);
 			if (propDef != null && propDef.getDataType().getName().equals(DataTypeDefinition.CONTENT)) {
-				ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
-						true);
-				if (writer != null) {
-					InputStream inputStream = contentField.getInputStream();
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					try {
-						IOUtils.copy(inputStream, baos);
-					} catch (IOException e) {
-						logger.error("Can't create copy of image stream", e);
+				InputStream inputStream = contentField.getInputStream();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				try {
+					int streamSize = IOUtils.copy(inputStream, baos);
+					if (streamSize > 0) {
+						ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
+								true);
+						if (writer != null) {
+							
+							processMetadata(new ByteArrayInputStream(baos.toByteArray()), persistedObject);
+							
+							// write the content
+							writer.putContent(new ByteArrayInputStream(baos.toByteArray()));
+							
+							// content data has not been persisted yet so get it from
+							// the node
+							ContentData contentData = (ContentData) this.getNodeService().getProperty(persistedObject,
+									ContentModel.PROP_CONTENT);
+							if (contentData != null) {
+								String mimetype = determineDefaultMimetype(data);
+								contentData = ContentData.setMimetype(contentData, mimetype);
+								Map<QName, Serializable> propsToPersist = new HashMap<QName, Serializable>();
+								propsToPersist.put(ContentModel.PROP_CONTENT, contentData);
+								this.getNodeService().addProperties(persistedObject, propsToPersist);
+							}
+						}
 					}
-
-					processMetadata(new ByteArrayInputStream(baos.toByteArray()), persistedObject);
-
-					// write the content
-					writer.putContent(new ByteArrayInputStream(baos.toByteArray()));
-
-					// content data has not been persisted yet so get it from
-					// the node
-					ContentData contentData = (ContentData) this.getNodeService().getProperty(persistedObject,
-							ContentModel.PROP_CONTENT);
-					if (contentData != null) {
-						String mimetype = determineDefaultMimetype(data);
-						contentData = ContentData.setMimetype(contentData, mimetype);
-						Map<QName, Serializable> propsToPersist = new HashMap<QName, Serializable>();
-						propsToPersist.put(ContentModel.PROP_CONTENT, contentData);
-						this.getNodeService().addProperties(persistedObject, propsToPersist);
-					}
+				} catch (IOException e) {
+					logger.error("Can't create copy of image stream", e);
 				}
 			}
 		}
@@ -214,6 +217,53 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		}
 	}
 
+	protected NodeRef getSiteRefByNode(NodeRef nodeRef) {
+		while (nodeRef != null && !SiteModel.TYPE_SITE.equals(this.getNodeService().getType(nodeRef))) {
+			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
+		}
+
+		return nodeRef;
+	}
+	
+	// <site>/system/artifact_attachments/<artist>/<artifact_name>
+	protected NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
+		// TODO: LOG
+		NodeRef site = getSiteRefByNode(artifactRef);
+		if (site == null)
+			return null;
+
+		Serializable artistNameValue = this.getNodeService().getProperty(artifactRef,
+				UCMConstants.PROP_UCM_ARTIST_QNAME);
+		Serializable artifactNameValue = this.getNodeService().getProperty(artifactRef, ContentModel.PROP_NAME);
+
+		if (artistNameValue == null || artifactNameValue == null)
+			return null;
+
+		String artistName = artistNameValue.toString();
+		String artifactName = artifactNameValue.toString();
+
+		NodeRef systemFolder = getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
+		
+//		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
+//		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
+		/*
+		 * NodeRef systemFolder = getOrCreateFolder(site,
+		 * UCMConstants.SYSTEM_FOLDER_NAME, true);
+		 */
+		NodeRef mediaFolder = getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
+		NodeRef artistFolder = getOrCreateFolder(mediaFolder, artistName, false);
+		NodeRef artifactFolder = getOrCreateFolder(artistFolder, artifactName, false);
+
+		// set media folder caption
+		this.getNodeService().setProperty(artifactFolder, ContentModel.PROP_TITLE, "Media content for " + artifactName);
+
+		// save reference to folder in artifact association
+		this.getNodeService().addChild(artifactRef, artifactFolder, UCMConstants.ASSOC_UCM_ARTIFACT_CONTAINS_QNAME,
+				QName.createQName(UCMConstants.UCM_NAMESPACE, artifactName));
+
+		return mediaFolder;
+	}
+	
 	/*
 	 * TODO: ideally metadata should be extracted in the same way it is done in
 	 * upload.post.js:extractMetadata

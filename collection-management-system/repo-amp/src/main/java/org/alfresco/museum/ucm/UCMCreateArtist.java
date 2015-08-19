@@ -64,16 +64,6 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 					// save reference to artist artifact in artist property
 					this.getNodeService().setProperty(persistedObject, PROP_UCM_ARTIST_ARTIFACT_QNAME,
 							artistArtifact);
-/*					
-					if (this.getNodeService().getAspects(artistArtifact).contains(ASPECT_GEOGRAPHICAL_QNAME)) {
-						Serializable lat = this.getNodeService().getProperty(artistArtifact, ContentModel.PROP_LATITUDE); 
-						Serializable lon = this.getNodeService().getProperty(artistArtifact, ContentModel.PROP_LONGITUDE);
-						HashMap<QName, Serializable> geoProps = new HashMap<QName, Serializable>();
-						geoProps.put(ContentModel.PROP_LATITUDE, lat);
-						geoProps.put(ContentModel.PROP_LONGITUDE, lon);
-						this.getNodeService().addAspect(persistedObject, ASPECT_GEOGRAPHICAL_QNAME, geoProps);
-					}
-*/
 				}
 			}
 		}
@@ -96,6 +86,7 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 			inheritProperties(artistArtifactType, artistFolder, artistArtifactRef);
 			writeContent(artistArtifactType, data, artistArtifactRef);
 			fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
+			getOrCreateArtistMediaFolder(artistArtifactRef);
 		}
 		return artistArtifactRef;
 	}
