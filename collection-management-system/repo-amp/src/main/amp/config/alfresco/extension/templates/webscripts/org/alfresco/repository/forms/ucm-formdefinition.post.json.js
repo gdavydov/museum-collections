@@ -29,7 +29,7 @@ function main()
     
     // extract optional data from request body (if present)
     var count = 0;
-    var fields = null; 
+    var fields = null;
     if (json.has("fields"))
     {
        // convert the JSONArray object into a native JavaScript array
@@ -142,7 +142,7 @@ function main()
         			var fieldName = "prop_" + propertyName.replace(":", "_");
         			var propValue = sourceNode.properties[propertyName];
         			if (propValue != null && propValue != undefined) {
-        				var fieldValue = ((value instanceof java.util.Date) ? utils.toISO8601(propValue) : propValue);
+        				var fieldValue = ((value instanceof java.util.Date) ? utils.toISO8601(propValue) : propValue.toString());
         				formModel.formData[fieldName] = fieldValue;
         			}
         		}
