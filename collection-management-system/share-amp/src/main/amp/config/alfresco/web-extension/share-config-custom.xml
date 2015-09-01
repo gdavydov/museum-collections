@@ -27,7 +27,7 @@
 				deployed -->
 			<module-deployment>
 				<mode>manual</mode>
-				<enable-auto-deploy-modules>true</enable-auto-deploy-modules>
+				<enable-auto-deploy-modules>true</enable-auto-deploy-modules>f
 			</module-deployment>
 		</web-framework>
 	</config>
@@ -199,8 +199,8 @@
 				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:content" force="true"/>
-					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_name" />
+					<show id="ucm:artist_nickname" />
 					<show id="cm:name" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
@@ -215,9 +215,9 @@
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
+					<field id="ucm:artist_name" label="Known As (Name)"/>
+	        <field id="cm:name" label="Given Name"/>
 					<field id="ucm:artist_nickname" />
-					<field id="ucm:artist_name" />
-	                <field id="cm:name" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
 					<field id="ucm:artist_dod" />
@@ -255,9 +255,9 @@
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
+					<field id="ucm:artist_name" label="Known As (Name)"/>
+	        <field id="cm:name" label="Given Name"/>
 					<field id="ucm:artist_nickname" />
-					<field id="ucm:artist_name" />
-	                <field id="cm:name" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
 					<field id="ucm:artist_dod" />
@@ -289,9 +289,9 @@
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
+					<field id="ucm:artist_name" label="Known As (Name)"/>
+	        <field id="cm:name" label="Given Name"/>
 					<field id="ucm:artist_nickname" />
-					<field id="ucm:artist_name" />
-	                <field id="cm:name" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
 					<field id="ucm:artist_dod" />
