@@ -47,6 +47,29 @@
 			    <div id="bd">
 			       <div class="share-form">
 			          <@region id="edit-metadata-mgr" scope="template" />
+                      <script type="text/javascript">
+                         function safeAccess() {
+                            var object = arguments[0];
+                            for (var i = 1; i < arguments.length; ++i) {
+                               object = (object == undefined || object == null) ? object : object[arguments[i]];
+                            }
+                            return object;
+                         }
+                         <!-- Customized version of js/alfresco.js:FormManager_navigateForward -->
+                         Alfresco.component.FormManager.prototype.navigateForward = function UCM__navigateForward(nodeRef) {
+                            var actionsComponent = Alfresco.util.ComponentManager.findFirst("Alfresco.DocumentActions");
+			    		    var path = safeAccess(actionsComponent, 'options', 'documentDetails', 'item', 'location', 'path');
+			    		    var file = safeAccess(actionsComponent, 'options', 'documentDetails', 'item', 'location', 'file');
+                            if (path && file) {
+			    		       /* Navigate to parent directory */
+                               document.location.href = Alfresco.util.siteURL("documentlibrary") + '?path=' + encodeURIComponent(path) + '&file=' + encodeURIComponent(file);
+                            }
+                            else {
+                               history.go(-1);
+                            }
+                            return;
+			    		 };
+			          </script>
 			          <@region id="edit-metadata" scope="template" />
 			       </div>
 			    </div>
