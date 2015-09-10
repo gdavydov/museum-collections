@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <template-instance>
+   <!-- THIS LINE SHOULD BE AUTOFORMATTED! -->
    <template-type>com/alfresco/museum/ucm/ucm-artifact-details</template-type>
    <properties>
       <pageFamily>documentlibrary</pageFamily>
@@ -155,19 +156,56 @@
          <url>/components/edit-metadata/edit-metadata-mgr</url>
       </component>
 
-      <!-- Edit Metadata Form -->
-      <component>
-         <region-id>edit-metadata</region-id>
-         <url>/components/form</url>
-         <properties>
-            <itemKind>node</itemKind>
-            <itemId>{nodeRef}</itemId>
-            <mode>edit</mode>
-            <submitType>json</submitType>
-            <showCaption>true</showCaption>
-            <showCancelButton>true</showCancelButton>
-         </properties>
-      </component>
+		<!-- Edit Metadata Form -->
+		<component>
+			<region-id>edit-metadata</region-id>
+			<sub-components>
+				<sub-component id="edit">
+					<evaluations>
+						<evaluation>
+							<evaluators>
+								<evaluator type="com.alfresco.museum.ucm.evaluators.edit">
+									<params>
+										<nodeRef>{nodeRef}</nodeRef>
+									</params>
+								</evaluator>
+							</evaluators>
+							<url>/components/form</url>
+							<properties>
+								<itemKind>node</itemKind>
+								<itemId>{nodeRef}</itemId>
+								<mode>edit</mode>
+								<submitType>json</submitType>
+								<showCaption>true</showCaption>
+								<showCancelButton>false</showCancelButton>
+							</properties>
+						</evaluation>
+					</evaluations>
+				</sub-component>
+				<sub-component id="view">
+					<evaluations>
+						<evaluation>
+							<evaluators>
+								<evaluator type="com.alfresco.museum.ucm.evaluators.view">
+									<params>
+										<nodeRef>{nodeRef}</nodeRef>
+									</params>
+								</evaluator>
+							</evaluators>
+							<url>/components/form</url>
+							<properties>
+								<itemKind>node</itemKind>
+								<itemId>{nodeRef}</itemId>
+								<mode>view</mode>
+								<submitType>json</submitType>
+								<showCaption>true</showCaption>
+								<showCancelButton>false</showCancelButton>
+							</properties>
+						</evaluation>
+					</evaluations>
+				</sub-component>
+			</sub-components>
+		</component>
 
       <!-- Document Actions (incl commons) -->
        <component>

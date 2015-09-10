@@ -236,6 +236,7 @@
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:content" force="true"/>
@@ -270,6 +271,7 @@
 			</form>
 			<!-- Document Library pop-up Edit Metadata form -->
 			<form id="doclib-simple-metadata">
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:content" force="true"/>
@@ -454,6 +456,7 @@
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:name" />
@@ -637,6 +640,7 @@
 		<forms>
 			<!-- Default form configuration for the ucm:about_artist_artifact type -->
 			<form>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<field-visibility>
 <!--					
@@ -721,6 +725,7 @@
 			</form>
 			
 			<form id="doclib-simple-metadata">
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
 				<field-visibility>
 <!--					
@@ -846,6 +851,7 @@
 	            </appearance>
             </form>
             <form id="doclib-simple-metadata">
+				<view-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
 				<field-visibility>
 					<show id="cm:name"/>

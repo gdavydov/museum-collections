@@ -9,6 +9,11 @@
    <@link rel="stylesheet" type="text/css" href="${url.context}/res/css/artifact-details.css" group="artifact"/>
    <@templateHtmlEditorAssets />
 </@>
+<@markup id="js">
+   <#-- JavaScript Dependencies -->
+   <#include "../../../../org/alfresco/components/form/ucm-form.js.ftl"/> 
+   <@script src="${url.context}/components/document-details/document-metadata.js" group="document-details"/>
+</@>
 
 <@templateBody>
    <@markup id="alf-hd">
