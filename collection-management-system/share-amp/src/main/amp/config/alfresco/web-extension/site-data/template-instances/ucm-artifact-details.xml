@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <template-instance>
-   <!-- THIS LINE SHOULD BE AUTOFORMATTED! -->
+   <!-- THIS LINE SHOULDN'T BE AUTOFORMATTED! -->
    <template-type>com/alfresco/museum/ucm/ucm-artifact-details</template-type>
    <properties>
       <pageFamily>documentlibrary</pageFamily>
@@ -150,11 +150,26 @@
          </properties>
       </component>
 
-      <!-- Edit Metadata Form Manager -->
-      <component>
-         <region-id>edit-metadata-mgr</region-id>
-         <url>/components/edit-metadata/edit-metadata-mgr</url>
-      </component>
+		<!-- Edit Metadata Form Manager -->
+		<component>
+			<region-id>edit-metadata-mgr</region-id>
+			<sub-components>
+				<sub-component id="default">
+					<evaluations>
+						<evaluation>
+							<evaluators>
+								<evaluator type="com.alfresco.museum.ucm.evaluators.edit">
+									<params>
+										<nodeRef>{nodeRef}</nodeRef>
+									</params>
+								</evaluator>
+							</evaluators>
+							<url>/components/edit-metadata/edit-metadata-mgr</url>
+						</evaluation>
+					</evaluations>
+				</sub-component>
+			</sub-components>
+		</component>
 
 		<!-- Edit Metadata Form -->
 		<component>

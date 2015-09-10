@@ -60,7 +60,7 @@
                             }
                             return object;
                          }
-                         <!-- Customized version of js/alfresco.js:FormManager_navigateForward -->
+                         /* Customized version of js/alfresco.js:FormManager_navigateForward */
                          Alfresco.component.FormManager.prototype.navigateForward = function UCM__navigateForward(nodeRef) {
                             var actionsComponent = Alfresco.util.ComponentManager.findFirst("Alfresco.DocumentActions");
 			    		    var path = safeAccess(actionsComponent, 'options', 'documentDetails', 'item', 'location', 'path');

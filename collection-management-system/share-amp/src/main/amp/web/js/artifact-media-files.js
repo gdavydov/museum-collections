@@ -1,3 +1,19 @@
+function safeAccess() {
+	var object = arguments[0];
+	for (var i = 1; i < arguments.length; ++i) {
+		object = (object == undefined || object == null) ? object
+				: object[arguments[i]];
+	}
+	return object;
+}
+
+
+function ucmIsEditable() {
+    var actionsComponent = Alfresco.util.ComponentManager.findFirst("Alfresco.DocumentActions");
+    return !!safeAccess(actionsComponent, 'options', 'documentDetails', 'item', 'node', 'permissions', 'user', 'Write');
+}
+
+
 function ucmShowDialog(url, wdth, hght, tltl) {
 	var $dialog = $('<div/>', {
 		class : 'ucm-media-dialog'
@@ -43,6 +59,13 @@ function ucmMediaServiceUrl() {
 				+ encodeURIComponent(Alfresco.util.CSRFPolicy.getToken());
 	}
 	return result;
+}
+
+function ucmAddControlButtons(container, deleteButton, editButton) {
+	if (ucmIsEditable()) {
+		container.append(deleteButton);
+		container.append(editButton);
+	}
 }
 
 // !!!! TODO create custom jquery player
@@ -103,8 +126,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		})
 		audioSpan.append('<audio src="' + contentLink
 				+ '" class="ucm-media-audio" preload="none" controls/>')
-		audioSpan.append(deleteButton);
-		audioSpan.append(editButton);
+		ucmAddControlButtons(audioSpan, deleteButton, editButton);
 		wrapper.append(audioSpan);
 		break;
 	case 'application/pdf':
@@ -116,8 +138,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 			ucmShowDialog(contentLink, 600, 600, name);
 		});
 		wrapper.append(link);
-		wrapper.append(deleteButton);
-		wrapper.append(editButton);
+		ucmAddControlButtons(wrapper, deleteButton, editButton);
 		break;
 	case 'application/msword':
 	case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -130,8 +151,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 			ucmShowDialog(contentLink, 600, 600, name);
 		});
 		wrapper.append(link);
-		wrapper.append(deleteButton);
-		wrapper.append(editButton);
+		ucmAddControlButtons(wrapper, deleteButton, editButton);
 		break;
 	case 'video/mp4':
 		var link = $('<a/>', {
@@ -142,8 +162,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 			ucmShowVideo(contentLink, 600, 600, name);
 		});
 		wrapper.append(link);
-		wrapper.append(deleteButton);
-		wrapper.append(editButton);
+		ucmAddControlButtons(wrapper, deleteButton, editButton);
 		break;
 	case 'text/uri-list':
 		var link = $('<a/>', {
@@ -158,8 +177,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		 * ucmShowDialog(mediaFile.title, 600, 600, name); });
 		 */
 		wrapper.html(link);
-		wrapper.append(deleteButton);
-		wrapper.append(editButton);
+		ucmAddControlButtons(wrapper, deleteButton, editButton);
 		break;
 	default: // TODO: let user save content instead of showing dialog?
 		var link = $('<a/>', {
@@ -170,8 +188,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 			ucmShowDialog(contentLink, 600, 600, name);
 		});
 		wrapper.append(link);
-		wrapper.append(deleteButton);
-		wrapper.append(editButton);
+		ucmAddControlButtons(wrapper, deleteButton, editButton);
 		break;
 	}
 
@@ -316,7 +333,9 @@ function ucmAjaxRefreshMediaFileList(containerSelector, nodeRef) {
 }
 
 function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
-	// TODO Add security here (permision==write) otherwise do not do the rest
+	//Uploader can't be used if user has no write permission on the node
+	if (!ucmIsEditable()) return;
+	
 	require([ "jquery" ], function($) {
 		jQuery = $;
 		require([ appContext + "/res/js/formstone/core.js" ], function() {

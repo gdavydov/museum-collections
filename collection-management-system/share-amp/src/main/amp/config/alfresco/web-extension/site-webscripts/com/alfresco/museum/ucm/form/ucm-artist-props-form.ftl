@@ -43,7 +43,7 @@
             <div class="yui-g">
                <h2 id="${el}-dialogHeader"></h2>
             </div>
-            <#if form.showCaption?exists && form.showCaption>
+            <#if form.showCaption?exists && form.showCaption && form.mode != "view">
                <div id="${formId}-caption" class="caption"><span class="mandatory-indicator">*</span>${msg("form.required.fields")}</div>
             </#if>
 
