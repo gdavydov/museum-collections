@@ -85,7 +85,7 @@ function moveOptions(from, to)
 <div id="container">
  
   <h1>Create Site</h1>
-<h3>Site</h3>
+<!-- <h3>Site</h3> -->
   <div>
   	<fieldset>
   		<legend>Site</legend>
@@ -99,11 +99,23 @@ function moveOptions(from, to)
                     <br>
 			  	<fieldset style="width:inherit">
 				    		<legend>Logo</legend>
+				    			<table>
+				    				<tr>
+												
+												<p>
+													<td>
                         <input type='file' id='ex1' name='ex1' onchange='#'/><br>
 											<script>
 													$('input[type=file]').simpleFilePreview();
 												</script>
+											</td>
+											<td valign="top">
+												Upload your site logo here. Please note, that this logo could be changed anytime later
+										</td>			
+											</tr>
+									</table>			
 				<div id='colldiv'>	
+												<br> 
                         <input type='button' value='Save' id='savesite' style="visibility:hidden"/> <em>(Note: Submit to the server here!)</em>
                         <script>
                         	  $( "#savesite" ).click(function() {
@@ -130,15 +142,17 @@ function moveOptions(from, to)
   <h3>Collection and Site folders</h3>
   <div>
 	  	<fieldset>
-				<legend>Collection</legend>
+				<legend>Collection (Optional)</legend>
 		  	<fieldset>
-					 Collection Name *: <input type="text">
+					 Collection Name : <input type="text">
 					 Collection ID : <input type="text">
 		    </fieldset>
+<!--
 		    <fieldset>
 					<legend>Collection Organization <img src="icon_info.gif" width="21" height="17" alt="info" id="corg" onClick="#"/></legend>
 					 Add 'Letter Folders' to organize collection :<input type="checkbox" name="checkbox2" id="checkbox2"><br>
 		    </fieldset>
+-->		
 		 </fieldset>
 		 <fieldset>
 				<legend>Additional Site Folders <img src="icon_info.gif" width="21" height="17" alt="info" id="asf" onClick="#"/></legend>

@@ -1,13 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 INSTALLDIR=/Applications/alfresco-5.0.d
 GITROOT=/Users/`whoami`/GitHub/
-LOCALAMPDIR = $GITROOT/museum-collections/collection-management-system
+#
+export LOCALAMPDIR=$GITROOT/museum-collections/collection-management-system
 export ALF_HOME=$INSTALLDIR
 export CATALINA_HOME=$ALF_HOME/tomcat
 
 cd $INSTALLDIR/amps
 #wget https://github.com/gdavydov/museum-collections/raw/master/release_amps/collection-management-system-repo-amp.amp -O collection-management-system-repo-amp.amp
 #wget https://github.com/gdavydov/museum-collections/raw/master/release_amps/uploader-plus-repo-1.2.amp -O uploader-plus-repo-1.2.amp
+echo 'copy colelction-managment amp files'
 cp $LOCALAMPDIR/repo-amp/target/collection-management-system-repo-amp.amp .
 cp $LOCALAMPDIR/share-amp/target/collection-management-system-share-amp.amp .
 
