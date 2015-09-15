@@ -19,11 +19,21 @@ h3 {
 	background-color:#DFEBE8;
 }
 #container{
-   width:750px; /* The width is fixed by pixels */
-/*                           height:800px; /* The height is fixed by pixels*/
+   width:650px; /* The width is fixed by pixels */
   color:#000000;
 /*  background-color:#DFEBE8; /*lightblue;*/
  }
+#accordion {
+   width:650px; /* The width is fixed by pixels */
+  color:#000000;
+/*  background-color:#DFEBE8; /*lightblue;*/
+ }
+/*form, fieldset, legend, label, input{ margin: 0; padding: 2;} */
+
+fieldset, input  {
+   margin:0px;
+   padding:0px;
+}
 
 </style>
 
@@ -97,8 +107,8 @@ function moveOptions(from, to)
 						});
 					</script>
                     <br>
-			  	<fieldset style="width:inherit">
-				    		<legend>Logo</legend>
+			  	<fieldset style="width:70%">
+				    		<legend>Company Logo</legend>
 				    			<table>
 				    				<tr>
 												
@@ -114,9 +124,31 @@ function moveOptions(from, to)
 										</td>			
 											</tr>
 									</table>			
-				<div id='colldiv'>	
+          </fieldset>                  
+			  	<br>
+			  	<fieldset>
+			  		<label> </label>
+            Site Adminstrator First Name* : <input type="text" required><br>
+            Site Adminstrator Last Name* : &nbsp; <input type="text" required><br>
+            Email* : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" required><br>
+            Private Site : <input type="checkbox"> Information icon goes here<br>
+            Description  :  <textarea cols="25" rows="3"></textarea>
+			  	</fieldset>
+					<br>
+<!--					
+          <fieldset>
+            <legend >Information about Museum/Gallery</legend>
+            Name: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
+            Address: <input type="text"><br>
+            Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email"><br>
+            Phone: &nbsp;&nbsp;&nbsp;<input type="phone"><
+            Fax: &nbsp;&nbsp;&nbsp;&nbsp;<input type="phone">
+          </fieldset>
+-->
+          <br>
+			  	
 												<br> 
-                        <input type='button' value='Save' id='savesite' style="visibility:hidden"/> <em>(Note: Submit to the server here!)</em>
+                        <input type='button' value='Save' id='savesite' style="visibility:show"/> <em>(Note: Submit to the server here!)</em>
                         <script>
                         	  $( "#savesite" ).click(function() {
 									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
@@ -139,7 +171,29 @@ function moveOptions(from, to)
   </script>
 
 <div id="accordion">
-  <h3>Collection and Site folders</h3>
+	
+  <h3>Museum/Gallery Information</h3>
+  <div>
+    <p>
+          <fieldset>
+            <legend >Information about Museum/Gallery</legend>
+            Name* : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
+            Address: <input type="text"><br>
+            Email* : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email"><br>
+            Phone* : &nbsp;&nbsp;&nbsp;<input type="phone">
+            Fax: &nbsp;&nbsp;&nbsp;&nbsp;<input type="phone">
+          </fieldset>
+          <br>
+                        <input type='button' value='Save' id='savemuseum' /> <em>(Note: Submit to the server here!)</em>
+                        <script>
+                        	  $( "#savemuseum" ).click(function() {
+									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
+							  });
+                        </script>	
+    </p>
+  </div>
+
+  <h3>Collection and Site folders (Optional)</h3>
   <div>
 	  	<fieldset>
 				<legend>Collection (Optional)</legend>
@@ -155,7 +209,7 @@ function moveOptions(from, to)
 -->		
 		 </fieldset>
 		 <fieldset>
-				<legend>Additional Site Folders <img src="icon_info.gif" width="21" height="17" alt="info" id="asf" onClick="#"/></legend>
+				<legend>Additional Site Folders (Optional) <img src="icon_info.gif" width="21" height="17" alt="info" id="asf" onClick="#"/></legend>
 	            <table width="38%" border="0" cellspacing="0" cellpadding="0">
 	               <tr>
 	                 <td width="47%" align="center">
@@ -186,26 +240,6 @@ function moveOptions(from, to)
 							  });
                         </script>	
 </div>
-  <h3>Museum</h3>
-  <div>
-    <p>
-          <fieldset>
-            <legend >Museum</legend>
-            Name: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
-            Address: <input type="text"><br>
-            Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"><br>
-            Phone: &nbsp;&nbsp;&nbsp;<input type="text">
-            Fax: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text">
-          </fieldset>
-          <br>
-                        <input type='button' value='Save' id='savemuseum' /> <em>(Note: Submit to the server here!)</em>
-                        <script>
-                        	  $( "#savemuseum" ).click(function() {
-									alert( document.location.protocol+"//"+document.location.hostname+":"+document.location.port+"/share/uploadSiteImage.js");
-							  });
-                        </script>	
-    </p>
-  </div>
   <h3>Copywrite</h3>
   <div>
     <p>
