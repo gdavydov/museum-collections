@@ -1,0 +1,103 @@
+<!--comment-->
+<UCMConfig name="ucm:config" xmlns="http://www.alfresco.org/model/dictionary/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<description>Museum collection management system configuration</description>
+	<author>Greg Davydov</author>
+	<version>1.0</version>
+	<data-model>
+		<types>
+			<type name="ucm:attached_file">
+				<property name="ucm:attached_file_language">
+									<value>English</value>
+									<value>German</value>
+									<value>French</value>
+									<value>Italian</value>
+									<value>Dutch</value>
+									<value>Spanish</value>
+									<value>Polish</value>
+									<value>Russian</value>
+									<value>Arabic</value>
+				</property>					
+			</type>			
+			<type name='ucm:artifact'>
+				<property name='ucm:artifact_medium'>
+									<value></value>
+									<value>Photo</value>
+									<value>Video</value>
+									<value>Audio</value>
+									<value>Oil on canvas</value>
+									<value>Oil on board</value>
+									<value>Acrylic on paper</value>
+									<value>Gold</value>
+									<value>Silver</value>
+									<value>Bronze</value>
+									<value>Cast Iron</value>
+									<value>Stoneware</value>
+									<value>Other</value>
+				</property>
+				<property name="ucm:artifact_status">
+									<value>Exhibition</value>
+									<value>Restoration</value>
+									<value>Loan</value>
+				</property>	
+				<property name="ucm:artifact_acquisition_type">
+						<value>N/A</value>
+						<value>Purchased</value>
+						<value>Donated</value>
+				</property>				
+				<property name="ucm:artifact_type">	
+									<value></value>
+									<value>Portrait</value>
+									<value>Landscape</value>
+									<value>Naturmort</value>
+									<value>Gobelen</value>
+									<value>Fresco</value>
+									<value>Statue</value>
+									<value>Jar</value>
+									<value>Sarcophagus</value>
+
+			  </property>
+			</type>	
+			<type name='ucm:artist'>
+			</type>
+			</types>
+			<aspects>	
+		  <aspect name="ucm:site_aspect">
+				<property name="ucm:site_aspect_type">
+									<value>All</value>
+									<value>Modern</value>
+									<value>Classical</value>
+									<value>Sculpture only</value>
+				</property>
+      </aspect>
+      <aspect name="ucm:artist_aspect">
+				<property name="ucm:artist_period">
+									<value>N/A</value>
+									<value>Stone Age</value>
+									<value>Mesopotamian</value>
+									<value>Egyptian</value>
+									<value>Greek and Hellenistic</value>
+									<value>Roman</value>
+									<value>Byzantine and Islamic</value>
+									<value>Middle Ages</value>
+									<value>Classicism</value>
+									<value>Pre-Renaissance</value>
+									<value>Renaissance</value>
+									<value>Venetian and Northern Renaissance</value>
+									<value>Mannerism </value>
+									<value>Neoclassical</value>
+									<value>Romanticism</value>
+									<value>Realism</value>
+									<value>Impressionism</value>
+									<value>Post-Impressionism</value>
+									<value>Fauvism and Expressionism</value>
+									<value>Cubism, Futurism, Supremativism, Constructivism, De Stijl</value>
+									<value>Art Deco</value>
+									<value>Dada and Surrealism</value>
+									<value>Abstract Expressionism</value>
+									<value>Modern Art</value>
+				</property>
+		  </aspect>
+    </aspects>
+	</data-model>	
+</UCMConfig>

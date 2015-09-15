@@ -1,0 +1,71 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="urn:oasis:names:tc:ubl:SpecializedDatatypes:1:0"
+    xmlns:ccts="urn:oasis:names:tc:ubl:CoreComponentParameters:1:0"
+    xmlns:udt="urn:oasis:names:tc:ubl:UnspecializedDatatypes:1:0"
+    xmlns:cur="urn:oasis:names:tc:ubl:codelist:CurrencyCode:1:0"
+    targetNamespace="urn:oasis:names:tc:ubl:SpecializedDatatypes:1:0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    version="1:0">
+  <xsd:element name="UCMConfig">
+    <xsd:annotation>
+      <xsd:documentation>comment</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element type="xsd:string" name="description"/>
+        <xsd:element type="xsd:string" name="author"/>
+        <xsd:element type="xsd:float" name="version"/>
+        <xsd:element name="data-model">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="aspects">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="aspect" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="property" maxOccurs="unbounded" minOccurs="1">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element type="xsd:string" name="value" maxOccurs="unbounded" minOccurs="1"/>
+                              </xsd:sequence>
+                              <xsd:attribute type="xsd:string" name="name" use="required"/>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="types">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="type" maxOccurs="unbounded" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="property" maxOccurs="unbounded" minOccurs="1">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element type="xsd:string" name="value" maxOccurs="unbounded" minOccurs="1"/>
+                              </xsd:sequence>
+                              <xsd:attribute type="xsd:string" name="name" use="required"/>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute type="xsd:string" name="name"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
