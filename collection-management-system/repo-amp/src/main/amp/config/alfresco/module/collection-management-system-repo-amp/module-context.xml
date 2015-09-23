@@ -43,12 +43,23 @@
 		parent="ucmBaseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
- 
+
 	<bean id="ucmEditArtistArtifactFilter" class="org.alfresco.museum.ucm.UCMEditArtistArtifact"
 		parent="ucmBaseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
 
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site.post" class="org.alfresco.museum.ucm.UCMCreateSite"
+		parent="webscript">
+		<property name="authorityService" ref="AuthorityService" />
+		<property name="siteService" ref="SiteService" />
+		<property name="contentService" ref="ContentService" />
+		<property name="fileFolderService" ref="FileFolderService" />
+		<property name="dictionaryService" ref="DictionaryService" />
+		<property name="nodeService" ref="NodeService" />
+		<property name="mimetypeService" ref="MimetypeService" />
+	</bean>
+	
 	<!-- TODO: explicitly override typeFormProcessor -->
 	<!-- TODO: explicitly override FileFolderServiceImpl -->
 </beans>

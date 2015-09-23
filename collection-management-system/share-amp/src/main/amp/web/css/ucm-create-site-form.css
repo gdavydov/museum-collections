@@ -1,0 +1,108 @@
+form#ucm-create-site-form {
+	margin: 0 auto;
+	width: 800px;
+}
+
+.wizard>.content {
+	min-height: 52em;
+}
+
+form.wizard {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	color: #333;
+	background-color: #fff;
+}
+
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+.wizard legend {
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin-bottom: 20px;
+	font-size: 21px;
+	line-height: 40px;
+	color: #333;
+	border: 0;
+	border-bottom: 1px solid #e5e5e5
+}
+
+.wizard label {
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 7px;
+}
+
+.wizard fieldset, .wizard  simpleFilePreview {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.wizard input, .wizard select, .wizard textarea {
+	vertical-align: middle;
+}
+
+.wizard input[type="text"], .wizard textarea {
+	display: inline-block;
+	height: 20px;
+	padding: 4px 6px;
+	margin-bottom: 10px;
+	font: 14px Arial;
+	line-height: 20px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	width: 300px
+}
+
+.wizard textarea {
+	height: auto;
+	width: 100%;
+	overflow: auto;
+	resize: vertical;
+}
+
+.wizard p {
+	line-height: 1.5em;
+	margin: 0 0 1.5em;
+}
+
+.wizard input.smallButton {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #ccc !important;
+}
+
+.wizard select.siteFolders {
+	overflow: hidden;
+	width: 200px;
+	margin: 5px 0 5px 0;
+}
+
+.wizard th {
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.wizard .infoButton {
+	vertical-align: middle;
+}
+
+.small_tooltip {
+	background-color: white;
+}

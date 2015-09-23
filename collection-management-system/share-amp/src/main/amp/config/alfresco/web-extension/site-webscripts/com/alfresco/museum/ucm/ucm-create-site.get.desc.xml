@@ -1,0 +1,8 @@
+<webscript>
+	<shortname>UCM Site creation wizard</shortname>
+	<description>Returns HTML form for site creation wizard
+	</description>
+	<url>/ucm/create-site</url>
+	<format default="html"/>
+	<authentication>admin</authentication>
+</webscript>

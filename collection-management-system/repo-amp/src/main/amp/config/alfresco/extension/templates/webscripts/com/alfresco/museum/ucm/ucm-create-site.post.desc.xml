@@ -1,0 +1,11 @@
+<webscript>
+	<shortname>UCM Site creation implementation</shortname>
+	<description>Create UCM site with custom properties, admin user, user
+		groups, fill museum properties, create "System" folder, optionally
+		also create collections and custom folders
+	</description>
+	<url>/ucm/create-site</url>
+	<format default="json" />
+	<!--authentication runas="admin">user</authentication -->
+	<authentication>admin</authentication>
+</webscript>

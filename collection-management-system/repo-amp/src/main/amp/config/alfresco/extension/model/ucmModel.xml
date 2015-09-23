@@ -933,14 +933,14 @@
 					<title>Studied at Workshop</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
-					<multiple>true</multiple>
+					<multiple>true</multiple><!--TODO: set false to allow values with comma?-->
 				</property>
 
 				<property name="ucm:artist_live_city">
 					<title>Lived Cities</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory> <!-- TODO: true? -->
-					<multiple>true</multiple>
+					<multiple>true</multiple><!--TODO: set false to allow values with comma-->
 				</property>
 
 				<property name="ucm:artist_period">
