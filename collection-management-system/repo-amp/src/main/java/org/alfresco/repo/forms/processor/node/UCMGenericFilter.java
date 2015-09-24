@@ -26,6 +26,7 @@ import org.alfresco.repo.forms.FormException;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.AbstractFormProcessor;
 import org.alfresco.repo.site.SiteModel;
+import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.dictionary.AspectDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
@@ -33,11 +34,16 @@ import org.alfresco.service.cmr.dictionary.PropertyDefinition;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.repository.ContentData;
+import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.MimetypeService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.Path;
+import org.alfresco.service.cmr.repository.StoreRef;
+import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -137,6 +143,64 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * Create configuration for the current site. SHould run when site is accessed the first time
+	 * @param nodeRef
+	 * @return
+	 */
+	public String getSiteName(NodeRef nodeRef) 
+	{
+		while (nodeRef != null && !SiteModel.TYPE_SITE.equals(this.getNodeService().getType(nodeRef))) {
+			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
+		}
+
+		NodeRef siteNodeRef = nodeRef;
+		return getNodeName(siteNodeRef, UCMConstants.PROP_UCM_SITE_QNAME);
+		
+/*
+		int sitePosition = 3;
+		Path path = this.getNodeService().getPaths(nodeRef, true).get(0);
+		return path.get(3).getElementString(); //siteName
+*/		
+	}
+
+	/**
+	 * Return node name for specified QName
+	 * @param nodeRef
+	 * @param qName
+	 * @return String 
+	 */
+	public String getNodeName(NodeRef nodeRef, QName qName) 
+	{
+		return getNodeService().getProperty(nodeRef, qName).toString();
+	}
+	/**
+	 * Return node name for generic cm:object
+	 * @param nodeRef
+	 * @return String
+	 */
+	public String getNodeName(NodeRef nodeRef) 
+	{
+		return getNodeService().getProperty(nodeRef, UCMConstants.PROP_CM_CMOBJECTNAME_QNAME).toString();
+	}
+
+	/**
+	 * TODO Do I need it?
+	 * @param nodeRef
+	 * @return
+	 */
+	private InputStream getContent(NodeRef nodeRef)
+	{
+		try {
+			ContentReader reader = this.getContentService().getReader(nodeRef, ContentModel.PROP_CONTENT);
+			return reader.getContentInputStream();	
+		}
+		catch(org.alfresco.service.cmr.dictionary.InvalidTypeException ite) {
+			logger.error("Invalid node type for "+getNodeName(nodeRef));
+		}
+		return  null;
 	}
 
 	protected void writeContent(TypeDefinition item, FormData data, NodeRef persistedObject) {

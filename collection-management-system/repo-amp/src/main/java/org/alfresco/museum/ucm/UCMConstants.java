@@ -10,11 +10,22 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.service.namespace.QName;
 
 public class UCMConstants {
+	
 	public static final String UCM_NAMESPACE = "http://www.ucm.org/model/1.0";
+
+	public static final String ALFRESCO_NAMESPACE = "http://www.alfresco.org/model/content/1.0"; 
+	public static final String PROP_CM_CMOBJECT = "cmobject";
+	public static final QName PROP_CM_CMOBJECT_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_CM_CMOBJECT);
+	public static final String PROP_NODE_CMNAME = "name";
+	public static final QName PROP_CM_CMOBJECTNAME_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMNAME);
+	public static final String PROP_UCM_SITE = "site";
+	public static final QName PROP_UCM_SITE_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_UCM_SITE);
+//	public static final QName PROP_UCM_SITE_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_SITE);
+	
 
 	public static final String CONTENT_PROP_DATA = PROP_DATA_PREFIX + "cm" + DATA_KEY_SEPARATOR
 			+ ContentModel.PROP_CONTENT.getLocalName();
-
+	
 	public static final String NAME_PROP_DATA = PROP_DATA_PREFIX + "cm" + DATA_KEY_SEPARATOR
 			+ ContentModel.PROP_NAME.getLocalName();
 
@@ -47,6 +58,12 @@ public class UCMConstants {
 
 	public static final String MANDATORY_PROP_FILLER = "N/A";
 
+	public static final String SITE_TYPE = "st:site";
+	public static final String TYPE_UCM_CONFIG = "cm:document";
+	public static final String UCM_CONFIG_FILE_NAME = "cm:ucm-config.xml";
+	
+	public static final QName UCM_CONFIG_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_CONFIG);
+		
 	public static final String ASPECT_GEOGRAPHICAL = ContentModel.ASPECT_GEOGRAPHIC.getLocalName();
 	public static final QName ASPECT_GEOGRAPHICAL_QNAME = ContentModel.ASPECT_GEOGRAPHIC;
 
