@@ -72,6 +72,7 @@
 
 			<type name="cm:folder">
 				<subtype name="ucm:collection" />
+				<subtype name="ucm:artist" />
 			</type>
 
 			<type name="ucm:collection">
@@ -199,9 +200,9 @@
 				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:content" force="true"/>
+					<show id="cm:name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:artist_nickname" />
-					<show id="cm:name" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
 					<show id="ucm:artist_dod" />
@@ -209,14 +210,14 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artist_comments" />
+<!--					<show id="ucm:artist_comments" /> -->
 				</field-visibility>
 				<appearance>
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
-					<field id="ucm:artist_name" label="Known As (Name)"/>
-	        <field id="cm:name" label="Given Name"/>
+	        		<field id="cm:name" label="Artist Name"/>
+					<field id="ucm:artist_name" label="Also Known As (Name)"/>
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -225,7 +226,7 @@
 					<field id="ucm:artist_study_workshop" />
 					<field id="ucm:artist_live_city" />
 					<field id="ucm:artist_period" />
-					<field id="ucm:artist_comments" />
+<!--					<field id="ucm:artist_comments" /> -->
 				</appearance>
 			</form>
 		</forms>
@@ -240,9 +241,9 @@
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:content" force="true"/>
-					<show id="ucm:artist_nickname" />
-					<show id="ucm:artist_name" />
 					<show id="cm:name" />
+					<show id="ucm:artist_name" />
+					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
 					<show id="ucm:artist_dod" />
@@ -250,14 +251,14 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artist_comments" />
+<!--					<show id="ucm:artist_comments" /> -->
 				</field-visibility>
 				<appearance>
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
-					<field id="ucm:artist_name" label="Known As (Name)"/>
-	        <field id="cm:name" label="Given Name"/>
+	        		<field id="cm:name" label="Name"/>
+					<field id="ucm:artist_name" label="Also Known As (Name)"/>
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -266,7 +267,7 @@
 					<field id="ucm:artist_study_workshop" />
 					<field id="ucm:artist_live_city" />
 					<field id="ucm:artist_period" />
-					<field id="ucm:artist_comments" />
+<!--					<field id="ucm:artist_comments" /> -->
 				</appearance>
 			</form>
 			<!-- Document Library pop-up Edit Metadata form -->
@@ -285,14 +286,14 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artist_comments" />
+<!--					<show id="ucm:artist_comments" /> -->
 				</field-visibility>
 				<appearance>
  					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
-					<field id="ucm:artist_name" label="Known As (Name)"/>
-	        <field id="cm:name" label="Given Name"/>
+	        		<field id="cm:name" label="Name"/>
+					<field id="ucm:artist_name" label="Also Known As (Name)"/>
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -301,7 +302,7 @@
 					<field id="ucm:artist_study_workshop" />
 					<field id="ucm:artist_live_city" />
 					<field id="ucm:artist_period" />
-					<field id="ucm:artist_comments" />
+<!--					<field id="ucm:artist_comments" /> -->
 				</appearance>
 			</form>
 		</forms>
@@ -315,6 +316,7 @@
 				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
 				<field-visibility>
 					<show id="cm:name" />
+          <show id="cm:description" force="true" />
 					<show id="cm:title" />
 					<show id="cm:content" force="true"/>
 					
@@ -332,7 +334,7 @@
 <!-- 					<show id="ucm:artifact_donor" /> -->
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
-					<show id="ucm:artifact_comments" />
+<!--					<show id="ucm:artifact_comments" /> -->
 					<!--show id="ucm:artifact_referenced_objects" /-->
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
@@ -390,6 +392,12 @@
 					<field id="ucm:artifact_technique" set="artifactMain" />
 					<field id="ucm:artifact_dimension" set="artifactMain" />
 					<field id="ucm:artifact_status" set="artifactMain" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
+					
 					
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
@@ -397,7 +405,7 @@
 <!-- 					<field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
-					<field id="ucm:artifact_comments" set="artifactAdditional" />
+<!--					<field id="ucm:artifact_comments" set="artifactAdditional" /> -->
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
 					
 					<field id="ucm:artist_nickname" set="artifactArtist" />
@@ -422,6 +430,7 @@
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
+                    <show id="cm:description" force="true" />
 				</field-visibility>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<appearance>
@@ -429,6 +438,11 @@
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 				</appearance>
 			</form>
 
@@ -440,12 +454,18 @@
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
+          <show id="cm:description" force="true" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name" />
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 				</appearance>
 			</form>
 		</forms>
@@ -464,6 +484,7 @@
 					<show id="cm:content" force="true"/>
 					
 					<show id="ucm:artifact_name"/>
+          <show id="cm:description" force="true" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
 					<show id="ucm:artifact_date" />
@@ -479,7 +500,7 @@
 					<show id="ucm:artifact_donor" />
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
-					<show id="ucm:artifact_comments" />
+<!--					<show id="ucm:artifact_comments" /> -->
 					<!--show id="ucm:artifact_referenced_objects" /-->
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
@@ -525,6 +546,11 @@
 						</control>
 					</field>
 					<field id="cm:title" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 					
 					<field id="cm:taggable">
 						<control>
@@ -551,14 +577,6 @@
 					<field id="ucm:artifact_medium" set="artifactAdditional" />
 					<field id="ucm:artifact_technique" set="artifactAdditional" />
 					<field id="ucm:artifact_dimension" set="artifactAdditional" />
-					<field id="ucm:artifact_comments" set="artifactAdditional">
-<!--                  		<control template="/org/alfresco/components/form/controls/textfield.ftl" /> -->
-                  		<control>                  		
-		                  <control-param name="rows">4</control-param>
-        		          <control-param name="columns">60</control-param>
-	                     <control-param name="activateLinks">true</control-param>
-						</control>
-                    </field>
 
 					<field id="ucm:artifact_status" set="artifactAdditional" />
 					<!--
@@ -578,7 +596,16 @@
 <!-- 					<field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
-<!--					<field id="ucm:artifact_comments" set="artifactAdditional" /> -->
+<!--					
+					<field id="ucm:artifact_comments" set="artifactAdditional"> 
+                  		<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                  		<control>                  		
+		                  <control-param name="rows">4</control-param>
+        		          <control-param name="columns">60</control-param>
+	                     <control-param name="activateLinks">true</control-param>
+						</control>
+                    </field>
+-->                    
 
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
 					
@@ -606,6 +633,7 @@
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
+          <show id="cm:description" force="true" />
 				</field-visibility>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<appearance>
@@ -613,6 +641,11 @@
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 				</appearance>
 			</form>
 
@@ -624,12 +657,18 @@
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
+          <show id="cm:description" force="true" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name" />
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 				</appearance>
 			</form>
 		</forms>
@@ -648,11 +687,11 @@
 					<show id="cm:title" />
 -->					
 <!--					<show id="cm:content" />  -->
-					<show id="ucm:artifact_name"/>
 					<show id="ucm:artist_name" />
+					<show id="ucm:artifact_name"/>
 
 					<!-- show id="ucm:artifact_contains" /-->
-					<show id="ucm:artifact_comments" />
+          <show id="cm:description" force="true" />
 					<!--show id="ucm:artifact_referenced_objects" /-->
 					
 					<show id="ucm:artist_nickname" />
@@ -663,7 +702,7 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artifact_comments" />
+<!--					<show id="ucm:artifact_comments" /> -->
 					
 <!--					<show id="ucm:museum_artifact_gallery_location" /> -->
 					
@@ -690,8 +729,13 @@
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-					<field id="ucm:artifact_name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" set="artistMain" label="Given Name"/>
+					<field id="ucm:artist_name" set="artistMain" label="Known As (Name)"/>
+					<field id="ucm:artifact_name" label="Given Name"/>
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
@@ -715,7 +759,7 @@
 					<field id="ucm:artist_live_city" set="artistMain" />
 					<field id="ucm:artist_period" set="artistMain" />
 <!--					<field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
-					<field id="ucm:artifact_comments" set="artistMain" />
+<!--					<field id="ucm:artifact_comments" set="artistMain" /> -->
 <!--					
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
 					<field id="cm:latitude" set="artifactMuseum"/>
@@ -733,11 +777,11 @@
 					<show id="cm:title" />
 -->					
 <!--					<show id="cm:content" />  -->
-					<show id="ucm:artifact_name"/>
 					<show id="ucm:artist_name" />
+					<show id="ucm:artifact_name"/>
 
 					<!-- show id="ucm:artifact_contains" /-->
-					<show id="ucm:artifact_comments" />
+          <show id="cm:description" force="true" />
 					<!--show id="ucm:artifact_referenced_objects" /-->
 					
 					<show id="ucm:artist_nickname" />
@@ -748,7 +792,7 @@
 					<show id="ucm:artist_study_workshop" />
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
-					<show id="ucm:artifact_comments" />
+<!--					<show id="ucm:artifact_comments" /> -->
 <!--					<show id="ucm:museum_artifact_gallery_location" /> -->
 					
 					<!-- cm:geographic aspect -->
@@ -775,19 +819,26 @@
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-					<field id="ucm:artifact_name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" set="artistMain" label="Given Name"/>
+					<field id="ucm:artist_name" set="artistMain" label="Known As (Name)"/>
+					<field id="ucm:artifact_name" label="Given Name"/>
+					<field id="cm:description">
+          	<control>
+            	<control-param name="activateLinks">true</control-param>
+            </control>
+          </field>
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
-					<!--field id="ucm:artifact_contains" set="artifactMain">
+<!--
+					field id="ucm:artifact_contains" set="artifactMain">
 			        	<control template="/org/alfresco/components/form/controls/association.ftl">
 							<control-param name="">items</control-param>
 							<control-param name="displayMode">items</control-param>
 							<control-param name="showTargetLink">true</control-param>
 							<control-param name="compactMode">true</control-param>
 						</control>
-					</field-->
+					</field
+-->
 
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
 					
@@ -799,9 +850,7 @@
 					<field id="ucm:artist_study_workshop" set="artistMain" />
 					<field id="ucm:artist_live_city" set="artistMain" />
 					<field id="ucm:artist_period" set="artistMain" />
-					<field id="ucm:museum_artifact_gallery_location" set="artistMain" />
-					<field id="cm:title" set="artistMain" label="Comments" />
-					<field id="ucm:artifact_comments" set="artistMain" />
+<!--					<field id="ucm:artifact_comments" set="artistMain" /> -->
 <!--					
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
 					<field id="cm:latitude" set="artifactMuseum"/>
