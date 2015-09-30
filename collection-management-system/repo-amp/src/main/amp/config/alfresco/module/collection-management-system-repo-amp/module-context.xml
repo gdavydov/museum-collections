@@ -21,38 +21,19 @@
 		</property>
 	</bean>
 
-	<bean id="ucmBaseFormFilter" class="org.alfresco.repo.forms.processor.node.UCMGenericFilter"
+	<!--bean id="ucm.surfClientConfig" class="org.springframework.extensions.config.ConfigBootstrap"
+		init-method="register">
+		<property name="configService" ref="web.config" />
+		<property name="configs">
+			<list>
+				<value>classpath:alfresco/module/collection-management-system-repo-amp/context/surf-config.xml</value>
+			</list>
+		</property>
+	</bean-->
+
+	<bean id="ucm.baseFormFilter" class="org.alfresco.repo.forms.processor.node.UCMGenericFilter"
 		parent="baseFormFilter">
-		<property name="contentService" ref="ContentService" />
-		<property name="fileFolderService" ref="FileFolderService" />
-		<property name="dictionaryService" ref="DictionaryService" />
-		<property name="nodeService" ref="NodeService" />
-		<property name="mimetypeService" ref="MimetypeService" />
-	</bean>
-	<bean id="ucmCreateArtifactFilter" class="org.alfresco.museum.ucm.UCMCreateArtifact"
-		parent="ucmBaseFormFilter">
-		<property name="filterRegistry" ref="typeFilterRegistry" />
-	</bean>
-
-	<bean id="ucmCreateArtistFilter" class="org.alfresco.museum.ucm.UCMCreateArtist"
-		parent="ucmBaseFormFilter">
-		<property name="filterRegistry" ref="typeFilterRegistry" />
-	</bean>
-
-	<bean id="ucmEditArtistFilter" class="org.alfresco.museum.ucm.UCMEditArtist"
-		parent="ucmBaseFormFilter">
-		<property name="filterRegistry" ref="nodeFilterRegistry" />
-	</bean>
-
-	<bean id="ucmEditArtistArtifactFilter" class="org.alfresco.museum.ucm.UCMEditArtistArtifact"
-		parent="ucmBaseFormFilter">
-		<property name="filterRegistry" ref="nodeFilterRegistry" />
-	</bean>
-
-	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site.post" class="org.alfresco.museum.ucm.UCMCreateSite"
-		parent="webscript">
-		<property name="authorityService" ref="AuthorityService" />
-		<property name="siteService" ref="SiteService" />
+		<property name="utils" ref="ucm.nodeUtils" />
 		<property name="contentService" ref="ContentService" />
 		<property name="fileFolderService" ref="FileFolderService" />
 		<property name="dictionaryService" ref="DictionaryService" />
@@ -60,6 +41,46 @@
 		<property name="mimetypeService" ref="MimetypeService" />
 	</bean>
 	
+	<bean id="ucm.nodeUtils" class="org.alfresco.museum.ucm.utils.NodeUtils">
+		<property name="nodeService" ref="NodeService" />
+		<property name="fileFolderService" ref="FileFolderService" />
+		<property name="contentService" ref="ContentService" />
+	</bean>
+	
+	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.UCMCreateArtifact"
+		parent="ucm.baseFormFilter">
+		<property name="filterRegistry" ref="typeFilterRegistry" />
+	</bean>
+
+	<bean id="ucm.createArtistFilter" class="org.alfresco.museum.ucm.UCMCreateArtist"
+		parent="ucm.baseFormFilter">
+		<property name="filterRegistry" ref="typeFilterRegistry" />
+	</bean>
+
+	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.UCMEditArtist"
+		parent="ucm.baseFormFilter">
+		<property name="filterRegistry" ref="nodeFilterRegistry" />
+	</bean>
+
+	<bean id="ucm.editArtistArtifactFilter" class="org.alfresco.museum.ucm.UCMEditArtistArtifact"
+		parent="ucm.baseFormFilter">
+		<property name="filterRegistry" ref="nodeFilterRegistry" />
+	</bean>
+
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site.post"
+		class="org.alfresco.museum.ucm.UCMCreateSite" parent="webscript">
+		<property name="authorityService" ref="AuthorityService" />
+		<property name="siteService" ref="SiteService" />
+		<property name="contentService" ref="ContentService" />
+		<property name="fileFolderService" ref="FileFolderService" />
+		<property name="dictionaryService" ref="DictionaryService" />
+		<property name="nodeService" ref="NodeService" />
+		<property name="mimetypeService" ref="MimetypeService" />
+		<property name="remote" ref="webscripts.script.remote" />
+		<property name="utils" ref="ucm.nodeUtils" />
+		<property name="properties" ref="global-properties" />
+	</bean>
+
 	<!-- TODO: explicitly override typeFormProcessor -->
 	<!-- TODO: explicitly override FileFolderServiceImpl -->
 </beans>

@@ -113,7 +113,7 @@
 					<option>Home</option>
 					<option>Visit</option>
 					<option>Collections</option>
-				</select>        
+				</select>
 				</td>
 			</tr>
 			</tbody>

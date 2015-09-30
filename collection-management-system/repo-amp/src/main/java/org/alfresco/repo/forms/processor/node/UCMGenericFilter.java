@@ -19,13 +19,13 @@ import java.util.Set;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
+import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.FormData.FieldData;
 import org.alfresco.repo.forms.FormException;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.AbstractFormProcessor;
-import org.alfresco.repo.site.SiteModel;
 import org.alfresco.service.cmr.dictionary.AspectDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
@@ -63,6 +63,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * processor class}.
  */
 public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
+	private NodeUtils utils;
 	private NodeService nodeService;
 	private ContentService contentService;
 	private DictionaryService dictionaryService;
@@ -94,15 +95,11 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	protected String findFreeFilename(NodeRef parentDirectory, String originalFilename) {
 		String tmpFilename = originalFilename;
 		int counter = 1;
-		while (null != childByNamePath(parentDirectory, tmpFilename)) {
+		while (null != this.getUtils().childByNamePath(parentDirectory, tmpFilename)) {
 			tmpFilename = generateFilenameWithIndex(originalFilename, counter);
 			++counter;
 		}
 		return tmpFilename;
-	}
-
-	private NodeRef childByNamePath(NodeRef parent, String filename) {
-		return getNodeService().getChildByName(parent, ContentModel.ASSOC_CONTAINS, filename);
 	}
 
 	private static String generateFilenameWithIndex(String oldFilename, int index) {
@@ -122,22 +119,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		return result;
 	}
 
-	protected NodeRef getOrCreateFolder(NodeRef parentRef, String name, boolean isHidden) {
-		NodeRef result = this.getFileFolderService().searchSimple(parentRef, name);
-		if (result == null) {
-			result = this.getFileFolderService().create(parentRef, name, ContentModel.TYPE_FOLDER).getNodeRef();
-			if (isHidden) {
-				Map<QName, Serializable> aspectHiddenProperties = new HashMap<QName, Serializable>(1);
-				// aspectHiddenProperties.put(ContentModel.PROP_VISIBILITY_MASK,
-				// true);
-				this.getNodeService().addAspect(result, ContentModel.ASPECT_HIDDEN, aspectHiddenProperties);
-				if (isHidden) {
-					this.getNodeService().addAspect(result, ContentModel.ASPECT_HIDDEN, aspectHiddenProperties);
-				}
-			}
-		}
-		return result;
-	}
+
 
 	protected void writeContent(TypeDefinition item, FormData data, NodeRef persistedObject) {
 		FieldData contentField = data.getFieldData(CONTENT_PROP_DATA);
@@ -217,18 +199,10 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		}
 	}
 
-	protected NodeRef getSiteRefByNode(NodeRef nodeRef) {
-		while (nodeRef != null && !SiteModel.TYPE_SITE.equals(this.getNodeService().getType(nodeRef))) {
-			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
-		}
-
-		return nodeRef;
-	}
-	
 	// <site>/system/artifact_attachments/<artist>/<artifact_name>
 	protected NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
 		// TODO: LOG
-		NodeRef site = getSiteRefByNode(artifactRef);
+		NodeRef site = this.getUtils().getSiteRefByNode(artifactRef);
 		if (site == null)
 			return null;
 
@@ -242,7 +216,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		String artistName = artistNameValue.toString();
 		String artifactName = artifactNameValue.toString();
 
-		NodeRef systemFolder = getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
+		NodeRef systemFolder = this.getUtils().getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
 		
 //		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
 //		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
@@ -250,9 +224,9 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		 * NodeRef systemFolder = getOrCreateFolder(site,
 		 * UCMConstants.SYSTEM_FOLDER_NAME, true);
 		 */
-		NodeRef mediaFolder = getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
-		NodeRef artistFolder = getOrCreateFolder(mediaFolder, artistName, false);
-		NodeRef artifactFolder = getOrCreateFolder(artistFolder, artifactName, false);
+		NodeRef mediaFolder = this.getUtils().getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
+		NodeRef artistFolder = this.getUtils().getOrCreateFolder(mediaFolder, artistName, false);
+		NodeRef artifactFolder = this.getUtils().getOrCreateFolder(artistFolder, artifactName, false);
 
 		// set media folder caption
 		this.getNodeService().setProperty(artifactFolder, ContentModel.PROP_TITLE, "Media content for " + artifactName);
@@ -410,6 +384,14 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	public void afterPersist(T item, FormData data, NodeRef persistedObject) {
 	}
 	
+	public NodeUtils getUtils() {
+		return utils;
+	}
+
+	public void setUtils(NodeUtils utils) {
+		this.utils = utils;
+	}
+
 	public NodeService getNodeService() {
 		return nodeService;
 	}

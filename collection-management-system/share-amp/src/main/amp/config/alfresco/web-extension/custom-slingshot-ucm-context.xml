@@ -30,25 +30,37 @@
 		</property>
 	</bean>
 
-   <!--bean id="com.alfresco.museum.ucm.evaluators.groupMembership" class="com.alfresco.museum.ucm.evaluators.HasGroupMembershipsEvaluator">
-      <property name="slingshotEvaluatorUtil" ref="slingshot.evaluator.utility" />
-   </bean-->
+	<!--bean id="com.alfresco.museum.ucm.evaluators.groupMembership" class="com.alfresco.museum.ucm.evaluators.HasGroupMembershipsEvaluator"> 
+		<property name="slingshotEvaluatorUtil" ref="slingshot.evaluator.utility" 
+		/> </bean -->
 
-   <!--bean id="com.alfresco.museum.ucm.evaluators.isSiteConsumer" parent="com.alfresco.museum.ucm.evaluators.groupMembership">
-      <property name="groups">
-         <list>
-            <value>SiteConsumer</value>
-         </list>
-      </property>
-   </bean-->
+	<!--bean id="com.alfresco.museum.ucm.evaluators.isSiteConsumer" parent="com.alfresco.museum.ucm.evaluators.groupMembership"> 
+		<property name="groups"> <list> <value>SiteConsumer</value> </list> </property> 
+		</bean -->
 
-   <!--bean id="com.alfresco.museum.ucm.evaluators.isNotSiteConsumer" class="com.alfresco.museum.ucm.evaluators.InvertedEvaluator">
-		<property name="evaluator" ref="com.alfresco.museum.ucm.evaluators.isSiteConsumer"/>
-   </bean-->
+	<!--bean id="com.alfresco.museum.ucm.evaluators.isNotSiteConsumer" class="com.alfresco.museum.ucm.evaluators.InvertedEvaluator"> 
+		<property name="evaluator" ref="com.alfresco.museum.ucm.evaluators.isSiteConsumer"/> 
+		</bean -->
 
-   <bean id="com.alfresco.museum.ucm.evaluators.edit" class="com.alfresco.museum.ucm.evaluators.CanEditEvaluator" />
-   
-   <bean id="com.alfresco.museum.ucm.evaluators.view" class="com.alfresco.museum.ucm.evaluators.InvertedEvaluator">
-		<property name="evaluator" ref="com.alfresco.museum.ucm.evaluators.edit"/>
-   </bean>
+	<bean id="com.alfresco.museum.ucm.evaluators.edit" class="com.alfresco.museum.ucm.evaluators.CanEditEvaluator" />
+
+	<bean id="com.alfresco.museum.ucm.evaluators.view" class="com.alfresco.museum.ucm.evaluators.InvertedEvaluator">
+		<property name="evaluator" ref="com.alfresco.museum.ucm.evaluators.edit" />
+	</bean>
+
+	<!-- See spring-surf-presets-context.xml for reference -->
+	<bean id="ucm.presetsManager" class="com.alfresco.museum.ucm.UCMPresetsManager">
+		<property name="modelObjectService" ref="webframework.service.modelobject" />
+		<property name="searchPath" ref="webframework.presets.searchpath" />
+		<property name="files">
+			<list>
+				<value>presets.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site-templates.get"
+		class="com.alfresco.museum.ucm.UCMCreateSiteTemplates">
+		<property name="presetsManager" ref="ucm.presetsManager" />
+	</bean>
 </beans>

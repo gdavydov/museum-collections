@@ -1,0 +1,6 @@
+<webscript>
+	<shortname>UCM Site templates content</shortname>
+	<description>Returns content of templates instance elements required for site creation</description>
+	<url>/ucm/create-site-templates</url>
+	<format default="json"/>
+</webscript>

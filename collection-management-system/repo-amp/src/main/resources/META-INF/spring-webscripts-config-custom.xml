@@ -1,0 +1,22 @@
+<app-config>
+   <config evaluator="string-compare" condition="Remote">
+      <remote>
+         <connector>
+            <id>sharehttp</id>
+            <name>Share Http Connector</name>
+            <description>Share Http Connector</description>
+            <class>org.springframework.extensions.webscripts.connector.HttpConnector</class>
+         </connector>
+
+         <endpoint>
+            <id>share</id>
+            <name>Share - unauthenticated access</name>
+            <description>Access to Share WebScripts that do not require authentication</description>
+            <connector-id>sharehttp</connector-id>
+            <endpoint-url>http://localhost:8080/</endpoint-url>
+            <identity>none</identity>
+         </endpoint>
+      </remote>
+   </config>
+
+</app-config>
