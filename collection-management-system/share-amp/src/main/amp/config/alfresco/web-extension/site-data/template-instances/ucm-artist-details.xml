@@ -300,36 +300,12 @@
 		</component>
 
 		<!-- Document Versions -->
-<!--
 		<component>
 			<region-id>document-versions</region-id>
 			<url>/components/document-details/document-versions</url>
 			<properties>
 				<nodeRef>{nodeRef}</nodeRef>
 			</properties>
-		</component>
--->
-		<component>
-			<region-id>document-versions</region-id>
-			<sub-components>
-				<sub-component id="edit">
-					<evaluations>
-						<evaluation>
-							<evaluators>
-								<evaluator type="com.alfresco.museum.ucm.evaluators.edit">
-									<params>
-										<nodeRef>{nodeRef}</nodeRef>
-									</params>
-								</evaluator>
-							</evaluators>
-							<url>/components/document-details/document-versions</url>
-							<properties>
-							   <nodeRef>{nodeRef}</nodeRef>
-							</properties>
-						</evaluation>
-					</evaluations>
-				</sub-component>
-			</sub-components>
 		</component>
 
       <!-- Document Publishing -->
