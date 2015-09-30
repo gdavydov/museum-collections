@@ -112,7 +112,7 @@
 <@templateFooter>
    <@markup id="alf-ft">
    <div id="alf-ft">
-      <@region id="footer" scope="global"/>
+      <@region id="ucm-footer" scope="global"/>
    </div>
    </@>
 </@> 

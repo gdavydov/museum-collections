@@ -1,12 +1,4 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns="urn:oasis:names:tc:ubl:SpecializedDatatypes:1:0"
-    xmlns:ccts="urn:oasis:names:tc:ubl:CoreComponentParameters:1:0"
-    xmlns:udt="urn:oasis:names:tc:ubl:UnspecializedDatatypes:1:0"
-    xmlns:cur="urn:oasis:names:tc:ubl:codelist:CurrencyCode:1:0"
-    targetNamespace="urn:oasis:names:tc:ubl:SpecializedDatatypes:1:0"
-    elementFormDefault="qualified"
-    attributeFormDefault="unqualified"
-    version="1:0">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:element name="UCMConfig">
     <xsd:annotation>
       <xsd:documentation>comment</xsd:documentation>

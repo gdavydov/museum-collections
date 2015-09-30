@@ -218,7 +218,7 @@
 						<constraint name="ucm:allowed_attach_types" type="LIST">
 							<parameter name="allowedValues">
 								<list>
-									<value>Artifact</value>
+									<value>Url</value>
 									<value>Media</value>
 									<value>Document</value>
 								</list>
@@ -235,20 +235,11 @@
 					<multiple>false</multiple>
             		<default>English</default> 
 					<constraints>
-						<constraint name="ucm:attachment_language" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>English</value>
-									<value>German</value>
-									<value>French</value>
-									<value>Italian</value>
-									<value>Dutch</value>
-									<value>Spanish</value>
-									<value>Polish</value>
-									<value>Russian</value>
-									<value>Arabic</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:attachment_language" type="org.alfresco.museum.ucm.model.LOVConstraint_Attached_file__attached_file_language">
+						    <parameter name="allowedValues">
+						    	<list>
+						      </list>
+						    </parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -264,21 +255,13 @@
 					<type>d:noderef</type>
 					<mandatory>true</mandatory>
 				</property>
-<!--
-				<property name="ucm:attached_file_referenced_to">
-					<title>Referenced to</title>
-					<type>d:noderef</type>
-					<mandatory>true</mandatory>
-					<multiple>true</multiple>
-				</property>
--->
 			</properties>
 
 		</type>
 
 		<type name="ucm:artifact">
 			<title>Artifact</title>
-			<parent>ucm:document</parent> <!-- TODO: ucm:folder or sys:container? -->
+			<parent>ucm:document</parent>
 
 			<properties>
 				<property name="ucm:artifact_name">
@@ -298,25 +281,11 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<constraints>
-						<!-- TODO: change constraint in order to load list of allowed values 
-							dynamically -->
-						<constraint name="ucm:allowed_mediums" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value></value>
-									<value>Photo</value>
-									<value>Video</value>
-									<value>Audio</value>
-									<value>Oil on canvas</value>
-									<value>Acrylic on paper</value>
-									<value>Gold</value>
-									<value>Silver</value>
-									<value>Bronze</value>
-									<value>Cast Iron</value>
-									<value>Stoneware</value>
-									<value>Other</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:allowed_mediums" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_medium">
+						    <parameter name="allowedValues">
+						    	<list>
+						      </list>
+						    </parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -338,20 +307,14 @@
 					<type>d:text</type>
 					<mandatory enforced="false">false</mandatory>
 					<constraints>
-						 <!--TODO: change constraint in order to load list of allowed values 
-							dynamically--> 
-						<constraint name="ucm:allowed_statuses" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>Exhibition</value>
-									<value>Restoration</value>
-									<value>Loan</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:allowed_statuses" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_status">
+						    <parameter name="allowedValues">
+							   	<list>
+							    </list>
+						    </parameter>
 						</constraint>
 					</constraints>
-
-				</property>
+=				</property>
 
 				<property name="ucm:artifact_location">
 					<title>Current Location</title>
@@ -369,14 +332,11 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<constraints>
-						<constraint name="ucm:allowed_acquisition_types" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>N/A</value>
-									<value>Purchased</value>
-									<value>Donated</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:allowed_acquisition_types" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_acquisition_type">
+						    <parameter name="allowedValues">
+							   	<list>
+							    </list>
+						    </parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -386,22 +346,11 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<constraints>
-						<!-- TODO: change constraint in order to load list of allowed values 
-							dynamically -->
-						<constraint name="ucm:allowed_artifact_types" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value></value>
-									<value>Portrait</value>
-									<value>Landscape</value>
-									<value>Naturmort</value>
-									<value>Gobelen</value>
-									<value>Fresco</value>
-									<value>Statue</value>
-									<value>Jar</value>
-									<value>Sarcophagus</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:allowed_artifact_types" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_type">
+						    <parameter name="allowedValues">
+							   	<list>
+							    </list>
+						    </parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -630,117 +579,12 @@
 				</property>
 			</properties>
 		</type>
-
-		<type name="ucm:value_assist">
-			<title>LBS Value Assistance Object</title>
-			<parent>cm:cmobject</parent>
-
-			<properties>
-				<property name="ucm:object_type">
-					<title>Object Type</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:object_type_length" type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>32</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-
-				<property name="ucm:attribute_name">
-					<title>Attribute Name</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:attribute_name_length" type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>50</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-
-				<property name="ucm:val_code">
-					<title>Attribute Value</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:val_code_length" type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>32</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-
-				<property name="ucm:sort_order">
-					<title>Sort Order</title>
-					<type>d:int</type>
-					<mandatory>true</mandatory>
-				</property>
-
-				<property name="ucm:parent_object_type">
-					<title>Parent Object Name</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:parent_object_type_length" type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>32</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-
-				<property name="ucm:parent_attribute_name">
-					<title>Parent Object Attribute</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:parent_attribute_name_length"
-							type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>50</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-
-				<property name="ucm:parent_attribute_val">
-					<title>Parent Object Attribute Val</title>
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<constraints>
-						<constraint name="ucm:parent_attribute_val_length"
-							type="LENGTH">
-							<parameter name="minLength">
-								<value>1</value>
-							</parameter>
-							<parameter name="maxLength">
-								<value>100</value>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-			</properties>
-		</type>
+		
+		<type name="ucm:config">
+            <title>UCM configuration type file</title>
+            <parent>ucm:document</parent> 
+    </type>
+		
 	</types>
 
 	<aspects>
@@ -770,8 +614,6 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<constraints>
-						<!-- TODO: change constraint in order to load list of allowed values 
-							dynamically -->
 						<constraint name="ucm:site_aspect_allowed_types" type="LIST">
 							<parameter name="allowedValues">
 								<list>
@@ -949,38 +791,11 @@
 					<mandatory>false</mandatory>
 					<multiple>false</multiple>
 					<constraints>
-						<!-- TODO: check if this constraint works fine with multiple = true -->
-						<!-- TODO: change constraint in order to load list of allowed values 
-							dynamically -->
-						<constraint name="ucm:allowed_art_periods" type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>N/A</value>
-									<value>Stone Age</value>
-									<value>Mesopotamian</value>
-									<value>Egyptian</value>
-									<value>Greek and Hellenistic</value>
-									<value>Roman</value>
-									<value>Byzantine and Islamic</value>
-									<value>Middle Ages</value>
-									<value>Classicism</value>
-									<value>Pre-Renaissance</value>
-									<value>Renaissance</value>
-									<value>Venetian and Northern Renaissance</value>
-									<value>Mannerism </value>
-									<value>Neoclassical</value>
-									<value>Romanticism</value>
-									<value>Realism</value>
-									<value>Impressionism</value>
-									<value>Post-Impressionism</value>
-									<value>Fauvism and Expressionism</value>
-									<value>Cubism, Futurism, Supremativism, Constructivism, De Stijl</value>
-									<value>Art Deco</value>
-									<value>Dada and Surrealism</value>
-									<value>Abstract Expressionism</value>
-									<value>Modern Art</value>
-								</list>
-							</parameter>
+						<constraint name="ucm:allowed_art_periods" type="org.alfresco.museum.ucm.model.LOVConstraint_Artist_aspect__artist_period">
+						    <parameter name="allowedValues">
+							   	<list>
+							    </list>
+						    </parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -1015,7 +830,7 @@
 			<title>Artifact Donor</title>
 			<properties>
 				<property name="ucm:donor_name">
-					<title>Donor Name</title>
+					<title>Donor</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 				</property>

@@ -1,6 +1,5 @@
 <!--comment-->
-<UCMConfig name="ucm:config" xmlns="http://www.alfresco.org/model/dictionary/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
+<UCMConfig>
 	<description>Museum collection management system configuration</description>
 	<author>Greg Davydov</author>
 	<version>1.0</version>
@@ -22,17 +21,18 @@
 			<type name='ucm:artifact'>
 				<property name='ucm:artifact_medium'>
 									<value></value>
+                                    <value>Oil on canvas</value>
+                                    <value>Oil on board</value>
 									<value>Photo</value>
-									<value>Video</value>
-									<value>Audio</value>
-									<value>Oil on canvas</value>
-									<value>Oil on board</value>
 									<value>Acrylic on paper</value>
 									<value>Gold</value>
 									<value>Silver</value>
 									<value>Bronze</value>
-									<value>Cast Iron</value>
+                                    <value>Cast Iron</value>
+                                    <value>Marble</value>
 									<value>Stoneware</value>
+                                    <value>Video</value>
+                                    <value>Audio</value>
 									<value>Other</value>
 				</property>
 				<property name="ucm:artifact_status">
