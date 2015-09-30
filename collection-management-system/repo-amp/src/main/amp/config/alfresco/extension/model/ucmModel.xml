@@ -23,6 +23,7 @@
 			prefix="d" />
 		<!-- Import Alfresco Content Domain Model Definitions -->
 		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+        <import uri="http://www.alfresco.org/model/site/1.0" prefix="st"/>
 	</imports>
 
 	<namespaces>
@@ -55,8 +56,8 @@
 		</type>
 
 		<type name="ucm:site">
-			<title>ARtium Gallery Site</title>
-			<parent>cm:site</parent>
+			<title>Artium Gallery Site</title>
+			<parent>st:site</parent>
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
 			</mandatory-aspects>
