@@ -55,8 +55,8 @@
 		</type>
 
 		<type name="ucm:site">
-			<title>CM site</title>
-			<parent>ucm:folder</parent>
+			<title>ARtium Gallery Site</title>
+			<parent>cm:site</parent>
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
 			</mandatory-aspects>
@@ -130,11 +130,6 @@
 					<propagateTimestamps>true</propagateTimestamps>
 				</child-association>
 			</associations>
-<!-- 
-			<mandatory-aspects>
-				<aspect>ucm:site_aspect</aspect>
-			</mandatory-aspects>
- -->	
 		</type>
 
 		<type name="ucm:artist">
@@ -609,7 +604,7 @@
 					<!-- TODO: add constraints? -->
 				</property>
 
-				<property name="ucm:site_aspect_type">
+				<property name="ucm:site_type">
 					<title>Site Type</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
