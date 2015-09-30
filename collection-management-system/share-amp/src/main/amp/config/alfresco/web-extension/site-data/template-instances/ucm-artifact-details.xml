@@ -290,7 +290,7 @@
       </component>
 -->
       <!-- Document Permissions -->
-<!--       <component>
+       <component>
          <region-id>document-permissions</region-id>
          <sub-components>
             <sub-component id="default">
@@ -308,7 +308,7 @@
                </evaluations>
             </sub-component>
          </sub-components>
-      </component> -->
+      </component>
 
       <!-- Document Workflows -->
        <component>
@@ -354,7 +354,6 @@
 			</component>
 
 
-
       <!-- Document Publishing -->
 <!--       <component>
          <region-id>document-publishing</region-id>
@@ -362,7 +361,30 @@
          <properties>
             <nodeRef>{nodeRef}</nodeRef>
          </properties>
-      </component> -->
+      </component> 
+ -->
+			<component>
+			<region-id>document-versions</region-id>
+			  <sub-components>
+				<sub-component id="edit">
+					<evaluations>
+						<evaluation>
+							<evaluators>
+								<evaluator type="com.alfresco.museum.ucm.evaluators.edit">
+									<params>
+										<nodeRef>{nodeRef}</nodeRef>
+									</params>
+								</evaluator>
+							</evaluators>
+							<url>/components/document-details/document-publishing</url>
+							<properties>
+							   <nodeRef>{nodeRef}</nodeRef>
+							</properties>
+						</evaluation>
+					</evaluations>
+				</sub-component>
+			  </sub-components>
+			</component>
 
       <!-- Uploaders -->
       <component>
