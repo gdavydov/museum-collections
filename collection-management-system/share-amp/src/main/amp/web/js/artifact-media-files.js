@@ -385,7 +385,7 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 				dropzone.append("<br/>");
 
 				var urlInput = $("<input>", {
-					type : "text",
+					type : "url",
 					"class" : "ucm-media-url-input"
 				});
 				setInlineInputDescription(urlInput, "... or enter URL here");

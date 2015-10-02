@@ -2,23 +2,20 @@ package org.alfresco.repo.forms.processor.node;
 
 import static org.alfresco.museum.ucm.UCMConstants.ASPECT_GEOGRAPHICAL_QNAME;
 import static org.alfresco.museum.ucm.UCMConstants.CONTENT_PROP_DATA;
-import static org.alfresco.museum.ucm.UCMConstants.DEFAULT_CONTENT_MIMETYPE;
 import static org.alfresco.museum.ucm.UCMConstants.NAME_PROP_DATA;
 import static org.alfresco.repo.forms.processor.node.FormFieldConstants.PROP_DATA_PREFIX;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
+import org.alfresco.museum.ucm.UCMContentImpl;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
@@ -27,13 +24,11 @@ import org.alfresco.repo.forms.FormException;
 import org.alfresco.repo.forms.processor.AbstractFilter;
 import org.alfresco.repo.forms.processor.AbstractFormProcessor;
 import org.alfresco.repo.site.SiteModel;
-import org.alfresco.service.cmr.dictionary.AspectDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.PropertyDefinition;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.model.FileFolderService;
-import org.alfresco.service.cmr.repository.ContentData;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
@@ -44,7 +39,6 @@ import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tika.exception.TikaException;
-import org.apache.tika.io.IOUtils;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.jpeg.JpegParser;
@@ -72,7 +66,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	private FileFolderService fileFolderService;
 	private MimetypeService mimetypeService;
 
-	private static Log logger = LogFactory.getLog(UCMGenericFilter.class);
+	private static Log LOGGER = LogFactory.getLog(UCMGenericFilter.class);
 
 	protected String getFilename(FormData data) {
 		String filename = "";
@@ -175,46 +169,54 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 			return reader.getContentInputStream();	
 		}
 		catch(org.alfresco.service.cmr.dictionary.InvalidTypeException ite) {
-			logger.error("Invalid node type for "+getNodeName(nodeRef));
+			LOGGER.error("Invalid node type for "+getNodeName(nodeRef));
 		}
 		return  null;
 	}
 
+	/**
+	 * Store "cm:content" property value, which is ignored by default handler.<br/>
+	 * See
+	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#persistNode(NodeRef, FormData)
+	 * persistNode},
+	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processPropertyPersist(NodeRef, Map,FieldData, Map, FormData)
+	 * processPropertyPersist},
+	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processContentPropertyPersist(NodeRef, FieldData, Map, FormData)
+	 * processContentPropertyPersist} and <a href=
+	 * "https://forums.alfresco.com/forum/developer-discussions/alfresco-share-development/file-upload-create-content-06282010-2333"
+	 * >discussion thread</a>
+	 */
 	protected void writeContent(TypeDefinition item, FormData data, NodeRef persistedObject) {
 		FieldData contentField = data.getFieldData(CONTENT_PROP_DATA);
 		if (contentField != null && contentField.isFile()) {
 			// if we have a property definition attempt the persist
 			PropertyDefinition propDef = item.getProperties().get(ContentModel.PROP_CONTENT);
 			if (propDef != null && propDef.getDataType().getName().equals(DataTypeDefinition.CONTENT)) {
-				InputStream inputStream = contentField.getInputStream();
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				try {
-					int streamSize = IOUtils.copy(inputStream, baos);
-					if (streamSize > 0) {
-						ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
-								true);
-						if (writer != null) {
-							
-							processMetadata(new ByteArrayInputStream(baos.toByteArray()), persistedObject);
-							
-							// write the content
-							writer.putContent(new ByteArrayInputStream(baos.toByteArray()));
-							
-							// content data has not been persisted yet so get it from
-							// the node
-							ContentData contentData = (ContentData) this.getNodeService().getProperty(persistedObject,
-									ContentModel.PROP_CONTENT);
-							if (contentData != null) {
-								String mimetype = determineDefaultMimetype(data);
-								contentData = ContentData.setMimetype(contentData, mimetype);
-								Map<QName, Serializable> propsToPersist = new HashMap<QName, Serializable>();
-								propsToPersist.put(ContentModel.PROP_CONTENT, contentData);
-								this.getNodeService().addProperties(persistedObject, propsToPersist);
-							}
-						}
+					FieldData mimetypeField = data.getFieldData(PROP_DATA_PREFIX + MimetypeFieldProcessor.KEY);
+					String mimetype = null;
+					if (mimetypeField != null) {
+						mimetype = Objects.toString(mimetypeField.getValue());
 					}
+					UCMContentImpl ucmContent;
+					if (mimetype == null) {
+						ucmContent = new UCMContentImpl(this.getMimetypeService(), contentField);
+					}
+					else {
+						ucmContent = new UCMContentImpl(contentField, mimetype);
+					}
+					
+					//process lat/lon data, etc
+					processMetadata(ucmContent.getInputStream(), persistedObject);
+					
+					// write the content
+					ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
+							true);
+					writer.setMimetype(ucmContent.getMimetype());
+					writer.setEncoding(ucmContent.getEncoding());
+					writer.putContent(ucmContent.getInputStream());
 				} catch (IOException e) {
-					logger.error("Can't create copy of image stream", e);
+					LOGGER.error("Can't create copy of image stream", e);
 				}
 			}
 		}
@@ -242,17 +244,17 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 				this.getNodeService().addAspect(node, ASPECT_GEOGRAPHICAL_QNAME, geoProps);
 			}
 		} catch (IOException e) {
-			logger.warn("Can't read image content, skipping", e);
+			LOGGER.warn("Can't read image content, skipping", e);
 		} catch (TikaException te) {
-			logger.warn("Caught tika exception, skipping", te);
+			LOGGER.warn("Caught tika exception, skipping", te);
 		} catch (SAXException se) {
-			logger.warn("Caught SAXException, skipping", se);
+			LOGGER.warn("Caught SAXException, skipping", se);
 		} finally {
 			if (inputStream != null) {
 				try {
 					inputStream.reset();
 				} catch (IOException e) {
-					logger.warn("Can't reset image stream", e);
+					LOGGER.warn("Can't reset image stream", e);
 				}
 			}
 		}
@@ -262,8 +264,10 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	protected NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
 		// TODO: LOG
 		NodeRef site = this.getUtils().getSiteRefByNode(artifactRef);
-		if (site == null)
+		if (site == null) {
+			LOGGER.error("Can't determine which site node belongs to. Media attachments folder wasn't created.");
 			return null;
+		}
 
 		Serializable artistNameValue = this.getNodeService().getProperty(artifactRef,
 				UCMConstants.PROP_UCM_ARTIST_QNAME);
@@ -297,55 +301,6 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		return mediaFolder;
 	}
 	
-	/*
-	 * TODO: ideally metadata should be extracted in the same way it is done in
-	 * upload.post.js:extractMetadata
-	 * "actions.create("extract-metadata").execute(file, false, false)"
-	 * equivalent Java code would be
-	 * "create("extract-metadata").execute(persistedObject, false, false);" But
-	 * unfortunately registryService bean isn't available in current context.
-	 * Are there any workarounds? private ScriptAction create(String actionName)
-	 * { ScriptAction scriptAction = null; ActionService actionService =
-	 * serviceRegistry.getActionService(); ActionDefinition actionDef =
-	 * actionService.getActionDefinition(actionName); if (actionDef != null) {
-	 * Action action = actionService.createAction(actionName); scriptAction =
-	 * new ScriptAction(this.serviceRegistry, action, actionDef);
-	 * scriptAction.setScope(new BaseScopableProcessorExtension().getScope()); }
-	 * return scriptAction; }
-	 */
-
-	/**
-	 * Looks through the form data for the 'mimetype' transient field and
-	 * returns it's value if found, otherwise the default 'text/plain' is
-	 * returned
-	 * 
-	 * @param data
-	 *            Form data being persisted
-	 * @return The default mimetype
-	 */
-	protected String determineDefaultMimetype(FormData data) {
-		String mimetype = DEFAULT_CONTENT_MIMETYPE;
-
-		if (data != null) {
-			FieldData mimetypeField = data.getFieldData(PROP_DATA_PREFIX + MimetypeFieldProcessor.KEY);
-			if (mimetypeField != null) {
-				String mimetypeFieldValue = (String) mimetypeField.getValue();
-				if (mimetypeFieldValue != null && mimetypeFieldValue.length() > 0) {
-					mimetype = mimetypeFieldValue;
-				}
-			} else {
-				FieldData contentField = data.getFieldData(CONTENT_PROP_DATA);
-				if (contentField != null) {
-					String fileName = contentField.getValue().toString();
-					InputStream inputStream = contentField.getInputStream();
-					mimetype = getMimetypeService().guessMimetype(fileName, inputStream);
-				}
-			}
-		}
-
-		return mimetype;
-	}
-
 	protected void resolvePossibleFilenameConflict(TypeDefinition item, FormData data) {
 		// firstly, ensure we have a destination to create the node in
 		NodeRef parentRef = null;
@@ -361,68 +316,6 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		String validFilename = findFreeFilename(parentRef, originalFilename);
 		// Use name of uploaded file as new content name
 		data.addFieldData(NAME_PROP_DATA, validFilename, true);
-	}
-
-	/*
-	 * Fills properties of "to" node with values of "from" node. To be updated
-	 * property should: 1. be defined in child node type description in types
-	 * model file; 2. be set in parent node.
-	 */
-	protected void inheritProperties(TypeDefinition toType, NodeRef fromNode, NodeRef toNode) {
-		Set<QName> propsSet = getAllProperties(toType).keySet();
-		for (QName property : propsSet) {
-			Serializable fromValue = this.getNodeService().getProperty(fromNode, property);
-			Serializable toValue = this.getNodeService().getProperty(toNode, property);
-			if (toValue == null && fromValue != null) {
-				this.getNodeService().setProperty(toNode, property, fromValue);
-			}
-		}
-	}
-
-	protected void fillMandatoryProperties(TypeDefinition type, NodeRef node, Serializable value) {
-		for (PropertyDefinition propDef : getAllProperties(type).values()) {
-			if (propDef.isMandatory()) {
-				Serializable currentValue = this.getNodeService().getProperty(node, propDef.getName());
-				if (currentValue == null) {
-					this.getNodeService().setProperty(node, propDef.getName(), value);
-				}
-			}
-		}
-	}
-	
-	protected void synchronizeUCMPropertyValues(NodeRef from, NodeRef to, Set<QName> exclude) {
-		QName fromType = this.getNodeService().getType(from);
-		QName toType = this.getNodeService().getType(to);
-		
-		Set<QName> fromProps = getAllProperties(fromType).keySet();
-		Set<QName> toProps = getAllProperties(toType).keySet();
-		
-		Set<QName> commonProps = new HashSet<QName>(fromProps);
-		commonProps.retainAll(toProps);
-		commonProps.removeAll(exclude);
-		
-		for (QName propQname : commonProps) {
-			if (UCMConstants.UCM_NAMESPACE.equals(propQname.getNamespaceURI())) {
-				Serializable value = this.getNodeService().getProperty(from, propQname);
-				if (value != null) {
-					this.getNodeService().setProperty(to, propQname, value);
-				}
-			}
-		}
-	}
-	
-	public HashMap<QName, PropertyDefinition> getAllProperties(QName typeQname) {
-		TypeDefinition typeDef = this.getDictionaryService().getType(typeQname);
-		return getAllProperties(typeDef);
-	}
-	
-	public static HashMap<QName, PropertyDefinition> getAllProperties(TypeDefinition type) {
-		HashMap<QName, PropertyDefinition> result = new HashMap<QName, PropertyDefinition>();
-		result.putAll(type.getProperties());
-		for (AspectDefinition aspect : type.getDefaultAspects()) {
-			result.putAll(aspect.getProperties());
-		}
-		return result;
 	}
 	
 	@Override

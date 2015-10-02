@@ -23,6 +23,8 @@
 			prefix="d" />
 		<!-- Import Alfresco Content Domain Model Definitions -->
 		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<!-- Import Alfresco Site Model Definitions -->
+		<import uri="http://www.alfresco.org/model/site/1.0" prefix="st" />
 	</imports>
 
 	<namespaces>
@@ -56,7 +58,7 @@
 
 		<type name="ucm:site">
 			<title>CM site</title>
-			<parent>ucm:folder</parent>
+			<parent>st:site</parent>
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
 			</mandatory-aspects>
@@ -64,7 +66,7 @@
 
 		<type name="ucm:collection">
 			<title>Collection</title>
-			<parent>ucm:site</parent>
+			<parent>ucm:folder</parent>
 			<properties>
 				<property name="ucm:collection_id">
 					<title>Collection ID</title>
@@ -130,11 +132,9 @@
 					<propagateTimestamps>true</propagateTimestamps>
 				</child-association>
 			</associations>
-<!-- 
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
 			</mandatory-aspects>
- -->	
 		</type>
 
 		<type name="ucm:artist">

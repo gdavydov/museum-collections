@@ -52,6 +52,9 @@ public class UCMConstants {
 	public static final QName ASSOC_UCM_ARTIFACT_CONTAINS_QNAME = QName.createQName(UCM_NAMESPACE,
 			ASSOC_UCM_ARTIFACT_CONTAINS);
 
+	public static final String TYPE_UCM_DOCUMENT = "document";
+	public static final QName TYPE_UCM_DOCUMENT_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_DOCUMENT);
+
 	public static final String SYSTEM_FOLDER_NAME = "system";
 
 	public static final String MEDIA_FOLDER_NAME = "artifact_attachments";
@@ -66,6 +69,54 @@ public class UCMConstants {
 		
 	public static final String ASPECT_GEOGRAPHICAL = ContentModel.ASPECT_GEOGRAPHIC.getLocalName();
 	public static final QName ASPECT_GEOGRAPHICAL_QNAME = ContentModel.ASPECT_GEOGRAPHIC;
-
+	
+	public static final String TYPE_UCM_MEDIA_ATTACHMENT = "attached_file";
+	public static final QName TYPE_UCM_MEDIA_ATTACHMENT_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_MEDIA_ATTACHMENT);
+	
+	public static final String TYPE_UCM_FOLDER = "folder";
+	public static final QName TYPE_UCM_FOLDER_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_FOLDER);
+	
+	public static final String TYPE_UCM_COLLECTION = "collection";
+	public static final QName TYPE_UCM_COLLECTION_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_COLLECTION);
+	
+	public static final String PROP_UCM_COLLECTION_ID = "collection_id";
+	public static final QName PROP_UCM_COLLECTION_ID_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_COLLECTION_ID);
+	
+//	public static final String PROP_UCM_COLLECTION_NAME = "collection_name";
+//	public static final QName PROP_UCM_COLLECTION_NAME_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_COLLECTION_NAME);
+	
+	public static final String TYPE_UCM_SITE = "site";
+	public static final QName TYPE_UCM_SITE_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_SITE);
+	
+	public static final String ASPECT_SITE = "site_aspect";
+	public static final QName ASPECT_SITE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_SITE);
+	
+	public static final String ASPECT_PROP_UCM_SITE_NAME = "site_name";
+	public static final QName ASPECT_PROP_UCM_SITE_NAME_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_NAME);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ADDRESS = "site_address";
+	public static final QName ASPECT_PROP_UCM_SITE_ADDRESS_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ADDRESS);
+	
+	public static final String ASPECT_PROP_UCM_SITE_BUILD_YEAR = "site_buildYear";
+	public static final QName ASPECT_PROP_UCM_SITE_BUILD_YEAR_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_BUILD_YEAR);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_TYPE = "site_aspect_type";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_TYPE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_TYPE);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PERSON = "site_aspect_contact_person";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PERSON_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PERSON);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED = "site_aspect_contact_tweed";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL = "site_aspect_contact_email";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL);
+	
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE = "site_aspect_contact_phone";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE);
+	
+//	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX = "site_aspect_contact_fax";
+//	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
+	
 	public static final Set<QName> NOT_SYNC_PROPERTIES = Collections.singleton(PROP_UCM_ARTIST_ARTIFACT_QNAME);
 }

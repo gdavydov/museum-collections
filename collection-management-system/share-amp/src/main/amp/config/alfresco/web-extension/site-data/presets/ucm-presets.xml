@@ -44,9 +44,9 @@
       </components>
       <pages>
          <page id="site/${siteid}/dashboard">
-            <title>CMS Site collection</title>
+            <title>UCM Site collection</title>
             <title-id>page.ucmSiteDashboard.title</title-id>
-            <description>CMS site's collection page</description>
+            <description>UCM site's collection page</description>
             <description-id>page.ucmSiteDashboard.description</description-id>
             <template-instance>dashboard-2-columns-wide-right</template-instance>
             <authentication>user</authentication>

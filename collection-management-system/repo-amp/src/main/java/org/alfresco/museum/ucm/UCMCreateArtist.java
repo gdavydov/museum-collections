@@ -1,6 +1,5 @@
 package org.alfresco.museum.ucm;
 
-import static org.alfresco.museum.ucm.UCMConstants.ASPECT_GEOGRAPHICAL_QNAME;
 import static org.alfresco.museum.ucm.UCMConstants.MANDATORY_PROP_FILLER;
 import static org.alfresco.museum.ucm.UCMConstants.PROP_UCM_ARTIST_ARTIFACT_QNAME;
 import static org.alfresco.museum.ucm.UCMConstants.PROP_UCM_ARTIST_QNAME;
@@ -8,17 +7,12 @@ import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAM
 import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_QNAME;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.alfresco.model.ContentModel;
 import org.alfresco.repo.forms.FormData;
-import org.alfresco.repo.forms.FormData.FieldData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.namespace.QName;
 import org.springframework.util.StringUtils;
 
 /**
@@ -34,20 +28,14 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 	 */
 	@Override
 	public void beforePersist(TypeDefinition item, FormData data) {
-		resolvePossibleFilenameConflict(item, data);
+		boolean isArtist = item.getName().equals(TYPE_UCM_ARTIST_QNAME);
+		if (isArtist) {
+			resolvePossibleFilenameConflict(item, data);
+		}
 	}
 
 	/**
-	 * Store "cm:content" property value, which is ignored by default handler.<br/>
-	 * See
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#persistNode(NodeRef, FormData)
-	 * persistNode},
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processPropertyPersist(NodeRef, Map,FieldData, Map, FormData)
-	 * processPropertyPersist},
-	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#processContentPropertyPersist(NodeRef, FieldData, Map, FormData)
-	 * processContentPropertyPersist} and <a href=
-	 * "https://forums.alfresco.com/forum/developer-discussions/alfresco-share-development/file-upload-create-content-06282010-2333"
-	 * >discussion thread</a>
+	 * Save submitted content into "artist artifact".
 	 */
 	@Override
 	public void afterPersist(TypeDefinition item, FormData data, NodeRef persistedObject) {
@@ -83,9 +71,9 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 
 			TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 					TYPE_UCM_ARTIST_ARTIFACT_QNAME);
-			inheritProperties(artistArtifactType, artistFolder, artistArtifactRef);
+			super.getUtils().inheritProperties(artistArtifactType, artistFolder, artistArtifactRef);
 			writeContent(artistArtifactType, data, artistArtifactRef);
-			fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
+			super.getUtils().fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
 			getOrCreateArtistMediaFolder(artistArtifactRef);
 		}
 		return artistArtifactRef;

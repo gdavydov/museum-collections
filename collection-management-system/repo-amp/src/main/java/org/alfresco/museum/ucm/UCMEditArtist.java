@@ -41,6 +41,6 @@ public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 	 */
 	protected void updateArtistArtifact(FormData data, NodeRef artistRef, NodeRef artistArtifactRef) {
 		// TODO: what to do with lat/lon?
-		synchronizeUCMPropertyValues(artistRef, artistArtifactRef, UCMConstants.NOT_SYNC_PROPERTIES);
+		super.getUtils().synchronizeUCMPropertyValues(artistRef, artistArtifactRef, UCMConstants.NOT_SYNC_PROPERTIES);
 	}
 }
