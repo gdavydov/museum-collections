@@ -15,8 +15,8 @@ import java.util.Objects;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
-import org.alfresco.museum.ucm.UCMContentImpl;
 import org.alfresco.museum.ucm.utils.NodeUtils;
+import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.FormData.FieldData;

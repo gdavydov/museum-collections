@@ -1,4 +1,4 @@
-package org.alfresco.museum.ucm;
+package org.alfresco.museum.ucm.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

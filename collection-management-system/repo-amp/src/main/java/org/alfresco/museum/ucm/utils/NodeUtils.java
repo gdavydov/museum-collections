@@ -13,7 +13,6 @@ import java.util.Set;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
-import org.alfresco.museum.ucm.UCMContentImpl;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.repo.site.SiteModel;
 import org.alfresco.service.cmr.dictionary.AspectDefinition;

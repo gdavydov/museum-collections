@@ -8,17 +8,6 @@
       <@link rel="stylesheet" type="text/css" href="${url.context}/res/css/ucm-create-site-form.css" />
    </@>
 
-   <@markup id="js" >
-      <#-- JS Dependencies -->
-      <@script type="text/javascript" src="${url.context}/res/js/jquery.js" />
-      <@script type="text/javascript" src="${url.context}/res/js/jquery-ui.min.js" />
-      <@script type="text/javascript" src="${url.context}/res/js/jquery.steps.min.js" />
-      <@script type="text/javascript" src="${url.context}/res/js/jquery.simple-file-preview.js" />
-      <@script type="text/javascript" src="${url.context}/res/js/jquery.validate.min.js" />
-   </@>	
-	
-	<!-- TODO: html, head, body? -->
-	
 	<form id="ucm-create-site-form" action="${url.context}/proxy/alfresco/ucm/create-site" method="post" enctype="multipart/form-data" onsubmit="return false;">
 	    <h3>Create Site</h3>
 	    <fieldset>
@@ -56,9 +45,6 @@
 	    <fieldset>
 	        <legend>Information about Museum/Gallery</legend>
 	 
-	        <label for="museumName">Name *</label>
-	        <input id="museumName" name="museumName" type="text" class="required">
-			
 	        <label for="museumAddress">Address</label>
 	        <input id="museumAddress" name="museumAddress" type="text">
 			
@@ -196,51 +182,61 @@
 			
 			form[0].submit();
 		}
-		
-		var form = $("#ucm-create-site-form").show();
-		
-		form.steps(
-				{
-					headerTag : "h3",
-					bodyTag : "fieldset",
-					transitionEffect : "slideLeft",
-					onStepChanging : function(event, currentIndex, newIndex) {
-						// Always allow previous action
-						if (currentIndex > newIndex) {
-							return true;
-						}
-		
-						// Needed in some cases if the user went back (clean up)
-						if (currentIndex < newIndex) {
-							// To remove error styles
-							form.find(".body:eq(" + newIndex + ") label.error")
-									.remove();
-							form.find(".body:eq(" + newIndex + ") .error").removeClass(
-									"error");
-						}
-						form.validate().settings.ignore = ":disabled,:hidden";
-						return form.valid();
-					},
-					onStepChanged : function(event, currentIndex, priorIndex) {
-						/**/
-					},
-					onFinishing : function(event, currentIndex) {
-						form.validate().settings.ignore = ":disabled";
-						return form.valid();
-					},
-					onFinished : function(event, currentIndex) {
-						ucmSubmitForm(form);
+
+		require([ "jquery", "jqueryui"], function($) {
+			jQuery = $;
+
+			require([
+				"${url.context}/res/js/jquery.steps.min.js",
+				"${url.context}/res/js/jquery.simple-file-preview.js",
+				"${url.context}/res/js/jquery.validate.min.js"
+				], function() {
+				var form = $("#ucm-create-site-form").show();
+				
+				form.steps(
+						{
+							headerTag : "h3",
+							bodyTag : "fieldset",
+							transitionEffect : "slideLeft",
+							onStepChanging : function(event, currentIndex, newIndex) {
+								// Always allow previous action
+								if (currentIndex > newIndex) {
+									return true;
+								}
+				
+								// Needed in some cases if the user went back (clean up)
+								if (currentIndex < newIndex) {
+									// To remove error styles
+									form.find(".body:eq(" + newIndex + ") label.error")
+											.remove();
+									form.find(".body:eq(" + newIndex + ") .error").removeClass(
+											"error");
+								}
+								form.validate().settings.ignore = ":disabled,:hidden";
+								return form.valid();
+							},
+							onStepChanged : function(event, currentIndex, priorIndex) {
+								/**/
+							},
+							onFinishing : function(event, currentIndex) {
+								form.validate().settings.ignore = ":disabled";
+								return form.valid();
+							},
+							onFinished : function(event, currentIndex) {
+								ucmSubmitForm(form);
+							}
+						}).validate({
+					errorPlacement : function errorPlacement(error, element) {
+						element.before(error);
 					}
-				}).validate({
-			errorPlacement : function errorPlacement(error, element) {
-				element.before(error);
-			}
-		/*TODO: validate phone http://jqueryvalidation.org/documentation/
-		 * , rules : { confirm : { equalTo : "#password-2" } }
-		 */
+				/*TODO: validate phone http://jqueryvalidation.org/documentation/
+				 * , rules : { confirm : { equalTo : "#password-2" } }
+				 */
+				});
+				
+				$('#siteLogo').simpleFilePreview();
+				$(document).tooltip();
+			});	
 		});
-		
-		$('#siteLogo').simpleFilePreview();
-		$(document).tooltip();
 	</script>
 </@>

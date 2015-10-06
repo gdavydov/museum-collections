@@ -21,15 +21,10 @@
 		</property>
 	</bean>
 
-	<!--bean id="ucm.surfClientConfig" class="org.springframework.extensions.config.ConfigBootstrap"
-		init-method="register">
-		<property name="configService" ref="web.config" />
-		<property name="configs">
-			<list>
-				<value>classpath:alfresco/module/collection-management-system-repo-amp/context/surf-config.xml</value>
-			</list>
-		</property>
-	</bean-->
+	<!--bean id="ucm.surfClientConfig" class="org.springframework.extensions.config.ConfigBootstrap" 
+		init-method="register"> <property name="configService" ref="web.config" /> 
+		<property name="configs"> <list> <value>classpath:alfresco/module/collection-management-system-repo-amp/context/surf-config.xml</value> 
+		</list> </property> </bean -->
 
 	<bean id="ucm.baseFormFilter" class="org.alfresco.repo.forms.processor.node.UCMGenericFilter"
 		parent="baseFormFilter">
@@ -40,7 +35,7 @@
 		<property name="nodeService" ref="NodeService" />
 		<property name="mimetypeService" ref="MimetypeService" />
 	</bean>
-	
+
 	<bean id="ucm.nodeUtils" class="org.alfresco.museum.ucm.utils.NodeUtils">
 		<property name="nodeService" ref="NodeService" />
 		<property name="fileFolderService" ref="FileFolderService" />
@@ -48,28 +43,30 @@
 		<property name="dictionaryService" ref="DictionaryService" />
 		<property name="searchService" ref="SearchService" />
 	</bean>
-	
-	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.UCMCreateArtifact"
+
+	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtifact"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createArtistFilter" class="org.alfresco.museum.ucm.UCMCreateArtist"
+	<bean id="ucm.createArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtist"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createMediaAttachment" class="org.alfresco.museum.ucm.UCMCreateMediaAttachment"
+	<bean id="ucm.createMediaAttachment"
+		class="org.alfresco.museum.ucm.formfilters.UCMCreateMediaAttachment"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.UCMEditArtist"
+	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMEditArtist"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.editArtistArtifactFilter" class="org.alfresco.museum.ucm.UCMEditArtistArtifact"
+	<bean id="ucm.editArtistArtifactFilter"
+		class="org.alfresco.museum.ucm.formfilters.UCMEditArtistArtifact"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
@@ -92,6 +89,27 @@
 		<property name="properties" ref="global-properties" />
 	</bean>
 
+	<!-- Put email template to the repository node. See http://docs.alfresco.com/5.0/concepts/dev-extensions-modules-importing-module-data.html -->
+	<bean id="ucm.spacesBootstrap" class="org.alfresco.repo.module.ImporterModuleComponent"
+		parent="module.baseComponent">
+		<property name="moduleId" value="collection-management-system-repo-amp" />
+		<property name="name" value="ucm.collection-management-system-repo-amp.bootstrapSpaces" />
+		<property name="description" value="Initial data requirements" />
+		<property name="sinceVersion" value="1.0" />
+		<property name="appliesFromVersion" value="1.0" />
+
+		<property name="importer" ref="spacesBootstrap" />
+		<property name="bootstrapViews">
+			<list>
+				<props>
+				<!-- See http://docs.alfresco.com/5.0/concepts/dev-extensions-modules-import-strategy.html -->
+					<prop key="uuidBinding">UPDATE_EXISTING</prop>
+					<prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.templates.email.childname}</prop>
+					<prop key="location">alfresco/module/collection-management-system-repo-amp/ucm-bootstrap/config_email_templates.xml</prop>
+				</props>
+			</list>
+		</property>
+	</bean>
 	<!-- TODO: explicitly override typeFormProcessor -->
 	<!-- TODO: explicitly override FileFolderServiceImpl -->
 </beans>

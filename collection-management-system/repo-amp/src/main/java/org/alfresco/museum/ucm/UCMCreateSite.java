@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.utils.NodeUtils;
+import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.action.executer.MailActionExecuter;
 import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ActionService;
@@ -64,7 +66,12 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	public static final String SHARE_ENDPOINT_ID = "share";
 	public static final String SITE_TEMPLATE = "ucm-site-dashboard";
 	public static final String MODEL_SUCCESS = "success";
-	public static final String NOTIFICATION_MAIL_TEMPLATE_PATH = "Data Dictionary/Email Templates/Notify Email Templates/notify_user_email.html.ftl";
+	public static final String MODEL_SITE_ADMIN = "siteAdmin";
+	public static final String MODEL_SITE_SHORT_NAME = "siteShortName";
+	public static final String MODEL_SITE_IS_PRIVATE = "siteIsPrivate";
+	public static final String MODEL_SITE_NODE_REF = "siteNodeRef";
+	//this file is created by ucm.spacesBootstrap bean
+	public static final String NOTIFICATION_MAIL_TEMPLATE_PATH = "Data Dictionary/Email Templates/UCM email templates/notify_admin_user_created_email_template.ftl";
 	public static final String LOGO_NAME = "logo";
 	public static final String COPYRIGHT_DOC_NAME = "Copyright Materials";
 	public static final int PASSWORD_LENGTH = 10;
@@ -72,7 +79,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	public static final Collection<String> OBLIGATORY_FIELDS = Collections.unmodifiableCollection(Arrays
 			.asList(new String[] { "siteName", "siteAdminFirstName", "siteAdminLastName", "siteAdminEmail",
-					"museumName", "museumEmail", "museumPhone" }));
+					"museumEmail", "museumPhone" }));
 
 	@SuppressWarnings("serial")
 	public static final Map<String, QName> FORM_FIELD_TO_ADMIN_PROPERTY = Collections
@@ -136,7 +143,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	/**
 	 * Late phases of site creation depend on objects created earlier. UCMSite
-	 * is intended to keep current state.
+	 * is intended to keep state of site attributes during initialization.
 	 */
 	public static class UCMSite {
 		public UCMSite(String name, String description, boolean isPrivate) {
@@ -157,76 +164,112 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		public String adminName;
 	}
 
+	private static void logAndThrow(String description) throws AlfrescoRuntimeException {
+		logAndThrow(description, null);
+	}
+	
+	private static void logAndThrow(String description, Exception cause) throws AlfrescoRuntimeException {
+		LOGGER.error("Site creation was cancelled due to error: " + description);
+		if (cause != null) {
+			throw new AlfrescoRuntimeException(description, cause);
+		}
+		else {
+			throw new AlfrescoRuntimeException(description);
+		}
+	}
+	
 	@Override
 	public Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
+		LOGGER.warn("Site creation process started!");
+		
 		Object parseContent = req.parseContent();
 		if (!(parseContent instanceof FormData)) {
-			return createErrorModel("Wrong form format! Form should be submitted with type \"multipart/form-data\".");
+			logAndThrow("Wrong form format! Form should be submitted with type \"multipart/form-data\".");
+			return null;
 		}
 
 		FormData formData = (FormData) parseContent;
 		String validationError = validateForm(formData);
 		if (validationError != null) {
-			return createErrorModel(validationError);
+			logAndThrow(validationError);
+			return null;
 		}
 
 		String siteName = getOnlyValue(formData, "siteName");
 		String siteDescription = getOnlyValue(formData, "siteDescription");
-		boolean isPrivate = StringUtils.equals("true", getOnlyValue(formData, "siteIsPrivate"));
-
+		boolean isPrivate = StringUtils.equals("true", getOnlyValue(formData, MODEL_SITE_IS_PRIVATE));
+		
+		
 		UCMSite site = new UCMSite(siteName, siteDescription, isPrivate);
 		Map<QName, Serializable> siteData = fillPropertiesWithFormData(FORM_FIELD_TO_SITE_ASPECT_PROPERTY, formData);
 
+		LOGGER.warn(String.format("Site will have name %s, and is %s", siteName, (isPrivate) ? "private" : "moderated"));
 		// create site node, fill site aspect properties
 		site = createSite(site, siteData);
+		LOGGER.info("Site node created.");
 
 		try {
+			LOGGER.info("Retrieving site templates data.");
 			// get data about surf config files from Share web script
 			JSONObject templatesJson = getTemplatesData(SITE_TEMPLATE, site.shortName);
+			LOGGER.info("Site templates retrieved succesfully.");
 
 			// create folders "system" and "documentLibrary", files required by
 			// Surf,
 			site = createSiteContent(site, templatesJson);
+			LOGGER.info("Site templates and service folders created.");
 		} catch (IOException | JSONException e) {
-			LOGGER.error("Can't create template instance elements", e);
-			// TODO: fail transaction by throwing AlfrescoRuntimeException
+			logAndThrow("Can't create template instance elements.", e);
+			return null;
 		}
 
 		try {
 			// create site logo file in "system"
 			site = createSiteLogo(site, getLogoField(formData));
-		} catch (IOException e) {
-			LOGGER.error("Can't set site logo", e);
+		} catch (IOException | JSONException e) {
+			LOGGER.warn("Can't set site logo. It could be set later manually.", e);
 		}
 
-		Map<QName, Serializable> adminData = fillPropertiesWithFormData(FORM_FIELD_TO_ADMIN_PROPERTY, formData);
-		try {
-			// create admin user, set up groups and access
-			site = createAdminUser(site, adminData);
-		} catch (FileNotFoundException e) {
-			LOGGER.error("Can't add site moderator", e);
-			// TODO: fail transaction by throwing AlfrescoRuntimeException
-		}
-
-		Map<QName, Serializable> collectionData = fillPropertiesWithFormData(FORM_FIELD_TO_COLLECTION_PROPERTY, formData);
+		Map<QName, Serializable> collectionData = fillPropertiesWithFormData(FORM_FIELD_TO_COLLECTION_PROPERTY,
+				formData);
 		// only if coll. id and coll. name are both filled
 		if (collectionData.size() == 2) {
 			Map<QName, Serializable> fullCollectionData = mergeMaps(siteData, collectionData);
+			LOGGER.info("Creating collection.");
 			site = createCollection(site, fullCollectionData);
+			LOGGER.info("Collection created.");
 		}
 
 		// museum document has no specific fields except those inherited from
 		// site aspect
+		LOGGER.info("Creatind \"About museum\" document.");
 		site = createAboutMuseumDocument(site, siteData);
+		LOGGER.info("\"About museum\" document have been created.");
 
+		LOGGER.info("Creating custom folders.");
 		site = createAdditionalFolders(site, formData.getParameters().get("siteFoldersSelectedOptions"));
+		LOGGER.info("Custom folders have been created.");
 
 		String copyrightText = getOnlyValue(formData, "copyright");
 		if (copyrightText != null) {
+			LOGGER.info("Creating copyright document.");
 			site = createCopyrightDocument(site, copyrightText, siteData);
+			LOGGER.info("Copyright document created.");
 		}
 
-		return createSuccessModel();
+		//Admin is created in the end of site creation. Nothing should rollback transaction after notification email was sent.
+		Map<QName, Serializable> adminData = fillPropertiesWithFormData(FORM_FIELD_TO_ADMIN_PROPERTY, formData);
+		try {
+			LOGGER.info("Creating admin user, setting up groups and access rules.");
+			site = createAdminUser(site, adminData);
+			LOGGER.info("Admin user created. New user name: " + site.adminName);
+		} catch (FileNotFoundException e) {
+			logAndThrow("Can't add site moderator.", e);
+			return null;
+		}
+		
+		LOGGER.warn("Site creation completed!");
+		return createSuccessModel(site);
 	}
 
 	public String validateForm(FormData formData) {
@@ -340,8 +383,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				// E.g. ["site", "{siteName}", "dashboard"] or just
 				// ["page.title.site~{siteName}~dashboard"]
 				LinkedList<String> pathTokens = new LinkedList<String>(Arrays.asList(objectId.split("/")));
-				String fileName = pathTokens.getLast() + ".xml";
-				pathTokens.removeLast();
+				String fileName = pathTokens.pollLast() + ".xml";
 				objectPath.addAll(pathTokens);
 
 				NodeRef objectFolderNodeRef = this.getUtils().getOrCreateFolderByPath(site.surfConfig, objectPath);
@@ -353,85 +395,57 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		return site;
 	}
 
-	public UCMSite createSiteLogo(UCMSite site, FormField logoField) throws IOException {
+	/**
+	 * Set logo NodeRef to site dashboard template property at Share side and retrieve updated template.
+	 * Template should be saved under path surf-config/pages/site/{siteName}/dashboard.xml
+	 * @return {"id": "site/{siteName}/dashboard", "xml": ${...}}
+	 */
+	public JSONObject getPageTemplateWithLogo(String siteId, NodeRef logoNodeRef) throws IOException, JSONException {
+		Response response = null;
+
+		String context = this.getProperties().getProperty("share.context", "share");
+		String encodedSiteId = URLEncoder.encode(siteId, StandardCharsets.UTF_8.name());
+		String encodedLogoNodeRef = URLEncoder.encode(logoNodeRef.toString(), StandardCharsets.UTF_8.name());
+		String path = String.format("/%s/page/ucm/get-page-template?siteId=%s&logoNodeRef=%s", context, encodedSiteId, encodedLogoNodeRef);
+
+		// TODO: use empty endpoint and build complete URL with Share protocol,
+		// host and port from "share.*" properties?
+		ScriptRemoteConnector connector = remote.connect(SHARE_ENDPOINT_ID);
+		response = connector.call(path);
+
+		return (response != null) ? new JSONObject(response.getText()) : null;
+	}
+	
+	public UCMSite createSiteLogo(UCMSite site, FormField logoField) throws IOException, JSONException {
 		if (logoField != null && logoField.getContent() != null) {
-			this.getUtils().createContentNode(site.system, LOGO_NAME, new UCMContentImpl(logoField),
+			LOGGER.info("Saving site logo to database.");
+			NodeRef logoNodeRef = this.getUtils().createContentNode(site.system, LOGO_NAME, new UCMContentImpl(logoField),
 					UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
+			
+			LOGGER.info("Retrieving site dashboard template.");
+			JSONObject updatedTemplate = getPageTemplateWithLogo(site.shortName, logoNodeRef);
+			LOGGER.info("Adding site logo to dashboard template.");
+			
+			//E.g. pages/site/{siteName}/dashboard.xml
+			String fullObjectPath = "pages/" + updatedTemplate.getString("id") + ".xml";
+			//E.g. ["pages", "site", {siteName}, "dashboard.xml"]
+			LinkedList<String> pathTokens = new LinkedList<String>(Arrays.asList(fullObjectPath.split("/")));
+			//E.g. "dashboard.xml"
+			String fileName = pathTokens.pollLast();
+			String objectXml = updatedTemplate.getString("xml");
+			
+			NodeRef objectFolderNodeRef = this.getUtils().getOrCreateFolderByPath(site.surfConfig, pathTokens);
+			
+			NodeRef existingTemplate = this.getNodeService().getChildByName(objectFolderNodeRef, ContentModel.ASSOC_CONTAINS, fileName);
+			if (existingTemplate != null) {
+				this.getNodeService().removeChild(objectFolderNodeRef, existingTemplate);
+			}
+			
+			@SuppressWarnings("unused")
+			NodeRef objectNodeRef = this.getUtils().createContentNode(objectFolderNodeRef, fileName, objectXml);
+			LOGGER.info("Site logo have been set.");
 		}
-
-		// TODO: set logo node ref as site property?
 		return site;
-	}
-
-	/**
-	 * See <a href=
-	 * "https://forums.alfresco.com/forum/general/non-technical-alfresco-discussion/creating-users-using-java-api-10032008-1248"
-	 * >discussion thread</a>
-	 * 
-	 * @throws FileNotFoundException
-	 */
-	public UCMSite createAdminUser(UCMSite site, Map<QName, Serializable> userProps) throws FileNotFoundException {
-		String firstName = userProps.get(ContentModel.PROP_FIRSTNAME).toString();
-		String lastName = userProps.get(ContentModel.PROP_LASTNAME).toString();
-
-		// Find free user name
-		site.adminName = createFreeUserName(firstName, lastName);
-
-		userProps.put(ContentModel.PROP_USERNAME, site.adminName);
-
-		// create the node to represent the Person
-		NodeRef newPerson = this.getPersonService().createPerson(userProps);
-
-		String allPermission = this.getPermissionService().getAllPermission();
-		// ensure the user can access their own Person object
-		this.getPermissionService().setPermission(newPerson, site.adminName, allPermission, true);
-
-		// add user to site managers group
-		this.getAuthorityService().addAuthority(getSiteManagerGroupName(site.shortName), site.adminName);
-
-		@SuppressWarnings("unused")
-		String email = userProps.get(ContentModel.PROP_EMAIL).toString();
-		String password = createPassword();
-
-		// create the ACEGI Authentication instance for the new user
-		this.getAuthenticationService().createAuthentication(site.adminName, password.toCharArray());
-
-		// https://loftux.com/en/blog/fixing-the-invite-email-template-in-alfresco-share#sthash.IQx2RxYt.dpbs
-		// sendNotificationEmail(email, password);
-		return site;
-	}
-
-	/**
-	 * See <a href=
-	 * "http://www.codified.com/alfresco-send-emails-using-html-email-template/"
-	 * >link</a>
-	 * 
-	 * @param password
-	 * @param email
-	 */
-	// TODO: find proper template. Include full name, user and site names.
-	// TODO: send mail without "mail" action (and without smtp server)?
-	public void sendNotificationEmail(String email, String password) throws FileNotFoundException {
-		Action mailAction = this.getActionService().createAction(MailActionExecuter.NAME);
-		mailAction.setParameterValue(MailActionExecuter.PARAM_TO, email);
-		mailAction.setParameterValue(MailActionExecuter.PARAM_SUBJECT, "Alfresco user successfully created!");
-
-		NodeRef companyHome = this.getUtils().getCompanyHomeNodeRef();
-		List<String> templatePath = Arrays.asList(StringUtils.split(NOTIFICATION_MAIL_TEMPLATE_PATH));
-		NodeRef emailTemplate = this.getFileFolderService().resolveNamePath(companyHome, templatePath).getNodeRef();
-		mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE, emailTemplate);
-
-		// Map<String, Serializable> templateArgs = new HashMap<String,
-		// Serializable>();
-		// templateArgs.put("contactFirstName", contactFirstName);
-		// templateArgs.put("contactLastName", contactLastName);
-		// mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE_MODEL,
-		// (Serializable) templateArgs);
-		// mailAction.setParameterValue(MailActionExecuter.PARAM_FROM, "TODO!");
-		// schedule send mail at midnight
-		mailAction.setExecuteAsynchronously(true);
-
-		this.getActionService().executeAction(mailAction, null);
 	}
 
 	/**
@@ -458,10 +472,11 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		String documentTitle = "About " + site.name;
 		museumProps.put(ContentModel.PROP_TITLE, documentTitle);
 
-		FileInfo aboutMuseum = this.getFileFolderService().create(site.documentLibrary, documentName,
+		// create empty "about museum" document
+		NodeRef aboutMuseum = this.getUtils().createContentNode(site.documentLibrary, documentName, "",
 				UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
 
-		this.getNodeService().addAspect(aboutMuseum.getNodeRef(), UCMConstants.ASPECT_SITE_QNAME, museumProps);
+		this.getNodeService().addAspect(aboutMuseum, UCMConstants.ASPECT_SITE_QNAME, museumProps);
 
 		return site;
 	}
@@ -490,6 +505,77 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		this.getNodeService().addAspect(documentRef, UCMConstants.ASPECT_SITE_QNAME, siteData);
 		return site;
 	}
+
+	/**
+	 * See <a href=
+	 * "https://forums.alfresco.com/forum/general/non-technical-alfresco-discussion/creating-users-using-java-api-10032008-1248"
+	 * >discussion thread</a>
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	public UCMSite createAdminUser(UCMSite site, Map<QName, Serializable> userProps) throws FileNotFoundException {
+		String firstName = userProps.get(ContentModel.PROP_FIRSTNAME).toString();
+		String lastName = userProps.get(ContentModel.PROP_LASTNAME).toString();
+	
+		// Find free user name
+		site.adminName = createFreeUserName(firstName, lastName);
+	
+		userProps.put(ContentModel.PROP_USERNAME, site.adminName);
+	
+		// create the node to represent the Person
+		NodeRef newPerson = this.getPersonService().createPerson(userProps);
+	
+		String allPermission = this.getPermissionService().getAllPermission();
+		// ensure the user can access their own Person object
+		this.getPermissionService().setPermission(newPerson, site.adminName, allPermission, true);
+	
+		// add user to site managers group
+		this.getAuthorityService().addAuthority(getSiteManagerGroupName(site.shortName), site.adminName);
+	
+		String email = userProps.get(ContentModel.PROP_EMAIL).toString();
+		String password = createPassword();
+	
+		// create the ACEGI Authentication instance for the new user
+		this.getAuthenticationService().createAuthentication(site.adminName, password.toCharArray());
+	
+		// https://loftux.com/en/blog/fixing-the-invite-email-template-in-alfresco-share#sthash.IQx2RxYt.dpbs
+		sendNotificationEmail(email, site.name, firstName, lastName, site.adminName, password);
+		return site;
+	}
+
+	/**
+		 * See <a href=
+		 * "http://www.codified.com/alfresco-send-emails-using-html-email-template/"
+		 * >link</a>
+		 */
+		public void sendNotificationEmail(String email, String siteName, String firstName, String lastName,
+				String adminName, String password) throws FileNotFoundException {
+			Action mailAction = this.getActionService().createAction(MailActionExecuter.NAME);
+			mailAction.setParameterValue(MailActionExecuter.PARAM_TO, email);
+			mailAction.setParameterValue(MailActionExecuter.PARAM_SUBJECT, "Alfresco user successfully created!");
+			//TODO: mailAction.setParameterValue(MailActionExecuter.PARAM_HTML, "true");
+	
+			NodeRef companyHome = this.getUtils().getCompanyHomeNodeRef();
+			List<String> templatePath = Arrays.asList(StringUtils.split(NOTIFICATION_MAIL_TEMPLATE_PATH, '/'));
+			NodeRef emailTemplate = this.getFileFolderService().resolveNamePath(companyHome, templatePath).getNodeRef();
+			mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE, emailTemplate);
+			
+	
+			Map<String, Serializable> templateArgs = new HashMap<String, Serializable>();
+			templateArgs.put("site_name", siteName);
+			templateArgs.put("user_password", password);
+			templateArgs.put("first_name", firstName);
+			templateArgs.put("last_name", lastName);
+			templateArgs.put("user_name", adminName);
+			mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE_MODEL, (Serializable) templateArgs);
+	
+	//		mailAction.setParameterValue(MailActionExecuter.PARAM_FROM, "TODO!");
+	
+			// send mail immediately
+			mailAction.setExecuteAsynchronously(false);
+	
+			this.getActionService().executeAction(mailAction, null);
+		}
 
 	public String createFreeUserName(String firstName, String lastName) {
 		firstName = firstName.replaceAll("[^\\w]", "");
@@ -523,17 +609,13 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		return "GROUP_site_" + shortSiteName + "_SiteManager";
 	}
 
-	public static Map<String, Object> createSuccessModel() {
+	public static Map<String, Object> createSuccessModel(UCMSite site) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put(MODEL_SUCCESS, true);
-		return model;
-	}
-
-	public static Map<String, Object> createErrorModel(String error) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put(MODEL_SUCCESS, false);
-		model.put("code", false);
-		model.put("error", error);
+		model.put(MODEL_SITE_NODE_REF, site.site);
+		model.put(MODEL_SITE_IS_PRIVATE, site.isPrivate);
+		model.put(MODEL_SITE_SHORT_NAME, site.shortName);
+		model.put(MODEL_SITE_ADMIN, site.adminName);
 		return model;
 	}
 

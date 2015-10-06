@@ -1,0 +1,34 @@
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0"
+	xmlns:cm="http://www.alfresco.org/model/content/1.0" xmlns:app="http://www.alfresco.org/model/application/1.0"
+	xmlns:sys="http://www.alfresco.org/model/system/1.0" xmlns:emailserver="http://www.alfresco.org/model/emailserver/1.0">
+
+	<cm:folder view:childName="cm:UCM email templates">
+		<app:uifacets />
+		<cm:name>UCM email templates</cm:name>
+		<sys:node-uuid>b7c40e26-ba1a-4fb2-aeab-e78da6fc2512</sys:node-uuid>
+		<app:icon>space-icon-default</app:icon>
+		<cm:title>UCM email templates</cm:title>
+		<cm:description></cm:description>
+		<cm:contains>
+			<cm:content view:childName="cm:notify_admin_user_created_email_template.ftl">
+				<view:aspects>
+					<cm:titled />
+					<cm:author />
+					<app:inlineeditable />
+				</view:aspects>
+				<view:properties>
+					<cm:name>notify_admin_user_created_email_template.ftl</cm:name>
+					<sys:node-uuid>68b9e585-61b4-46e8-b1b8-d137c64bc8e6</sys:node-uuid>
+					<app:editInline>true</app:editInline>
+					<cm:description>Notification about creation of UCM site admin user.
+					</cm:description>
+					<cm:content>contentUrl=classpath:alfresco/module/collection-management-system-repo-amp/ucm-bootstrap/notify_admin_user_created_email_template.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=en_US_
+					</cm:content>
+					<cm:title>Notification about site admin user creation</cm:title>
+					<cm:author>UCM</cm:author>
+				</view:properties>
+				<view:associations></view:associations>
+			</cm:content>
+		</cm:contains>
+	</cm:folder>
+</view:view>

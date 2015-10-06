@@ -1,7 +1,8 @@
-package org.alfresco.museum.ucm;
+package org.alfresco.museum.ucm.formfilters;
 
 import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME;
 
+import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;

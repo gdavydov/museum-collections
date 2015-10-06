@@ -1,10 +1,14 @@
 form#ucm-create-site-form {
-	margin: 0 auto;
+	margin: 13px auto;
 	width: 800px;
 }
 
 .wizard>.content {
 	min-height: 52em;
+}
+
+div#bd {
+	padding-bottom: 0px;
 }
 
 form.wizard {
@@ -37,7 +41,7 @@ form.wizard {
 	line-height: 40px;
 	color: #333;
 	border: 0;
-	border-bottom: 1px solid #e5e5e5
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .wizard label {
@@ -56,7 +60,8 @@ form.wizard {
 	vertical-align: middle;
 }
 
-.wizard input[type="text"], .wizard textarea {
+.wizard input[type="text"], .wizard input[type="tel"], .wizard textarea
+	{
 	display: inline-block;
 	height: 20px;
 	padding: 4px 6px;
@@ -66,7 +71,7 @@ form.wizard {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	width: 300px
+	width: 300px;
 }
 
 .wizard textarea {
@@ -105,4 +110,39 @@ form.wizard {
 
 .small_tooltip {
 	background-color: white;
+}
+
+/* Fix mess caused by collision of definitions of class ".error" from jQuery.steps and presentation.css */
+.wizard>.steps li.error {
+	padding: inherit;
+	font-family: inherit;
+}
+
+.wizard>.content label.error {
+	padding: 0px;
+}
+
+.wizard label {
+	font-family: inherit !important;
+}
+
+.wizard>.content>.body .error {
+	background: rgb(251, 227, 228) !important;
+	color: #8a1f11 !important;
+}
+
+.wizard>.content>.body label.error {
+	background: inherit !important;
+}
+
+.wizard>.content input[type="text"], .wizard>.content input[type="tel"]
+	{
+	padding: 0px 6px;
+	font-family: Arial;
+}
+
+.wizard>.content textarea {
+	box-sizing: border-box;
+	font-size: 14px;
+	font-family: Arial;
 }

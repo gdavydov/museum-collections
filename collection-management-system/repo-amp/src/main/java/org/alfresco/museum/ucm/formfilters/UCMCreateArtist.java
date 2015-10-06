@@ -1,4 +1,4 @@
-package org.alfresco.museum.ucm;
+package org.alfresco.museum.ucm.formfilters;
 
 import static org.alfresco.museum.ucm.UCMConstants.MANDATORY_PROP_FILLER;
 import static org.alfresco.museum.ucm.UCMConstants.PROP_UCM_ARTIST_ARTIFACT_QNAME;

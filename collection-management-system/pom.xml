@@ -131,5 +131,12 @@
     <module>solr</module>
     <module>share</module>
     <module>runner</module>
+    <!-- This projects were taken from http://alfresco-share-site-logo-customization.googlecode.com/svn/trunk/
+    They were included as sources instead of just adding Maven dependency on them for two reasons:
+    1. They are absent in maven repositories.
+    2. Repo side project was modified - path to site logo changed. 
+     -->
+    <module>customise-site-logo/customise-site-logo-alfresco</module>
+    <module>customise-site-logo/customise-site-logo-share-42</module>
   </modules>
 </project>

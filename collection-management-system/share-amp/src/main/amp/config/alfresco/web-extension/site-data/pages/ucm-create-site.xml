@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>Create UCM site</title>
+   <title-id>page.ucmCreateSite.title</title-id>
+   <description>UCM site creation wizard page</description>
+   <description-id>page.ucmCreateSite.description</description-id>
+   <template-instance>ucm-create-site</template-instance>
+   <authentication>admin</authentication>
+</page>

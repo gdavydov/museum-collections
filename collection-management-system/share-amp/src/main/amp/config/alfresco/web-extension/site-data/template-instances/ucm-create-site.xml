@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<template-instance>
+   <template-type>com/alfresco/museum/ucm/ucm-create-site</template-type>
+   <properties>
+      <pageFamily>documentlibrary</pageFamily>
+      <container>documentLibrary</container>
+   </properties>
+   <components>
+      <component>
+         <region-id>ucm-create-site</region-id>
+         <url>/ucm/create-site</url>
+      </component>
+   </components>
+</template-instance>
