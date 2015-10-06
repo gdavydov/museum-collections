@@ -612,7 +612,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	public static Map<String, Object> createSuccessModel(UCMSite site) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put(MODEL_SUCCESS, true);
-		model.put(MODEL_SITE_NODE_REF, site.site);
+		model.put(MODEL_SITE_NODE_REF, site.site.getNodeRef().toString());
 		model.put(MODEL_SITE_IS_PRIVATE, site.isPrivate);
 		model.put(MODEL_SITE_SHORT_NAME, site.shortName);
 		model.put(MODEL_SITE_ADMIN, site.adminName);

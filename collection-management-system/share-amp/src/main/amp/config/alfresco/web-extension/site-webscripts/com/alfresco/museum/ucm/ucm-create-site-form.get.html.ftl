@@ -180,6 +180,31 @@
 			$('#siteFoldersSelectedOptions').attr('multiple', '');
 			$('#siteFoldersSelectedOptions option').prop('selected', true);
 			
+			var submitFrame = $('<iframe>').css('display', 'none').uniqueId();
+			var submitFrameId = submitFrame.attr('id');
+			submitFrame.attr({'name': submitFrameId}).appendTo(document.body);
+			form.attr({'target': submitFrameId});
+			
+			// makes it possible to target the frame properly in IE.
+			window.frames[submitFrameId].name = submitFrameId;
+			
+			submitFrame.load(function ucmHandleSiteSubmit() {
+				//TODO: loading indicator, disable buttons
+				var jsonText = submitFrame.contents().find('body').text();
+				if (jsonText) {
+					var json = JSON.parse(jsonText);
+					var success = json.success;
+					var siteShortName = json.siteShortName;
+					if (success && siteShortName) {
+						window.location.href = Alfresco.constants.URL_CONTEXT + 'page/site/' + siteShortName + '/dashboard';
+					}
+					else {
+						console.log(json);
+						Alfresco.util.PopupManager.displayMessage({ text: "Error: " + json.message, displayTime: 5, modal: true });
+					}
+				}
+			});
+
 			form[0].submit();
 		}
 

@@ -4,5 +4,6 @@
 	</description>
 	<url>/ucm/create-site</url>
 	<format default="html"/>
+	<!--authentication runas="admin">none</authentication-->
 	<authentication>admin</authentication>
 </webscript>
