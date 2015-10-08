@@ -314,7 +314,7 @@
 						    </parameter>
 						</constraint>
 					</constraints>
-=				</property>
+				</property>
 
 				<property name="ucm:artifact_location">
 					<title>Current Location</title>

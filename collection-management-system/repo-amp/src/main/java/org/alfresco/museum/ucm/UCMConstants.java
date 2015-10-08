@@ -94,6 +94,9 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_NAME = "site_name";
 	public static final QName ASPECT_PROP_UCM_SITE_NAME_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_NAME);
 	
+	public static final String ASPECT_PROP_UCM_SITE_TYPE = "site_type";
+	public static final QName ASPECT_PROP_UCM_SITE_TYPE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_TYPE);
+	
 	public static final String ASPECT_PROP_UCM_SITE_ADDRESS = "site_address";
 	public static final QName ASPECT_PROP_UCM_SITE_ADDRESS_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ADDRESS);
 	

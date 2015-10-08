@@ -8,6 +8,34 @@
       <@link rel="stylesheet" type="text/css" href="${url.context}/res/css/ucm-create-site-form.css" />
    </@>
 
+	<style type="text/css"><#-- See http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation -->
+		.modal {
+		    display:    none;
+		    position:   fixed;
+		    z-index:    1000;
+		    top:        0;
+		    left:       0;
+		    height:     100%;
+		    width:      100%;
+		    background: rgba( 255, 255, 255, .8 ) 
+		                url('${url.context}/res/images/ucm-spinner.gif') 
+		                50% 50% 
+		                no-repeat;
+		}
+		
+		/* When the body has the loading class, we turn
+		   the scrollbar off with overflow:hidden */
+		body.loading {
+		    overflow: hidden;   
+		}
+		
+		/* Anytime the body has the loading class, our
+		   modal element will be visible */
+		body.loading .modal {
+		    display: block;
+		}
+	</style>
+
 	<form id="ucm-create-site-form" action="${url.context}/proxy/alfresco/ucm/create-site" method="post" enctype="multipart/form-data" onsubmit="return false;">
 	    <h3>Create Site</h3>
 	    <fieldset>
@@ -32,7 +60,7 @@
 			<label for="siteIsPrivate">Private site:</label>
 	        <input id="siteIsPrivate" name="siteIsPrivate" type="checkbox">
 			<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info"
-				title="When creating a site, you have the option of making it public or private.<br/>All users can view a public site, whether or not they have joined the site.<br/>Users who join the site are listed as site members and can work with the site content, depending on their assigned roles.<br/>A private site is available only to the site manager and any users invited to join the site.<br/>Company administrator (superuser)  will ALWAYS have access to your site.">
+				title="When creating a site, you have the option of making it public or private.&#10;All users can view a public site, whether or not they have joined the site.&#10;Users who join the site are listed as site members and can work with the site content, depending on their assigned roles.&#10;A private site is available only to the site manager and any users invited to join the site.&#10;Company administrator (superuser)  will ALWAYS have access to your site.">
 			<br/>
 			
 			<label for="siteDescription" class="clearfix">Site description</label><br/>
@@ -45,11 +73,16 @@
 	    <fieldset>
 	        <legend>Information about Museum/Gallery</legend>
 	 
+	        <label for="siteType">Type</label>
+	        <select id="siteType" name="siteType" class="siteType required" value="All">
+				<option value="All">All</option>
+				<option value="Modern">Modern</option>
+				<option value="Classical">Classical</option>
+				<option value="Sculpture only">Sculpture only</option>
+	        </select>
+
 	        <label for="museumAddress">Address</label>
 	        <input id="museumAddress" name="museumAddress" type="text">
-			
-	        <label for="museumEmail">Email *</label>
-	        <input id="museumEmail" name="museumEmail" type="text" class="required">
 			
 	        <label for="museumPhone">Phone *</label>
 	        <input id="museumPhone" name="museumPhone" type="tel" maxlength="14" class="required phone">
@@ -71,7 +104,7 @@
 	        <input id="collectionID" name="collectionID" type="text">
 			
 			<legend>Additional Site Folders (Optional)
-				<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info" title="TODO: about folders">
+				<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info" title="Selected folders woll be created inside site root folder">
 			</legend>
 			
 	        <table width="400px" border="0" cellspacing="0" cellpadding="0">
@@ -169,8 +202,6 @@
 		}
 		
 		function ucmSubmitForm(form) {
-			//TODO: show wait indicator
-			//TODO: disable select siteFoldersAvailableOptions before submit
 			var csrfToken = ucmGetToken()
 			if (csrfToken) {
 				form[0].action += '?Alfresco-CSRFToken=' + csrfToken;
@@ -189,7 +220,7 @@
 			window.frames[submitFrameId].name = submitFrameId;
 			
 			submitFrame.load(function ucmHandleSiteSubmit() {
-				//TODO: loading indicator, disable buttons
+				$('body').removeClass('loading');
 				var jsonText = submitFrame.contents().find('body').text();
 				if (jsonText) {
 					var json = JSON.parse(jsonText);
@@ -204,7 +235,8 @@
 					}
 				}
 			});
-
+			
+			$('body').addClass('loading');
 			form[0].submit();
 		}
 
@@ -264,4 +296,6 @@
 			});	
 		});
 	</script>
+	
+	<div class="modal"></div><#-- See http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation -->
 </@>

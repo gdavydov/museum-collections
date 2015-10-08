@@ -50,18 +50,22 @@ form.wizard {
 	margin-bottom: 7px;
 }
 
-.wizard fieldset, .wizard  simpleFilePreview {
+.wizard .simpleFilePreview {
+	margin: 0;
+}
+
+.wizard fieldset {
 	border: 0;
 	margin: 0;
 	padding: 0;
 }
 
-.wizard input, .wizard select, .wizard textarea {
+.wizard input, .wizard select, .wizard textarea, .wizard select {
 	vertical-align: middle;
 }
 
-.wizard input[type="text"], .wizard input[type="tel"], .wizard textarea
-	{
+.wizard input[type="text"], .wizard input[type="tel"], .wizard textarea,
+	.wizard select.siteType {
 	display: inline-block;
 	height: 20px;
 	padding: 4px 6px;
@@ -71,7 +75,8 @@ form.wizard {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	width: 300px;
+	box-sizing: border-box;
+	width: 350px;
 }
 
 .wizard textarea {
@@ -96,6 +101,11 @@ form.wizard {
 	overflow: hidden;
 	width: 200px;
 	margin: 5px 0 5px 0;
+}
+
+.wizard>.content>.body select.siteType {
+	display: block;
+	padding: 0;
 }
 
 .wizard th {
@@ -135,8 +145,8 @@ form.wizard {
 	background: inherit !important;
 }
 
-.wizard>.content input[type="text"], .wizard>.content input[type="tel"]
-	{
+.wizard>.content input[type="text"], .wizard>.content input[type="tel"],
+	.wizard select {
 	padding: 0px 6px;
 	font-family: Arial;
 }
@@ -145,4 +155,17 @@ form.wizard {
 	box-sizing: border-box;
 	font-size: 14px;
 	font-family: Arial;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -16px; /* half width of the spinner gif */
+    margin-top: -16px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1000;
+    overflow: auto;
+    width: 16px; /* width of the spinner gif */
+    height: 18px; /*hight of the spinner gif +2px to fix IE8 issue */
 }
