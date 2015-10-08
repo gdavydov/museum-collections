@@ -5,6 +5,7 @@
    <description>UCM site creation wizard page</description>
    <description-id>page.ucmCreateSite.description</description-id>
    <template-instance>ucm-create-site</template-instance>
-   <!--authentication runas="admin">none</authentication-->
-   <authentication>admin</authentication>
+   <authentication runas="admin">none</authentication>
+   <!--authentication>admin</authentication-->
+   <transaction>required</transaction>
 </page>

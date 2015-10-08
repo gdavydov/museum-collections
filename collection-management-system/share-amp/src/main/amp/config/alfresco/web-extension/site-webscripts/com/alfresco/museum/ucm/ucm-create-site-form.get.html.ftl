@@ -35,8 +35,8 @@
 		    display: block;
 		}
 	</style>
-
-	<form id="ucm-create-site-form" action="${url.context}/proxy/alfresco/ucm/create-site" method="post" enctype="multipart/form-data" onsubmit="return false;">
+<#-- Action url ${url.context}/proxy/alfresco/ucm/create-site would be cleaner solution, but /share/proxy doesn't handle anonimous calls properly. This should be updated if repo ever moves to another path/server. -->
+	<form id="ucm-create-site-form" action="/alfresco/service/ucm/create-site" method="post" enctype="multipart/form-data" onsubmit="return false;">
 	    <h3>Create Site</h3>
 	    <fieldset>
 	        <legend>Site</legend>

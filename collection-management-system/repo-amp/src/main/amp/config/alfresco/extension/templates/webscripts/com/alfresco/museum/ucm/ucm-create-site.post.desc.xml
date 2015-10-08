@@ -6,6 +6,6 @@
 	</description>
 	<url>/ucm/create-site</url>
 	<format default="json" />
-	<!--authentication runas="admin">none</authentication-->
-	<authentication>admin</authentication>
+	<authentication runas="admin">none</authentication>
+	<!--authentication>admin</authentication-->
 </webscript>

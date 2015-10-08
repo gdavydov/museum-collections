@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.model.ContentModel;
+import org.alfresco.museum.ucm.formfilters.UCMCreateCollection;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.action.executer.MailActionExecuter;
@@ -461,6 +462,10 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				UCMConstants.TYPE_UCM_COLLECTION_QNAME);
 
 		this.getNodeService().addProperties(collection.getNodeRef(), collectionData);
+		
+		// Collection has been created programmatically and CreateCollection filter wasn't invoked. We need to run processing manually.
+		// Otherwise "Uploader Plus" plugin wouldn't be configured properly.
+		UCMCreateCollection.afterCreateCollection(collection.getNodeRef(), this.getNodeService());
 
 		return site;
 	}

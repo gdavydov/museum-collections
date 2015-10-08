@@ -60,6 +60,12 @@
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
+	<bean id="ucm.createCollection"
+		class="org.alfresco.museum.ucm.formfilters.UCMCreateCollection"
+		parent="ucm.baseFormFilter">
+		<property name="filterRegistry" ref="typeFilterRegistry" />
+	</bean>
+
 	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMEditArtist"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />

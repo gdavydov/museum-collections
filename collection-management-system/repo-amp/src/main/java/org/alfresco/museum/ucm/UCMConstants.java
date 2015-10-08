@@ -13,7 +13,9 @@ public class UCMConstants {
 	
 	public static final String UCM_NAMESPACE = "http://www.ucm.org/model/1.0";
 
-	public static final String ALFRESCO_NAMESPACE = "http://www.alfresco.org/model/content/1.0"; 
+	public static final String ALFRESCO_NAMESPACE = "http://www.alfresco.org/model/content/1.0";
+	public static final String ALFRESCO_NAMESPACE_SHORT = "ucm";
+	
 	public static final String PROP_CM_CMOBJECT = "cmobject";
 	public static final QName PROP_CM_CMOBJECT_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_CM_CMOBJECT);
 	public static final String PROP_NODE_CMNAME = "name";
@@ -122,4 +124,10 @@ public class UCMConstants {
 //	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
 	
 	public static final Set<QName> NOT_SYNC_PROPERTIES = Collections.singleton(PROP_UCM_ARTIST_ARTIFACT_QNAME);
+	
+	
+	public static final String UPLOADER_NAMESPACE = "https://github.com/softwareloop/uploader-plus/model/1.0";
+	
+	public static final String PROP_ALLOWED_TYPES = "allowedTypes";
+	public static final QName PROP_UPLOADER_ALLOWED_TYPES = QName.createQName(UPLOADER_NAMESPACE, PROP_ALLOWED_TYPES);
 }
