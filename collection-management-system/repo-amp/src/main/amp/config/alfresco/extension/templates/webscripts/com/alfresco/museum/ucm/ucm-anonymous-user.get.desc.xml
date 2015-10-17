@@ -1,0 +1,8 @@
+<webscript>
+	<shortname>Create "anonymous" user</shortname>
+	<description>Create "anonymous" user similar to "Guest" user</description>
+	<url>/ucm/anonymous-user</url>
+	<format default="json" />
+	<authentication runas="admin">none</authentication>
+	<transaction>required</transaction>
+</webscript>

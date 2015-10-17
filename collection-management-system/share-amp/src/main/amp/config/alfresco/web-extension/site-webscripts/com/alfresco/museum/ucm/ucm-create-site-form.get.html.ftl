@@ -46,7 +46,7 @@
 			
 	        <label for="siteLogo">Company logo</label>
 	        <input id="siteLogo" name="siteLogo" type="file">
-			<small>Upload your site logo here. Please note, that this logo could be changed any time later.</small><br/><br/>
+			<small>Upload your site logo here. Max size is 48x48 px. Logo could be changed any time later.</small><br/><br/>
 	        
 			<label for="siteAdminFirstName">Site administrator first name *</label>
 	        <input id="siteAdminFirstName" name="siteAdminFirstName" type="text" class="required">

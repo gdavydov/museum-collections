@@ -13,7 +13,6 @@ import org.alfresco.web.config.forms.FormConfigElement;
 import org.alfresco.web.config.forms.Mode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.extensions.surf.FrameworkUtil;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -34,9 +33,11 @@ import org.springframework.extensions.webscripts.json.JSONWriter;
  * requests to "ucm-formdefinitions" webscript instead of "formdefinitions".
  */
 public class UCMFormUIGet extends FormUIGet {
-	private static Log logger = LogFactory.getLog(UCMFormUIGet.class);
+	private static final Log logger = LogFactory.getLog(UCMFormUIGet.class);
 
 	protected static final String PARAM_INHERIT = "inherit";
+	
+	private ConnectorService connectorService;
 
 	/**
 	 * Duplicate of FormUIGet.generateModel except for connector url difference
@@ -86,11 +87,10 @@ public class UCMFormUIGet extends FormUIGet {
 
 		try {
 			// setup the connection
-			ConnectorService connService = FrameworkUtil.getConnectorService();
 			RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();
 			String currentUserId = requestContext.getUserId();
 			HttpSession currentSession = ServletUtil.getSession(true);
-			Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
+			Connector connector = this.getConnectorService().getConnector(ENDPOINT_ID, currentUserId, currentSession);
 			ConnectorContext context = new ConnectorContext(HttpMethod.POST, null, buildDefaultHeaders());
 			context.setContentType("application/json");
 
@@ -173,5 +173,13 @@ public class UCMFormUIGet extends FormUIGet {
 		Map<String, String> headers = new HashMap<String, String>(1, 1.0f);
 		headers.put("Accept-Language", I18NUtil.getLocale().toString().replace('_', '-'));
 		return headers;
+	}
+
+	public ConnectorService getConnectorService() {
+		return connectorService;
+	}
+
+	public void setConnectorService(ConnectorService connectorService) {
+		this.connectorService = connectorService;
 	}
 }

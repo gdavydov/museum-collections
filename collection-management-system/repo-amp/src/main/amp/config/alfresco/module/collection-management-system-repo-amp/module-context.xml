@@ -60,8 +60,7 @@
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createCollection"
-		class="org.alfresco.museum.ucm.formfilters.UCMCreateCollection"
+	<bean id="ucm.createCollection" class="org.alfresco.museum.ucm.formfilters.UCMCreateCollection"
 		parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
@@ -99,7 +98,8 @@
 	<bean id="ucm.spacesBootstrap" class="org.alfresco.repo.module.ImporterModuleComponent"
 		parent="module.baseComponent">
 		<property name="moduleId" value="collection-management-system-repo-amp" />
-		<property name="name" value="ucm.collection-management-system-repo-amp.bootstrapSpaces" />
+		<property name="name"
+			value="ucm.collection-management-system-repo-amp.bootstrapSpaces" />
 		<property name="description" value="Initial data requirements" />
 		<property name="sinceVersion" value="1.0" />
 		<property name="appliesFromVersion" value="1.0" />
@@ -108,7 +108,7 @@
 		<property name="bootstrapViews">
 			<list>
 				<props>
-				<!-- See http://docs.alfresco.com/5.0/concepts/dev-extensions-modules-import-strategy.html -->
+					<!-- See http://docs.alfresco.com/5.0/concepts/dev-extensions-modules-import-strategy.html -->
 					<prop key="uuidBinding">UPDATE_EXISTING</prop>
 					<prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.templates.email.childname}</prop>
 					<prop key="location">alfresco/module/collection-management-system-repo-amp/ucm-bootstrap/config_email_templates.xml</prop>
@@ -116,6 +116,12 @@
 			</list>
 		</property>
 	</bean>
-	<!-- TODO: explicitly override typeFormProcessor -->
-	<!-- TODO: explicitly override FileFolderServiceImpl -->
+
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-anonymous-user.get"
+		class="org.alfresco.museum.ucm.UCMAnonymousUser" parent="webscript">
+		<property name="authorityService" ref="AuthorityService" />
+		<property name="personService" ref="PersonService" />
+		<property name="permissionService" ref="PermissionService" />
+		<property name="authenticationService" ref="AuthenticationService" />
+	</bean>
 </beans>

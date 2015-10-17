@@ -1,0 +1,13 @@
+<webscript>
+	<shortname>UCM guest autologin</shortname>
+	<description>Login anonymous user as guest and make redirect to the URL specified in "pageId"</description>
+	<url>/ucm-guest/{pageId}</url>
+	<format default="json"/>
+	<authentication runas="admin">none</authentication>
+	<args>
+		<arg>
+			<name>pageId</name>
+			<description>Path to which user will be redirected after login</description>
+		</arg>
+ 	</args>
+</webscript>

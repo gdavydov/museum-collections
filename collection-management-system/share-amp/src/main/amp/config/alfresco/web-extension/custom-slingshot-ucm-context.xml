@@ -12,6 +12,7 @@
 		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
+				<value>alfresco.web-extension.messages.ucm-login</value>
 				<value>alfresco.web-extension.messages.ucm-site</value>
 				<value>alfresco.web-extension.messages.ucm-model</value>
 			</list>
@@ -19,7 +20,9 @@
 	</bean>
 
 	<bean id="webscript.org.alfresco.components.form.ucm-form.get"
-		class="org.alfresco.web.scripts.forms.UCMFormUIGet" parent="webscript.org.alfresco.components.form.form.get" />
+		class="org.alfresco.web.scripts.forms.UCMFormUIGet" parent="webscript.org.alfresco.components.form.form.get">
+		<property name="connectorService" ref="connector.service" />
+	</bean>
 
 	<bean id="evaluator.doclib.metadata.isArtifact" parent="evaluator.doclib.action.nodeType">
 		<property name="allowSubtypes" value="false" />
@@ -62,5 +65,11 @@
 	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site-templates.get"
 		class="com.alfresco.museum.ucm.UCMCreateSiteTemplates">
 		<property name="presetsManager" ref="ucm.presetsManager" />
+	</bean>
+
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-guest-autologin.get"
+		class="com.alfresco.museum.ucm.UCMGuestAutoLogin">
+		<property name="userFactory" ref="user.factory" />
+		<property name="connectorService" ref="connector.service" />
 	</bean>
 </beans>

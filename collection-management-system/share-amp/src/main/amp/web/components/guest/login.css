@@ -64,3 +64,15 @@
 	background: transparent url(../../images/ucm-logo.png) no-repeat
 		!important;
 }
+
+.ucm-submit-button {
+    position: absolute;
+    right: 176px;
+    border-color: #4BF !important;	
+}
+
+
+.ucm-submit-button > span {
+    background-color: #4BF !important;
+    border-color: #4BF !important;
+}
