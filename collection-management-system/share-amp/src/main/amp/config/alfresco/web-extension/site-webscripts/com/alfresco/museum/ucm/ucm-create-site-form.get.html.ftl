@@ -17,18 +17,18 @@
 		    left:       0;
 		    height:     100%;
 		    width:      100%;
-		    background: rgba( 255, 255, 255, .8 ) 
-		                url('${url.context}/res/images/ucm-spinner.gif') 
-		                50% 50% 
+		    background: rgba( 255, 255, 255, .8 )
+		                url('${url.context}/res/images/ucm-spinner.gif')
+		                50% 50%
 		                no-repeat;
 		}
-		
+
 		/* When the body has the loading class, we turn
 		   the scrollbar off with overflow:hidden */
 		body.loading {
-		    overflow: hidden;   
+		    overflow: hidden;
 		}
-		
+
 		/* Anytime the body has the loading class, our
 		   modal element will be visible */
 		body.loading .modal {
@@ -40,39 +40,39 @@
 	    <h3>Create Site</h3>
 	    <fieldset>
 	        <legend>Site</legend>
-	 
+
 	        <label for="siteName">Site name *</label>
 	        <input id="siteName" name="siteName" type="text" class="required">
-			
+
 	        <label for="siteLogo">Company logo</label>
 	        <input id="siteLogo" name="siteLogo" type="file">
 			<small>Upload your site logo here. Max size is 48x48 px. Logo could be changed any time later.</small><br/><br/>
-	        
+
 			<label for="siteAdminFirstName">Site administrator first name *</label>
 	        <input id="siteAdminFirstName" name="siteAdminFirstName" type="text" class="required">
-			
+
 			<label for="siteAdminLastName">Site administrator last name *</label>
 	        <input id="siteAdminLastName" name="siteAdminLastName" type="text" class="required">
-			
+
 			<label for="siteAdminEmail">Site administrator email *</label>
 	        <input id="siteAdminEmail" name="siteAdminEmail" type="text" class="required email">
-			
+
 			<label for="siteIsPrivate">Private site:</label>
 	        <input id="siteIsPrivate" name="siteIsPrivate" type="checkbox">
 			<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info"
 				title="When creating a site, you have the option of making it public or private.&#10;All users can view a public site, whether or not they have joined the site.&#10;Users who join the site are listed as site members and can work with the site content, depending on their assigned roles.&#10;A private site is available only to the site manager and any users invited to join the site.&#10;Company administrator (superuser)  will ALWAYS have access to your site.">
 			<br/>
-			
+
 			<label for="siteDescription" class="clearfix">Site description</label><br/>
 	        <textarea id="siteDescription" style="resize: none;" name="siteDescription" rows="4"></textarea>
-			
+
 	        <p>(*) Mandatory</p>
 	    </fieldset>
-	 
+
 	    <h3>Museum/Gallery Information</h3>
 	    <fieldset>
 	        <legend>Information about Museum/Gallery</legend>
-	 
+
 	        <label for="siteType">Type</label>
 	        <select id="siteType" name="siteType" class="siteType required" value="All">
 				<option value="All">All</option>
@@ -83,30 +83,33 @@
 
 	        <label for="museumAddress">Address</label>
 	        <input id="museumAddress" name="museumAddress" type="text">
-			
+
+	        <label for="museumEmail">Site Email (General) *</label>
+	        <input id="museumEmail" name="museumEmail" type="text" class="required email">
+
 	        <label for="museumPhone">Phone *</label>
 	        <input id="museumPhone" name="museumPhone" type="tel" maxlength="14" class="required phone">
-			
+
 	        <label for="museumFax">Fax</label>
 	        <input id="museumFax" name="museumFax" type="tel" maxlength="14" class="phone">
-			
+
 	        <p>(*) Mandatory</p>
 	    </fieldset>
-	 
+
 	    <h3>Collection and Site folders (Optional)</h3>
 	    <fieldset>
 	        <legend>Collection (Optional)</legend>
-	
+
 			<label for="collectionName">Collection name</label>
 	        <input id="collectionName" name="collectionName" type="text">
-			
+
 			<label for="collectionID">Collection ID</label>
 	        <input id="collectionID" name="collectionID" type="text">
-			
+
 			<legend>Additional Site Folders (Optional)
 				<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info" title="Selected folders woll be created inside site root folder">
 			</legend>
-			
+
 	        <table width="400px" border="0" cellspacing="0" cellpadding="0">
 			<tbody>
 			<tr>
@@ -138,39 +141,39 @@
 			</tbody>
 			</table>
 	    </fieldset>
-	 
+
 	    <h3>Copyright</h3>
 	    <fieldset>
 	        <legend>Copyright</legend>
 	        <textarea id="copyright" name="copyright" rows="10"></textarea>
 	    </fieldset>
 	</form>
-	
+
 	<script type="text/javascript">
 		function ucmAddOption(theSel, theText, theValue) {
 			var newOpt = new Option(theText, theValue);
 			var selLength = theSel.length;
 			theSel.options[selLength] = newOpt;
 		}
-		
+
 		function ucmDeleteOption(theSel, theIndex) {
 			var selLength = theSel.length;
 			if (selLength > 0) {
 				theSel.options[theIndex] = null;
 			}
 		}
-		
+
 		function ucmMoveOptions(from, to) {
 			theSelFrom = document.getElementById(from);
 			theSelTo = document.getElementById(to);
-		
+
 			var selLength = theSelFrom.length;
 			var selectedText = new Array();
 			var selectedValues = new Array();
 			var selectedCount = 0;
-		
+
 			var i;
-		
+
 			// Find the selected Options in reverse order
 			// and delete them from the 'from' Select.
 			for (i = selLength - 1; i >= 0; i--) {
@@ -181,7 +184,7 @@
 					selectedCount++;
 				}
 			}
-		
+
 			// Add the selected text/values in reverse order.
 			// This will add the Options to the 'to' Select
 			// in the same order as they were in the 'from' Select.
@@ -189,38 +192,37 @@
 				ucmAddOption(theSelTo, selectedText[i], selectedValues[i]);
 			}
 		}
-		
+
 		function ucmGetCookie(name) {
 			var value = "; " + document.cookie;
 			var parts = value.split("; " + name + "=");
 			if (parts.length == 2) return parts.pop().split(";").shift();
 		}
-		
+
 		function ucmGetToken() {
 			var token = ucmGetCookie('Alfresco-CSRFToken');
 			if (token) return token;
 		}
-		
+
 		function ucmSubmitForm(form) {
 			var csrfToken = ucmGetToken()
 			if (csrfToken) {
 				form[0].action += '?Alfresco-CSRFToken=' + csrfToken;
 			}
-			
+
 			$('#siteFoldersAvailableOptions').prop('disabled', 'disabled');
 			$('#siteFoldersSelectedOptions').attr('multiple', '');
 			$('#siteFoldersSelectedOptions option').prop('selected', true);
-			
+
 			var submitFrame = $('<iframe>').css('display', 'none').uniqueId();
 			var submitFrameId = submitFrame.attr('id');
 			submitFrame.attr({'name': submitFrameId}).appendTo(document.body);
 			form.attr({'target': submitFrameId});
-			
+
 			// makes it possible to target the frame properly in IE.
 			window.frames[submitFrameId].name = submitFrameId;
-			
+
 			submitFrame.load(function ucmHandleSiteSubmit() {
-				$('body').removeClass('loading');
 				var jsonText = submitFrame.contents().find('body').text();
 				if (jsonText) {
 					var json = JSON.parse(jsonText);
@@ -234,8 +236,9 @@
 						Alfresco.util.PopupManager.displayMessage({ text: "Error: " + json.message, displayTime: 5, modal: true });
 					}
 				}
+				$('body').removeClass('loading');
 			});
-			
+
 			$('body').addClass('loading');
 			form[0].submit();
 		}
@@ -249,7 +252,7 @@
 				"${url.context}/res/js/jquery.validate.min.js"
 				], function() {
 				var form = $("#ucm-create-site-form").show();
-				
+
 				form.steps(
 						{
 							headerTag : "h3",
@@ -260,7 +263,7 @@
 								if (currentIndex > newIndex) {
 									return true;
 								}
-				
+
 								// Needed in some cases if the user went back (clean up)
 								if (currentIndex < newIndex) {
 									// To remove error styles
@@ -290,12 +293,12 @@
 				 * , rules : { confirm : { equalTo : "#password-2" } }
 				 */
 				});
-				
+
 				$('#siteLogo').simpleFilePreview();
 				$(document).tooltip();
-			});	
+			});
 		});
 	</script>
-	
+
 	<div class="modal"></div><#-- See http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation -->
 </@>

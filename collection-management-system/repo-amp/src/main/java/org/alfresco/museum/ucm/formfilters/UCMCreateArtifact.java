@@ -1,7 +1,9 @@
 package org.alfresco.museum.ucm.formfilters;
 
-import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIFACT_QNAME;
+import java.io.Serializable;
 
+import org.alfresco.model.ContentModel;
+import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
@@ -17,7 +19,7 @@ public class UCMCreateArtifact extends UCMGenericFilter<TypeDefinition> {
 	 */
 	@Override
 	public void beforePersist(TypeDefinition item, FormData data) {
-		boolean isArtifact = item.getName().equals(TYPE_UCM_ARTIFACT_QNAME);
+		boolean isArtifact = item.getName().equals(UCMConstants.TYPE_UCM_ARTIFACT_QNAME);
 		if (isArtifact) {
 			resolvePossibleFilenameConflict(item, data);
 		}
@@ -29,10 +31,16 @@ public class UCMCreateArtifact extends UCMGenericFilter<TypeDefinition> {
 	 */
 	@Override
 	public void afterPersist(TypeDefinition item, FormData data, NodeRef persistedObject) {
-		boolean isArtifact = item.getName().equals(TYPE_UCM_ARTIFACT_QNAME);
+		boolean isArtifact = item.getName().equals(UCMConstants.TYPE_UCM_ARTIFACT_QNAME);
 		if (isArtifact) {
 			writeContent(item, data, persistedObject);
 			getOrCreateArtistMediaFolder(persistedObject);
+
+			//set ucm:artifact_name
+			Serializable name = this.getNodeService().getProperty(persistedObject, ContentModel.PROP_NAME);
+			if (name != null) {
+				this.getNodeService().setProperty(persistedObject, UCMConstants.PROP_UCM_ARTIFACT_QNAME, name);
+			}
 		}
 	}
 }

@@ -1,16 +1,18 @@
 <webscript>
 	<shortname>Get updated template for UCM site dashboard page</shortname>
-	<description>Get UCM site dashboard page template with site logo property set</description>
-	<url>/ucm/get-page-template?siteId={siteId}&amp;logoNodeRef={logoNodeRef}</url>
-	<format default="json"/>
+	<description>Get UCM site dashboard page template with site logo
+		property set</description>
+	<url>/ucm/get-page-template?siteId={siteId}&amp;logoNodeRef={logoNodeRef}
+	</url>
+	<format default="json" />
 	<args>
-    <arg>
-      <name>siteId</name>
-      <description>Short name of site</description>
-    </arg>
-    <arg>
-      <name>logoNodeRef</name>
-      <description>NodeRef of new logo content</description>
-    </arg>
- </args>
+		<arg>
+			<name>siteId</name>
+			<description>Short name of site</description>
+		</arg>
+		<arg>
+			<name>logoNodeRef</name>
+			<description>NodeRef of new logo content</description>
+		</arg>
+	</args>
 </webscript>

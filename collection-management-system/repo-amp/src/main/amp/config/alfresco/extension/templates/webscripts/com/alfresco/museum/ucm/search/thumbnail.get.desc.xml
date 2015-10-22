@@ -1,0 +1,12 @@
+<webscript kind="org.alfresco.repository.content.stream">
+	<shortname>UCM thumbnails</shortname>
+	<description>Modified version of
+		org/alfresco/repository/thumbnail/thumbnail.get web script with
+		anonymous access allowed.
+	</description>
+	<url>/ucm/thumbnail/{store_type}/{store_id}/{id}/{thumbnailname}</url>
+	<transaction allow="readonly">required</transaction>
+	<format default="">argument</format>
+	<authentication runas="user">none</authentication>
+	<transaction>required</transaction>
+</webscript>

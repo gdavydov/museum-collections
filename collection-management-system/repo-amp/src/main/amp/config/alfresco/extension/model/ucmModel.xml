@@ -8,14 +8,8 @@
 
 	<!-- TODO: Create additional property value constraints, like UID constraint? -->
 	<!-- TODO: Adjust index settings (e.g. for ID properties) -->
-	<!-- TODO: References to attachments and references to attachment owners 
-		should be kept in sync -->
-		
- <!-- 
- 	TODO look on these sites	
- 	http://collection-online.moa.ubc.ca/collection-online/explore
- 	
- -->
+
+	<!-- TODO look on these sites http://collection-online.moa.ubc.ca/collection-online/explore -->
 
 	<imports>
 		<!-- Import Alfresco Dictionary Definitions -->
@@ -97,7 +91,7 @@
 					<propagateTimestamps>true</propagateTimestamps>
 				</child-association>
 
-				
+
 
 				<!-- Artifact (as it is child type of type cm:folder) -->
 				<child-association name="ucm:collectionArtifacts">
@@ -113,8 +107,8 @@
 					<duplicate>false</duplicate>
 					<propagateTimestamps>true</propagateTimestamps>
 				</child-association>
-				
-				<!-- TODO: this may require changes if implementation of ucm:artifact 
+
+				<!-- TODO: this may require changes if implementation of ucm:artifact
 					would change -->
 
 				<!-- Generic UCM Document -->
@@ -162,7 +156,7 @@
 						<many>false</many>
 					</source>
 					<target>
-<!--						<class>ucm:document</class> -->
+						<!-- <class>ucm:document</class> -->
 						<class>ucm:artifact</class>
 						<mandatory>false</mandatory>
 						<many>true</many>
@@ -233,13 +227,13 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<multiple>false</multiple>
-            		<default>English</default> 
+					<default>English</default>
 					<constraints>
 						<constraint name="ucm:attachment_language" type="org.alfresco.museum.ucm.model.LOVConstraint_Attached_file__attached_file_language">
-						    <parameter name="allowedValues">
-						    	<list>
-						      </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -268,6 +262,11 @@
 					<title>Title</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:artifact_date">
@@ -280,12 +279,17 @@
 					<title>Medium</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 					<constraints>
 						<constraint name="ucm:allowed_mediums" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_medium">
-						    <parameter name="allowedValues">
-						    	<list>
-						      </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -294,6 +298,11 @@
 					<title>Technique</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:artifact_dimension">
@@ -308,10 +317,10 @@
 					<mandatory enforced="false">false</mandatory>
 					<constraints>
 						<constraint name="ucm:allowed_statuses" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_status">
-						    <parameter name="allowedValues">
-							   	<list>
-							    </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -333,10 +342,10 @@
 					<mandatory>false</mandatory>
 					<constraints>
 						<constraint name="ucm:allowed_acquisition_types" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_acquisition_type">
-						    <parameter name="allowedValues">
-							   	<list>
-							    </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -345,12 +354,17 @@
 					<title>Type</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>false</tokenised>
+					</index>
 					<constraints>
 						<constraint name="ucm:allowed_artifact_types" type="org.alfresco.museum.ucm.model.LOVConstraint_Artifact__artifact_type">
-						    <parameter name="allowedValues">
-							   	<list>
-							    </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -359,6 +373,11 @@
 					<title>On display</title>
 					<type>d:boolean</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>false</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:artifact_comments">
@@ -376,7 +395,7 @@
 						<many>false</many>
 					</source>
 					<target>
-						<class>cm:folder</class> <!-- TODO: ucm:attached_file ?  -->
+						<class>cm:folder</class> <!-- TODO: ucm:attached_file ? -->
 						<mandatory>false</mandatory>
 						<many>false</many>
 					</target>
@@ -400,9 +419,9 @@
 
 		<type name="ucm:about_artist_artifact">
 			<title>About Artist</title>
-			<parent>ucm:artifact</parent> 
+			<parent>ucm:artifact</parent>
 		</type>
-		
+
 		<type name="ucm:license_file">
 			<title>Reference file</title>
 			<parent>ucm:content</parent> <!-- TODO: no instructions in specification! -->
@@ -579,12 +598,12 @@
 				</property>
 			</properties>
 		</type>
-		
+
 		<type name="ucm:config">
-            <title>UCM configuration type file</title>
-            <parent>ucm:document</parent> 
-    </type>
-		
+			<title>UCM configuration type file</title>
+			<parent>ucm:document</parent>
+		</type>
+
 	</types>
 
 	<aspects>
@@ -595,14 +614,23 @@
 					<title>Site Name</title>
 					<type>d:text</type>
 					<mandatory>true</mandatory>
-					<!-- TODO: constraints? -->
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:site_address">
 					<title>Museum Address</title>
 					<type>d:text</type>
-					<!-- TODO: constraints? -->
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
+
 				<property name="ucm:site_buildYear">
 					<title>Build Year</title>
 					<type>d:text</type>
@@ -613,6 +641,11 @@
 					<title>Site Type</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 					<constraints>
 						<constraint name="ucm:site_aspect_allowed_types" type="LIST">
 							<parameter name="allowedValues">
@@ -644,8 +677,8 @@
 					<type>d:text</type>
 					<!-- TODO: constraints? -->
 				</property>
-				
-				
+
+
 				<property name="ucm:site_aspect_contact_phone">
 					<title>Contact Phone</title>
 					<type>d:text</type>
@@ -737,6 +770,11 @@
 					<title>Artist Name</title>
 					<type>d:text</type>
 					<mandatory>true</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:artist_nickname">
@@ -775,14 +813,19 @@
 					<title>Studied at Workshop</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
-					<multiple>true</multiple><!--TODO: set false to allow values with comma?-->
+					<multiple>true</multiple><!--TODO: set false to allow values with comma? -->
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 
 				<property name="ucm:artist_live_city">
 					<title>Lived Cities</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory> <!-- TODO: true? -->
-					<multiple>true</multiple><!--TODO: set false to allow values with comma-->
+					<multiple>true</multiple><!--TODO: set false to allow values with comma -->
 				</property>
 
 				<property name="ucm:artist_period">
@@ -790,12 +833,17 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 					<multiple>false</multiple>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 					<constraints>
 						<constraint name="ucm:allowed_art_periods" type="org.alfresco.museum.ucm.model.LOVConstraint_Artist_aspect__artist_period">
-						    <parameter name="allowedValues">
-							   	<list>
-							    </list>
-						    </parameter>
+							<parameter name="allowedValues">
+								<list>
+								</list>
+							</parameter>
 						</constraint>
 					</constraints>
 				</property>
@@ -825,14 +873,19 @@
 				</property>
 			</properties>
 		</aspect>
-		
-		<aspect name="ucm:artifact_donor"> 
+
+		<aspect name="ucm:artifact_donor">
 			<title>Artifact Donor</title>
 			<properties>
 				<property name="ucm:donor_name">
 					<title>Donor</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
 				</property>
 				<property name="ucm:donation_date">
 					<title>Donated</title>
@@ -841,6 +894,6 @@
 				</property>
 			</properties>
 		</aspect>
-		
+
 	</aspects>
 </model>

@@ -21,16 +21,22 @@ import org.alfresco.museum.ucm.formfilters.UCMCreateCollection;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.action.executer.MailActionExecuter;
+import org.alfresco.repo.domain.node.ContentDataWithId;
+import org.alfresco.repo.thumbnail.ThumbnailDefinition;
+import org.alfresco.repo.thumbnail.ThumbnailRegistry;
+import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ActionService;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.model.FileNotFoundException;
+import org.alfresco.service.cmr.repository.ContentData;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.MimetypeService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.datatype.DefaultTypeConverter;
 import org.alfresco.service.cmr.security.AuthorityService;
 import org.alfresco.service.cmr.security.MutableAuthenticationService;
 import org.alfresco.service.cmr.security.PermissionService;
@@ -38,6 +44,7 @@ import org.alfresco.service.cmr.security.PersonService;
 import org.alfresco.service.cmr.site.SiteInfo;
 import org.alfresco.service.cmr.site.SiteService;
 import org.alfresco.service.cmr.site.SiteVisibility;
+import org.alfresco.service.cmr.thumbnail.ThumbnailService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -79,7 +86,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	public static final Collection<String> OBLIGATORY_FIELDS = Collections.unmodifiableCollection(Arrays
 			.asList(new String[] { "siteName", "siteAdminFirstName", "siteAdminLastName", "siteAdminEmail",
-					"museumPhone" }));
+					"museumPhone", "museumEmail" }));
 
 	@SuppressWarnings("serial")
 	public static final Map<String, QName> FORM_FIELD_TO_ADMIN_PROPERTY = Collections
@@ -87,7 +94,8 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				{
 					this.put("siteAdminFirstName", ContentModel.PROP_FIRSTNAME);
 					this.put("siteAdminLastName", ContentModel.PROP_LASTNAME);
-					this.put("siteAdminEmail", ContentModel.PROP_EMAIL);
+					this.put("siteAdminEmail", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME);
+					this.put("museumEmail", ContentModel.PROP_EMAIL);
 					// TODO: ContentModel.PROP_ORGID,
 					// ContentModel.PROP_SIZE_CURRENT,
 					// ContentModel.PROP_SIZE_QUOTA ?
@@ -140,6 +148,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	private ScriptRemote remote;
 	private NodeUtils utils;
 	private Properties properties;
+	private ServiceRegistry serviceRegistry;
 
 	/**
 	 * Late phases of site creation depend on objects created earlier. UCMSite
@@ -324,7 +333,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	/**
 	 * Creates component and page files required for site to operate. File
 	 * structure to create inside site root node:
-	 * 
+	 *
 	 * <pre>
 	 * surf-config/
 	 * 		components/
@@ -338,19 +347,19 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	 * 	documentLibrary/
 	 * 	system/
 	 * </pre>
-	 * 
+	 *
 	 * @param site
 	 *            Site to create content in.
 	 * @param objectsData
 	 *            Expected data structure:
-	 * 
+	 *
 	 *            <pre>
 	 * {
 	 * 	"pages": [{ "id":"site/{siteName}/dashboard", "xml":"..."}, ...],
 	 * 	"components":[{"id":"page.title.site~{siteName}~dashboard", "xml":"..." }, ...]
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * <br/>
 	 * @throws JSONException
 	 */
@@ -398,7 +407,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	 * Set logo NodeRef to site dashboard template property at Share side and
 	 * retrieve updated template. Template should be saved under path
 	 * surf-config/pages/site/{siteName}/dashboard.xml
-	 * 
+	 *
 	 * @return {"id": "site/{siteName}/dashboard", "xml": ${...}}
 	 */
 	public JSONObject getPageTemplateWithLogo(String siteId, NodeRef logoNodeRef) throws IOException, JSONException {
@@ -444,11 +453,72 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				this.getNodeService().removeChild(objectFolderNodeRef, existingTemplate);
 			}
 
+			// This node is used as a config file by Share, so now Share knows
+			// where to look for site logo
 			@SuppressWarnings("unused")
 			NodeRef objectNodeRef = this.getUtils().createContentNode(objectFolderNodeRef, fileName, objectXml);
+
+			// create doclib thumbnail
+			this.createThumbnail(logoNodeRef, "doclib");
+
+			// store reference to logo inside site node
+			// TODO: use association?
+			this.getNodeService().setProperty(site.site.getNodeRef(), UCMConstants.PROP_UCM_SITE_LOGO_REF_QNAME,
+					logoNodeRef.toString());
+
 			LOGGER.info("Site logo have been set.");
 		}
 		return site;
+	}
+
+	/**
+	 * @see {@link org.alfresco.repo.jscript.ScriptNode#createThumbnail(String) ScriptNode.createThumbnail()}
+	 */
+	public NodeRef createThumbnail(NodeRef nodeRef, String thumbnailName) {
+		final ThumbnailService thumbnailService = this.getServiceRegistry().getThumbnailService();
+
+		NodeRef result = null;
+
+		// Use the thumbnail registy to get the details of the thumbnail
+		ThumbnailRegistry registry = thumbnailService.getThumbnailRegistry();
+		ThumbnailDefinition details = registry.getThumbnailDefinition(thumbnailName);
+		if (details == null) {
+			return null;
+		}
+
+		// If there's nothing currently registered to generate thumbnails for
+		// the specified mimetype, then log a message and bail out
+		String nodeMimeType = null;
+		long size = 0l;
+		ContentDataWithId content = (ContentDataWithId) this.getNodeService().getProperties(nodeRef)
+				.get(ContentModel.PROP_CONTENT);
+		if (content != null) {
+			nodeMimeType = content.getMimetype();
+			size = content.getSize();
+		}
+		Serializable value = this.nodeService.getProperty(nodeRef, ContentModel.PROP_CONTENT);
+		ContentData contentData = DefaultTypeConverter.INSTANCE.convert(ContentData.class, value);
+		if (!ContentData.hasContent(contentData)
+				|| !this.getContentService().getReader(nodeRef, ContentModel.PROP_CONTENT).exists()) {
+			LOGGER.debug("Unable to create thumbnail '" + details.getName() + "' as there is no content");
+			return null;
+		}
+		if (!registry.isThumbnailDefinitionAvailable(contentData.getContentUrl(), nodeMimeType, size, nodeRef, details)) {
+			LOGGER.info("Unable to create thumbnail '" + details.getName() + "' for " + nodeMimeType
+					+ " as no transformer is currently available.");
+			return null;
+		}
+
+		// Have the thumbnail created
+		try {
+			// Create the thumbnail
+			result = thumbnailService.createThumbnail(nodeRef, ContentModel.PROP_CONTENT, details.getMimetype(),
+					details.getTransformationOptions(), details.getName());
+		} catch (AlfrescoRuntimeException e) {
+			LOGGER.debug("Unable to create thumbnail '" + details.getName() + "' as " + e.getMessage());
+			return null;
+		}
+		return result;
 	}
 
 	/**
@@ -462,8 +532,9 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				UCMConstants.TYPE_UCM_COLLECTION_QNAME);
 
 		this.getNodeService().addProperties(collection.getNodeRef(), collectionData);
-		
-		// Collection has been created programmatically and CreateCollection filter wasn't invoked. We need to run processing manually.
+
+		// Collection has been created programmatically and CreateCollection
+		// filter wasn't invoked. We need to run processing manually.
 		// Otherwise "Uploader Plus" plugin wouldn't be configured properly.
 		UCMCreateCollection.afterCreateCollection(collection.getNodeRef(), this.getNodeService());
 
@@ -517,7 +588,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	 * See <a href=
 	 * "https://forums.alfresco.com/forum/general/non-technical-alfresco-discussion/creating-users-using-java-api-10032008-1248"
 	 * >discussion thread</a>
-	 * 
+	 *
 	 * @throws FileNotFoundException
 	 */
 	public UCMSite createAdminUser(UCMSite site, Map<QName, Serializable> userProps) throws FileNotFoundException {
@@ -785,5 +856,13 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	public void setProperties(Properties properties) {
 		this.properties = properties;
+	}
+
+	public ServiceRegistry getServiceRegistry() {
+		return serviceRegistry;
+	}
+
+	public void setServiceRegistry(ServiceRegistry serviceRegistry) {
+		this.serviceRegistry = serviceRegistry;
 	}
 }

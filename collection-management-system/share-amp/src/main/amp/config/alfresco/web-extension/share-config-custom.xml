@@ -39,7 +39,7 @@
 		<aspects>
 			<!-- Aspects that a user can see -->
 			<visible>
-<!-- 				<aspect name="cm:dublincore" /> -->
+				<!-- <aspect name="cm:dublincore" /> -->
 				<aspect name="cm:versionable" />
 				<aspect name="cm:taggable" />
 				<aspect name="exif:exif" />
@@ -92,20 +92,20 @@
 		<create-content>
 			<content id="artifact" mimetype="image/jpeg" label="menu.create-content.ucm_artifact" itemid="ucm:artifact" />
 
-	        <content id="collection" label="menu.create-content.ucm_collection"  index="2" type="javascript">
-	            <param name="function">onNewCollection</param>
-	        </content>
+			<content id="collection" label="menu.create-content.ucm_collection" index="2" type="javascript">
+				<param name="function">onNewCollection</param>
+			</content>
 
-	        <content id="artist" label="menu.create-content.ucm_artist"  index="3" type="javascript">
-	            <param name="function">onNewArtist</param>
-	        </content>
+			<content id="artist" label="menu.create-content.ucm_artist" index="3" type="javascript">
+				<param name="function">onNewArtist</param>
+			</content>
 		</create-content>
-	
-        <create-content-by-template>false</create-content-by-template>
 
-      <folder-types>
-         <type name="ucm:collection" display-label="FCollection" display-label-id="fcollection" icon="folder" itemid="ucm:collection" />
-      </folder-types>
+		<create-content-by-template>false</create-content-by-template>
+
+		<folder-types>
+			<type name="ucm:collection" display-label="FCollection" display-label-id="fcollection" icon="folder" itemid="ucm:collection" />
+		</folder-types>
 
 		<metadata-templates>
 			<template id="isArtifact">
@@ -121,22 +121,22 @@
 		<forms>
 			<form id="doclib-common">
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:collection_id"/>
-					<show id="ucm:curator"/>
+					<show id="cm:name" />
+					<show id="ucm:collection_id" />
+					<show id="ucm:curator" />
 					<show id="cm:description" />
 				</field-visibility>
 				<create-form template="../documentlibrary/forms/doclib-common.ftl" />
-	            <appearance>
-	                <field id="cm:name" label-id="Collection Name" />
-	                <field id="ucm:collection_id" label-id="Collection ID" />
-					<field id="ucm:curator"/>
-	                <field id="cm:description">
-	                  <control>
-	                     <control-param name="activateLinks">true</control-param>
-	                  </control>
-	               </field>
-	            </appearance>
+				<appearance>
+					<field id="cm:name" label-id="Collection Name" />
+					<field id="ucm:collection_id" label-id="Collection ID" />
+					<field id="ucm:curator" />
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
+				</appearance>
 			</form>
 		</forms>
 	</config>
@@ -144,49 +144,49 @@
 	<!-- ucm:collection type (existing nodes) -->
 	<config evaluator="node-type" condition="ucm:collection">
 		<forms>
-		   <form>
+			<form>
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:collection_id"/>
-					<show id="ucm:curator"/>
- 	                <show id="cm:description"/>
+					<show id="cm:name" />
+					<show id="ucm:collection_id" />
+					<show id="ucm:curator" />
+					<show id="cm:description" />
 				</field-visibility>
-	            <appearance>                    
-	                <field id="cm:name" label-id="Collection Name" />
-	                <field id="ucm:collection_id" label-id="Collection ID" />
-					<field id="ucm:curator"/>
- 	                <field id="cm:description"/>
-	            </appearance>
-            </form>
-            <form id="doclib-simple-metadata">
+				<appearance>
+					<field id="cm:name" label-id="Collection Name" />
+					<field id="ucm:collection_id" label-id="Collection ID" />
+					<field id="ucm:curator" />
+					<field id="cm:description" />
+				</appearance>
+			</form>
+			<form id="doclib-simple-metadata">
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:collection_id"/>
-					<show id="ucm:curator"/>
- 	                <show id="cm:description"/>
+					<show id="cm:name" />
+					<show id="ucm:collection_id" />
+					<show id="ucm:curator" />
+					<show id="cm:description" />
 				</field-visibility>
-	            <appearance>                    
-	                <field id="cm:name" label-id="Collection Name" />
-	                <field id="ucm:collection_id" label-id="Collection ID" />
-					<field id="ucm:curator"/>
- 	                <field id="cm:description"/>
-	            </appearance>
+				<appearance>
+					<field id="cm:name" label-id="Collection Name" />
+					<field id="ucm:collection_id" label-id="Collection ID" />
+					<field id="ucm:curator" />
+					<field id="cm:description" />
+				</appearance>
 			</form>
 
 			<!-- Document Library Inline Edit form -->
 			<form id="doclib-inline-edit">
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:collection_id"/>
-					<show id="ucm:curator"/>
- 	                <show id="cm:description"/>
+					<show id="cm:name" />
+					<show id="ucm:collection_id" />
+					<show id="ucm:curator" />
+					<show id="cm:description" />
 				</field-visibility>
-	            <appearance>                    
-	                <field id="cm:name" label-id="Collection Name" />
-	                <field id="ucm:collection_id" label-id="Collection ID" />
-					<field id="ucm:curator"/>
- 	                <field id="cm:description"/>
-	            </appearance>
+				<appearance>
+					<field id="cm:name" label-id="Collection Name" />
+					<field id="ucm:collection_id" label-id="Collection ID" />
+					<field id="ucm:curator" />
+					<field id="cm:description" />
+				</appearance>
 			</form>
 		</forms>
 	</config>
@@ -196,9 +196,9 @@
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
-				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
+				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
 				<field-visibility>
-					<show id="cm:content" force="true"/>
+					<show id="cm:content" force="true" />
 					<show id="cm:name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:artist_nickname" />
@@ -212,11 +212,11 @@
 					<show id="ucm:artist_comments" />
 				</field-visibility>
 				<appearance>
- 					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
-	        		<field id="cm:name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" label="Given Name"/>
+					<field id="cm:content">
+						<control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
+					</field>
+					<field id="cm:name" label="Known As (Name)" />
+					<field id="ucm:artist_name" label="Given Name" />
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -230,16 +230,16 @@
 			</form>
 		</forms>
 	</config>
-	
+
 	<!-- ucm:artist type (existing nodes) -->
 	<config evaluator="node-type" condition="ucm:artist">
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
-				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
-				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
+				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
 				<field-visibility>
-					<show id="cm:content" force="true"/>
+					<show id="cm:content" force="true" />
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_name" />
 					<show id="cm:name" />
@@ -253,11 +253,11 @@
 					<show id="ucm:artist_comments" />
 				</field-visibility>
 				<appearance>
- 					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
-	        		<field id="cm:name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" label="Given Name"/>
+					<field id="cm:content">
+						<control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
+					</field>
+					<field id="cm:name" label="Known As (Name)" />
+					<field id="ucm:artist_name" label="Given Name" />
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -271,10 +271,10 @@
 			</form>
 			<!-- Document Library pop-up Edit Metadata form -->
 			<form id="doclib-simple-metadata">
-				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
-				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
+				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
 				<field-visibility>
-					<show id="cm:content" force="true"/>
+					<show id="cm:content" force="true" />
 					<show id="cm:name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:artist_nickname" />
@@ -288,11 +288,11 @@
 					<show id="ucm:artist_comments" />
 				</field-visibility>
 				<appearance>
- 					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
-	        		<field id="cm:name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" label="Given Name"/>
+					<field id="cm:content">
+						<control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
+					</field>
+					<field id="cm:name" label="Known As (Name)" />
+					<field id="ucm:artist_name" label="Given Name" />
 					<field id="ucm:artist_nickname" />
 					<field id="ucm:artist_dob" />
 					<field id="ucm:artist_birth_place" />
@@ -312,14 +312,14 @@
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
-				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
+				<create-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
+					<show id="cm:description" force="true" />
 					<show id="cm:title" />
-					<show id="cm:content" force="true"/>
-					
-					<show id="ucm:artifact_name"/>
+					<show id="cm:content" force="true" />
+
+					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
 					<show id="ucm:artifact_date" />
@@ -330,11 +330,11 @@
 					<show id="ucm:artifact_location" />
 					<show id="ucm:artifact_collection" />
 					<show id="ucm:artifact_acquisition_type" />
-<!-- 					<show id="ucm:artifact_donor" /> -->
+					<!-- <show id="ucm:artifact_donor" /> -->
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
 					<show id="ucm:artifact_comments" />
-					<!--show id="ucm:artifact_referenced_objects" /-->
+					<!--show id="ucm:artifact_referenced_objects" / -->
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
@@ -345,14 +345,14 @@
 					<show id="ucm:artist_period" />
 					<show id="ucm:artist_comments" />
 					<show id="ucm:museum_artifact_gallery_location" />
-					
+
 					<!-- cm:geographic aspect -->
-	                <show id="cm:latitude" />
-	                <show id="cm:longitude" />
+					<show id="cm:latitude" />
+					<show id="cm:longitude" />
 					<!-- tags and categories -->
-		            <show id="cm:taggable" for-mode="edit" force="true" />
-<!-- 		            <show id="cm:categories" /> -->
-					
+					<show id="cm:taggable" for-mode="edit" force="true" />
+					<!-- <show id="cm:categories" /> -->
+
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 
 					<!-- cm:dublincore aspect -->
@@ -367,45 +367,45 @@
 				</field-visibility>
 				<appearance>
 					<set id="artifactMain" appearance="fieldset" label="Main artifact properties" />
-					
+
 					<set id="artifactRest" appearance="accordion-wrapper" label="Additional properties" />
-						<set id="artifactAdditional" parent="artifactRest" appearance="accordion-element" label="Artifact additional properties" />
-						<set id="artifactArtist" parent="artifactRest" appearance="accordion-element" label="Artist" />
-						<set id="artifactMuseum" parent="artifactRest" appearance="accordion-element" label="Museum" />
+					<set id="artifactAdditional" parent="artifactRest" appearance="accordion-element" label="Artifact additional properties" />
+					<set id="artifactArtist" parent="artifactRest" appearance="accordion-element" label="Artist" />
+					<set id="artifactMuseum" parent="artifactRest" appearance="accordion-element" label="Museum" />
 					<!-- TODO: rest of aspects. And properties? -->
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
-               		<field id="cm:description">
-                  		<control>
-                     		<control-param name="activateLinks">true</control-param>
-                  		</control>
-               		</field>
- 					<field id="cm:title" />
- 					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
+					<field id="cm:title" />
+					<field id="cm:content">
+						<control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
+					</field>
 					<field id="ucm:artifact_name" set="artifactMain" />
 					<field id="ucm:artist_name" set="artifactMain" />
 					<field id="ucm:museum_number" set="artifactMain" />
-					
+
 					<field id="ucm:artifact_date" set="artifactMain" />
 					<field id="ucm:artifact_medium" set="artifactMain" />
 					<field id="ucm:artifact_technique" set="artifactMain" />
 					<field id="ucm:artifact_dimension" set="artifactMain" />
 					<field id="ucm:artifact_status" set="artifactMain" />
-					
+
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
 					<field id="ucm:artifact_acquisition_type" set="artifactAdditional" />
-<!-- 					<field id="ucm:artifact_donor" set="artifactAdditional" /> -->
+					<!-- <field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
-<!--					<field id="ucm:artifact_comments" set="artifactAdditional" /> -->
-					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
-					
+					<!-- <field id="ucm:artifact_comments" set="artifactAdditional" /> -->
+					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
+
 					<field id="ucm:artist_nickname" set="artifactArtist" />
 					<field id="ucm:artist_dob" set="artifactArtist" />
 					<field id="ucm:artist_birth_place" set="artifactArtist" />
@@ -415,7 +415,7 @@
 					<field id="ucm:artist_live_city" set="artifactArtist" />
 					<field id="ucm:artist_period" set="artifactArtist" />
 					<field id="ucm:artist_comments" set="artifactArtist" />
-					
+
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
 				</appearance>
 			</form>
@@ -425,7 +425,7 @@
 			<form id="doclib-simple-metadata">
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
+					<show id="cm:description" force="true" />
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
@@ -433,11 +433,11 @@
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<appearance>
 					<field id="cm:name" />
-		            <field id="cm:description">
-                    	<control>
-                     		<control-param name="activateLinks">true</control-param>
-                  		</control>
-               		</field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
@@ -449,21 +449,58 @@
 			<form id="doclib-inline-edit">
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
+					<show id="cm:description" force="true" />
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name" />
-		            <field id="cm:description">
-                    	<control>
-                     		<control-param name="activateLinks">true</control-param>
-                  		</control>
-               		</field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
+				</appearance>
+			</form>
+
+			<!-- Search form -->
+			<form id="search">
+				<field-visibility>
+					<show id="ucm:artist_name" />
+					<show id="ucm:artifact_name" />
+					<show id="ucm:artist_period" />
+					<show id="ucm:artist_study_workshop" />
+					<show id="ucm:artifact_medium" />
+					<show id="ucm:artifact_technique" />
+					<show id="ucm:artifact_on_display" />
+				</field-visibility>
+				<appearance>
+					<field id="ucm:artist_name" label-id="prop.ucm_artist_name">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<field id="ucm:artifact_name" label-id="prop.ucm_artifact_name">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<!-- TODO: set label to "Artifact period" ? -->
+					<field id="ucm:artist_period" label-id="prop.ucm_artist_period">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<field id="ucm:artist_study_workshop" label-id="prop.ucm_artist_study_workshop">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<field id="ucm:artifact_medium" label-id="prop.ucm_artifact_medium">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<field id="ucm:artifact_technique" label-id="prop.ucm_artifact_technique">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
+					<field id="ucm:artifact_on_display" label-id="prop.ucm_artifact_on_display">
+						<control template="/org/alfresco/components/form/controls/checkbox.ftl" />
+					</field>
 				</appearance>
 			</form>
 		</forms>
@@ -474,15 +511,15 @@
 		<forms>
 			<!-- Default form configuration for the ucm:artifact type -->
 			<form>
-				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
-				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl"/>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
+				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artifact-props-form.ftl" />
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
-<!-- 					<show id="cm:title" /> -->
-					<show id="cm:content" force="true"/>
-					
-					<show id="ucm:artifact_name"/>
+					<show id="cm:description" force="true" />
+					<!-- <show id="cm:title" /> -->
+					<show id="cm:content" force="true" />
+
+					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
 					<show id="ucm:artifact_date" />
@@ -490,16 +527,17 @@
 					<show id="ucm:artifact_technique" />
 					<show id="ucm:artifact_dimension" />
 					<show id="ucm:artifact_status" />
-					<!-- show id="ucm:artifact_contains" /-->
-					
+					<!-- show id="ucm:artifact_contains" / -->
+
 					<show id="ucm:artifact_location" />
 					<show id="ucm:artifact_collection" />
 					<show id="ucm:artifact_acquisition_type" />
+
 					<show id="ucm:artifact_donor" />
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
 					<show id="ucm:artifact_comments" />
-					<!--show id="ucm:artifact_referenced_objects" /-->
+					<!--show id="ucm:artifact_referenced_objects" / -->
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
@@ -510,15 +548,15 @@
 					<show id="ucm:artist_period" />
 					<show id="ucm:artist_comments" />
 					<show id="ucm:museum_artifact_gallery_location" />
-	                
+
 					<!-- cm:geographic aspect -->
-	                <show id="cm:latitude" />
-	                <show id="cm:longitude" />
+					<show id="cm:latitude" />
+					<show id="cm:longitude" />
 					<!-- tags and categories -->
-		            <show id="cm:taggable" for-mode="edit" force="true" />
-<!-- 		            <show id="cm:categories" /> -->
-					
-					
+					<show id="cm:taggable" for-mode="edit" force="true" />
+					<!-- <show id="cm:categories" /> -->
+
+
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 
 					<!-- cm:dublincore aspect -->
@@ -534,31 +572,31 @@
 				<appearance>
 					<set id="artifactMain" appearance="fieldset" label="Artifact properties" />
 					<set id="artifactRest" appearance="accordion-wrapper" label="Additional properties" />
-						<set id="artifactAdditional" parent="artifactRest" appearance="accordion-element" label="About Artifact" />
-						<set id="artifactArtist" parent="artifactRest" appearance="accordion-element" label="Artist" />
-						<set id="artifactMuseum" parent="artifactRest" appearance="accordion-element" label="Museum" />
+					<set id="artifactAdditional" parent="artifactRest" appearance="accordion-element" label="About Artifact" />
+					<set id="artifactArtist" parent="artifactRest" appearance="accordion-element" label="Artist" />
+					<set id="artifactMuseum" parent="artifactRest" appearance="accordion-element" label="Museum" />
 					<!-- TODO: rest of aspects. And properties? -->
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
-	               <field id="cm:description">
-	                  <control>
-	                     <control-param name="activateLinks">true</control-param>
-	                  </control>
-	               </field>
-<!--					<field id="cm:title" /> -->
-					
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
+					<!-- <field id="cm:title" /> -->
+
 					<field id="cm:taggable">
 						<control>
-                     		<control-param name="compactMode">true</control-param>
-                     		<control-param name="params">aspect=cm:taggable</control-param>
-                     		<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
-                     		<control-param name="createNewItemIcon">tag</control-param>
-                  		</control>
-               		</field>
-               			
+							<control-param name="compactMode">true</control-param>
+							<control-param name="params">aspect=cm:taggable</control-param>
+							<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
+							<control-param name="createNewItemIcon">tag</control-param>
+						</control>
+					</field>
+
 <!-- 					
 					<field id="cm:content" label-id="">
 						<control>
@@ -566,16 +604,16 @@
 						</control>
 					</field>
 -->
-					
+
 					<field id="ucm:artifact_name" set="artifactAdditional" />
 					<field id="ucm:artist_name" set="artifactAdditional" />
 					<field id="ucm:museum_number" set="artifactAdditional" />
-					
+
 					<field id="ucm:artifact_date" set="artifactAdditional" />
 					<field id="ucm:artifact_medium" set="artifactAdditional" />
 					<field id="ucm:artifact_technique" set="artifactAdditional" />
 					<field id="ucm:artifact_dimension" set="artifactAdditional" />
-<!--					<field id="ucm:artifact_comments" set="artifactAdditional"> -->
+					<!-- <field id="ucm:artifact_comments" set="artifactAdditional"> -->
 
 					<field id="ucm:artifact_status" set="artifactAdditional" />
 					<!--
@@ -588,17 +626,17 @@
 						</control>
 					</field
 					-->
-					
+
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
 					<field id="ucm:artifact_acquisition_type" set="artifactAdditional" />
-<!-- 					<field id="ucm:artifact_donor" set="artifactAdditional" /> -->
+					<!-- <field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
-<!--					<field id="ucm:artifact_comments" set="artifactAdditional" /> -->
+					<!-- <field id="ucm:artifact_comments" set="artifactAdditional" /> -->
 
-					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
-					
+					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
+
 					<field id="ucm:artist_nickname" set="artifactArtist" />
 					<field id="ucm:artist_dob" set="artifactArtist" />
 					<field id="ucm:artist_birth_place" set="artifactArtist" />
@@ -608,10 +646,10 @@
 					<field id="ucm:artist_live_city" set="artifactArtist" />
 					<field id="ucm:artist_period" set="artifactArtist" />
 					<field id="ucm:artist_comments" set="artifactArtist" />
-					
+
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
-					<field id="cm:latitude" set="artifactMuseum"/>
-	                <field id="cm:longitude" set="artifactMuseum"/>
+					<field id="cm:latitude" set="artifactMuseum" />
+					<field id="cm:longitude" set="artifactMuseum" />
 				</appearance>
 			</form>
 
@@ -620,7 +658,7 @@
 			<form id="doclib-simple-metadata">
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
+					<show id="cm:description" force="true" />
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
@@ -628,11 +666,11 @@
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<appearance>
 					<field id="cm:name" />
-		            <field id="cm:description">
-                    	<control>
-                     		<control-param name="activateLinks">true</control-param>
-                  		</control>
-               		</field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
@@ -644,18 +682,18 @@
 			<form id="doclib-inline-edit">
 				<field-visibility>
 					<show id="cm:name" />
-               		<show id="cm:description" force="true" />
+					<show id="cm:description" force="true" />
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 					<show id="ucm:museum_number" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name" />
-		            <field id="cm:description">
-                    	<control>
-                     		<control-param name="activateLinks">true</control-param>
-                  		</control>
-               		</field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 					<field id="ucm:artifact_name" />
 					<field id="ucm:artist_name" />
 					<field id="ucm:museum_number" />
@@ -669,22 +707,22 @@
 		<forms>
 			<!-- Default form configuration for the ucm:about_artist_artifact type -->
 			<form>
-				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
-				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
+				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
 <!--					
 					<show id="cm:name" />
 					<show id="cm:title" />
 -->					
-<!--					<show id="cm:content" />  -->
-<!--					<show id="ucm:artifact_name"/> -->
+					<!-- <show id="cm:content" /> -->
+					<!-- <show id="ucm:artifact_name"/> -->
 					<show id="ucm:artist_name" />
 
-					<!-- show id="ucm:artifact_contains" /-->
-<!--					<show id="ucm:artifact_comments" /> -->
-               		<show id="cm:description" force="true" />
-					<!--show id="ucm:artifact_referenced_objects" /-->
-					
+					<!-- show id="ucm:artifact_contains" / -->
+					<!-- <show id="ucm:artifact_comments" /> -->
+					<show id="cm:description" force="true" />
+					<!--show id="ucm:artifact_referenced_objects" / -->
+
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
@@ -694,9 +732,9 @@
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
 					<show id="ucm:artifact_comments" />
-					
-<!--					<show id="ucm:museum_artifact_gallery_location" /> -->
-					
+
+					<!-- <show id="ucm:museum_artifact_gallery_location" /> -->
+
 					<!-- cm:geographic aspect -->
 <!--
 	                <show id="cm:latitude" />
@@ -720,13 +758,13 @@
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-<!--					<field id="ucm:artifact_name" label="Known As (Name)"/> -->
-					<field id="ucm:artist_name" label="Given Name"/>
- 	                <field id="cm:description">
-	                  <control>
-	                     <control-param name="activateLinks">true</control-param>
-	                  </control>
-	                </field>
+					<!-- <field id="ucm:artifact_name" label="Known As (Name)"/> -->
+					<field id="ucm:artist_name" label="Given Name" />
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
@@ -740,8 +778,8 @@
 						</control>
 					</field-->
 
-					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
-					
+					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
+
 					<field id="ucm:artist_nickname" set="artistMain" />
 					<field id="ucm:artist_dob" set="artistMain" />
 					<field id="ucm:artist_birth_place" set="artistMain" />
@@ -750,7 +788,7 @@
 					<field id="ucm:artist_study_workshop" set="artistMain" />
 					<field id="ucm:artist_live_city" set="artistMain" />
 					<field id="ucm:artist_period" set="artistMain" />
-<!--					<field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
+					<!-- <field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
 					<field id="ucm:artifact_comments" set="artistMain" />
 <!--					
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
@@ -759,24 +797,24 @@
 -->	                
 				</appearance>
 			</form>
-			
+
 			<form id="doclib-simple-metadata">
-				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
-				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl"/>
+				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
+				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
 <!--					
 					<show id="cm:name" />
 					<show id="cm:title" />
 -->					
-<!--					<show id="cm:content" />  -->
-					<show id="ucm:artifact_name"/>
+					<!-- <show id="cm:content" /> -->
+					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
 
-					<!-- show id="ucm:artifact_contains" /-->
-               		<show id="cm:description" force="true" />
-<!--					<show id="ucm:artifact_comments" /> -->
-					<!--show id="ucm:artifact_referenced_objects" /-->
-					
+					<!-- show id="ucm:artifact_contains" / -->
+					<show id="cm:description" force="true" />
+					<!-- <show id="ucm:artifact_comments" /> -->
+					<!--show id="ucm:artifact_referenced_objects" / -->
+
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
 					<show id="ucm:artist_birth_place" />
@@ -786,8 +824,8 @@
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
 					<show id="ucm:artifact_comments" />
-<!--					<show id="ucm:museum_artifact_gallery_location" /> -->
-					
+					<!-- <show id="ucm:museum_artifact_gallery_location" /> -->
+
 					<!-- cm:geographic aspect -->
 <!--
 	                <show id="cm:latitude" />
@@ -812,16 +850,16 @@
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
 -->		            
-					<field id="ucm:artifact_name" label="Known As (Name)"/>
-					<field id="ucm:artist_name" set="artistMain" label="Given Name"/>
+					<field id="ucm:artifact_name" label="Known As (Name)" />
+					<field id="ucm:artist_name" set="artistMain" label="Given Name" />
 <!--		
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
-	               <field id="cm:description">
-	                  <control>
-	                     <control-param name="activateLinks">true</control-param>
-	                  </control>
-	               </field>
+					<field id="cm:description">
+						<control>
+							<control-param name="activateLinks">true</control-param>
+						</control>
+					</field>
 
 					<!--field id="ucm:artifact_contains" set="artifactMain">
 			        	<control template="/org/alfresco/components/form/controls/association.ftl">
@@ -832,8 +870,8 @@
 						</control>
 					</field-->
 
-					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" /-->
-					
+					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
+
 					<field id="ucm:artist_nickname" set="artistMain" />
 					<field id="ucm:artist_dob" set="artistMain" />
 					<field id="ucm:artist_birth_place" set="artistMain" />
@@ -860,18 +898,18 @@
 		<forms>
 			<form id="doclib-common">
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:attached_file_type"/>
+					<show id="cm:name" />
+					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
 				<create-form template="../documentlibrary/forms/doclib-common.ftl" />
-	            <appearance>
-	                <field id="cm:name" />
-					<field id="ucm:attached_file_type" label-id="Attachment Media Type"/>
-	                <field id="ucm:attached_file_language" />
-	                <field id="ucm:attached_file_sequence" />
-	            </appearance>
+				<appearance>
+					<field id="cm:name" />
+					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
+					<field id="ucm:attached_file_language" />
+					<field id="ucm:attached_file_sequence" />
+				</appearance>
 			</form>
 		</forms>
 	</config>
@@ -879,62 +917,79 @@
 	<!-- ucm:attached_file type (existing nodes) -->
 	<config evaluator="node-type" condition="ucm:attached_file">
 		<forms>
-		   <form>
+			<form>
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:attached_file_type"/>
+					<show id="cm:name" />
+					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
-	            <appearance>
-	                <field id="cm:name" />
-					<field id="ucm:attached_file_type" label-id="Attachment Media Type"/>
-	                <field id="ucm:attached_file_language" />
-	                <field id="ucm:attached_file_sequence" />
-	            </appearance>
-            </form>
-            <form id="doclib-simple-metadata">
-				<view-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
-				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
+				<appearance>
+					<field id="cm:name" />
+					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
+					<field id="ucm:attached_file_language" />
+					<field id="ucm:attached_file_sequence" />
+				</appearance>
+			</form>
+			<form id="doclib-simple-metadata">
+				<view-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:attached_file_type"/>
+					<show id="cm:name" />
+					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
-	            <appearance>
-	                <field id="cm:name" />
-					<field id="ucm:attached_file_type" label-id="Attachment Media Type"/>
-	                <field id="ucm:attached_file_language" />
-	                <field id="ucm:attached_file_sequence" />
-	            </appearance>
+				<appearance>
+					<field id="cm:name" />
+					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
+					<field id="ucm:attached_file_language" />
+					<field id="ucm:attached_file_sequence" />
+				</appearance>
 			</form>
 
 			<!-- Document Library Inline Edit form -->
 			<form id="doclib-inline-edit">
 				<field-visibility>
-					<show id="cm:name"/>
-					<show id="ucm:attached_file_type"/>
+					<show id="cm:name" />
+					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
-	            <appearance>
-	                <field id="cm:name" />
-					<field id="ucm:attached_file_type" label-id="Attachment Media Type"/>
-	                <field id="ucm:attached_file_language" />
-	                <field id="ucm:attached_file_sequence" />
-	            </appearance>
+				<appearance>
+					<field id="cm:name" />
+					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
+					<field id="ucm:attached_file_language" />
+					<field id="ucm:attached_file_sequence" />
+				</appearance>
 			</form>
 		</forms>
 	</config>
 
-	<config evaluator="string-compare" condition="DocumentDetails"
-		replace="true">
+	<!-- ucm:site type (creating nodes) -->
+	<config evaluator="model-type" condition="ucm:site">
+		<forms>
+			<form id="search">
+				<field-visibility>
+					<show id="ucm:site_type" />
+					<show id="ucm:site_name" />
+					<show id="ucm:site_address" />
+				</field-visibility>
+				<appearance>
+					<field id="ucm:site_type" />
+					<field id="ucm:site_name" />
+					<field id="ucm:site_address" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<config evaluator="string-compare" condition="DocumentDetails" replace="true">
 		<document-details>
 			<!-- display web previewer on document details page -->
 			<display-web-preview>true</display-web-preview>
 		</document-details>
-		
+
 		<!-- Sorting Options The 'sort' config element contains the name of the 
 			content model field to sort against and can be of the form: - short QName 
 			string e.g. "cm:name" - any other valid sortable fts-alfresco special field 
@@ -954,9 +1009,9 @@
 			<sort label="label.type">TYPE</sort>
 		</sorting>
 	</config>
-   
-   <!-- Document Library config section -->
-   <config evaluator="string-compare" condition="DocumentLibraryViews" replace="true">
+
+	<!-- Document Library config section -->
+	<config evaluator="string-compare" condition="DocumentLibraryViews" replace="true">
          <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and 
               Repository pages. This list can be added to or removed to control the views displayed. Use the a module
               that provides evaluated configuration to have the options change based on criteria (e.g. site name, 
@@ -966,35 +1021,35 @@
               one version of each is loaded - but if a view is removed that depends on a dependency defined in another
               view then it will cause an error. 
            -->
-      <view-renderers>
+		<view-renderers>
 <!--          <view-renderer id="simple" iconClass="simple" label="button.view.simple" index="10" widget="Alfresco.DocumentListSimpleViewRenderer">
             <dependencies>
                <js src="components/documentlibrary/documentlist-view-detailed.js" />
                <js src="components/documentlibrary/documentlist-view-simple.js" />
             </dependencies>
          </view-renderer> -->
-         <view-renderer id="detailed" iconClass="detailed" label="button.view.detailed" index="20" widget="Alfresco.DocumentListViewRenderer">
-            <dependencies>
-               <js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
-            </dependencies>
-         </view-renderer>
+			<view-renderer id="detailed" iconClass="detailed" label="button.view.detailed" index="20" widget="Alfresco.DocumentListViewRenderer">
+				<dependencies>
+					<js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
+				</dependencies>
+			</view-renderer>
          <view-renderer id="gallery" iconClass="gallery" label="button.view.gallery" index="30" widget="Alfresco.DocumentListGalleryViewRenderer">
-            <dependencies>
-               <js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
-               <js src="components/documentlibrary/ucm-documentlist-view-gallery.js" />
-               <js src="yui/slider/slider.js" />
-            </dependencies>
-         </view-renderer>
-      </view-renderers>
-   </config>
+				<dependencies>
+					<js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
+					<js src="components/documentlibrary/ucm-documentlist-view-gallery.js" />
+					<js src="yui/slider/slider.js" />
+				</dependencies>
+			</view-renderer>
+		</view-renderers>
+	</config>
 
 	<config evaluator="string-compare" condition="DocLibCustom">
 		<dependencies>
 			<js src="/custom/ucm-documentlibrary.js" />
-		</dependencies> 
+		</dependencies>
 	</config>
-   
-   
+
+
        <!-- Commented because normal users should not see this aspect
          It should only be used through the admin interface
         <config evaluator="string-compare" condition="DocumentLibrary">
@@ -1006,35 +1061,33 @@
         </config>
     -->
 
-    <config evaluator="aspect" condition="up:UploadFolder">
-        <forms>
-            <form>
-                <field-visibility>
-                    <show id="up:allowedTypes"/>
-                </field-visibility>
-            </form>
-            <form id="upload-folder">
-                <field-visibility>
-                    <show id="up:allowedTypes"/>
-                </field-visibility>
-                <edit-form
-                        template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
-                <appearance>
-                    <field id="up:allowedTypes">
-                        <control
-                                template="/uploader-plus/controls/selecttypes.ftl">
-                            <control-param name="styleClass">
-                                supported-types-select
-                            </control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-    
-   <!-- Document Library Custom Code config section -->
-   <config evaluator="string-compare" condition="DocLibCustom">
+	<config evaluator="aspect" condition="up:UploadFolder">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="up:allowedTypes" />
+				</field-visibility>
+			</form>
+			<form id="upload-folder">
+				<field-visibility>
+					<show id="up:allowedTypes" />
+				</field-visibility>
+				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+				<appearance>
+					<field id="up:allowedTypes">
+						<control template="/uploader-plus/controls/selecttypes.ftl">
+							<control-param name="styleClass">
+								supported-types-select
+							</control-param>
+						</control>
+					</field>
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<!-- Document Library Custom Code config section -->
+	<config evaluator="string-compare" condition="DocLibCustom">
       <!--
          Custom Code dependencies.
 
@@ -1044,143 +1097,143 @@
             <js src="my-custom-action.js" />
          </dependencies>
       -->
-      <dependencies />
-   </config>
+		<dependencies />
+	</config>
 
-   <!-- Document Library Actions config section -->
-   <config evaluator="string-compare" condition="DocLibActions">
+	<!-- Document Library Actions config section -->
+	<config evaluator="string-compare" condition="DocLibActions">
 
       <!--
          Action definitions
       -->
-      <actions>
-         <!-- Download document -->
-         <action id="document-download" type="link" label="actions.document.download">
-            <param name="href">{downloadUrl}</param>
-            <param name="target">_blank</param>
-            <evaluator>evaluator.doclib.action.downloadBrowser</evaluator>
-            <evaluator>evaluator.doclib.action.hasContent</evaluator>
-         </action>
+		<actions>
+			<!-- Download document -->
+			<action id="document-download" type="link" label="actions.document.download">
+				<param name="href">{downloadUrl}</param>
+				<param name="target">_blank</param>
+				<evaluator>evaluator.doclib.action.downloadBrowser</evaluator>
+				<evaluator>evaluator.doclib.action.hasContent</evaluator>
+			</action>
 
-         <!-- View document in browser -->
-         <action id="document-view-content" type="link" label="actions.document.view">
-            <param name="href">{viewUrl}</param>
-            <evaluator>evaluator.doclib.action.hasContent</evaluator>
-         </action>
+			<!-- View document in browser -->
+			<action id="document-view-content" type="link" label="actions.document.view">
+				<param name="href">{viewUrl}</param>
+				<evaluator>evaluator.doclib.action.hasContent</evaluator>
+			</action>
 
-         <!-- View document details -->
-         <action id="document-view-details" type="pagelink" label="actions.document.view-details">
-            <param name="page">document-details?nodeRef={node.nodeRef}</param>
-         </action>
+			<!-- View document details -->
+			<action id="document-view-details" type="pagelink" label="actions.document.view-details">
+				<param name="page">document-details?nodeRef={node.nodeRef}</param>
+			</action>
 
-         <!-- View folder details -->
-         <action id="folder-view-details" type="pagelink" label="actions.folder.view-details">
-            <param name="page">folder-details?nodeRef={node.nodeRef}</param>
-         </action>
+			<!-- View folder details -->
+			<action id="folder-view-details" type="pagelink" label="actions.folder.view-details">
+				<param name="page">folder-details?nodeRef={node.nodeRef}</param>
+			</action>
 
-         <!-- Edit properties pop-up -->
-         <action id="document-edit-properties" type="javascript" label="actions.document.edit-metadata">
-            <param name="function">onActionDetails</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator negate="true">evaluator.doclib.action.checkedOutAspect</evaluator>
-         </action>
+			<!-- Edit properties pop-up -->
+			<action id="document-edit-properties" type="javascript" label="actions.document.edit-metadata">
+				<param name="function">onActionDetails</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator negate="true">evaluator.doclib.action.checkedOutAspect</evaluator>
+			</action>
 
-         <!-- Edit properties page -->
-         <action id="document-edit-metadata" type="pagelink" label="actions.document.edit-metadata">
-            <param name="page">edit-metadata?nodeRef={node.nodeRef}</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator negate="true">evaluator.doclib.action.checkedOutAspect</evaluator>
-         </action>
+			<!-- Edit properties page -->
+			<action id="document-edit-metadata" type="pagelink" label="actions.document.edit-metadata">
+				<param name="page">edit-metadata?nodeRef={node.nodeRef}</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator negate="true">evaluator.doclib.action.checkedOutAspect</evaluator>
+			</action>
 
-         <!-- Approve simple workflow -->
-         <action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
-            <param name="function">onActionSimpleRepoAction</param>
-            <!-- Additional parameters for onRepoAction function  -->
-            <param name="action">accept-simpleworkflow</param>
-            <param name="successMessage">message.simple-workflow.approved</param>
-            <param name="failureMessage">message.simple-workflow.failure</param>
-            <!-- aspect check, property != null check, action name = property value -->
-            <evaluator>evaluator.doclib.action.simpleApprove</evaluator>
-         </action>
+			<!-- Approve simple workflow -->
+			<action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
+				<param name="function">onActionSimpleRepoAction</param>
+				<!-- Additional parameters for onRepoAction function -->
+				<param name="action">accept-simpleworkflow</param>
+				<param name="successMessage">message.simple-workflow.approved</param>
+				<param name="failureMessage">message.simple-workflow.failure</param>
+				<!-- aspect check, property != null check, action name = property value -->
+				<evaluator>evaluator.doclib.action.simpleApprove</evaluator>
+			</action>
 
-         <!-- Reject simple workflow -->
-         <action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
-            <param name="function">onActionSimpleRepoAction</param>
-            <!-- Additional parameters for onRepoAction function  -->
-            <param name="action">reject-simpleworkflow</param>
-            <param name="successMessage">message.simple-workflow.rejected</param>
-            <param name="failureMessage">message.simple-workflow.failure</param>
-            <!-- aspect check, property != null check, action name = property value -->
-            <evaluator>evaluator.doclib.action.simpleReject</evaluator>
-         </action>
+			<!-- Reject simple workflow -->
+			<action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
+				<param name="function">onActionSimpleRepoAction</param>
+				<!-- Additional parameters for onRepoAction function -->
+				<param name="action">reject-simpleworkflow</param>
+				<param name="successMessage">message.simple-workflow.rejected</param>
+				<param name="failureMessage">message.simple-workflow.failure</param>
+				<!-- aspect check, property != null check, action name = property value -->
+				<evaluator>evaluator.doclib.action.simpleReject</evaluator>
+			</action>
 
-         <!-- Increment Counter -->
-         <action id="document-increment-counter" type="javascript" label="actions.document.increment-counter">
-            <param name="function">onActionSimpleRepoAction</param>
-            <!-- Additional parameters for onRepoAction function  -->
-            <param name="action">counter</param>
-            <param name="successMessage">message.increment-counter.success</param>
-            <param name="failureMessage">message.increment-counter.failure</param>
-         </action>
+			<!-- Increment Counter -->
+			<action id="document-increment-counter" type="javascript" label="actions.document.increment-counter">
+				<param name="function">onActionSimpleRepoAction</param>
+				<!-- Additional parameters for onRepoAction function -->
+				<param name="action">counter</param>
+				<param name="successMessage">message.increment-counter.success</param>
+				<param name="failureMessage">message.increment-counter.failure</param>
+			</action>
 
-         <!-- Extract Metadata -->
-         <action id="document-extract-metadata" type="javascript" label="actions.document.extract-metadata">
-            <param name="function">onActionSimpleRepoAction</param>
-            <!-- Additional parameters for onRepoAction function  -->
-            <param name="action">extract-metadata</param>
-            <param name="successMessage">message.extract-metadata.success</param>
-            <param name="failureMessage">message.extract-metadata.failure</param>
-         </action>
+			<!-- Extract Metadata -->
+			<action id="document-extract-metadata" type="javascript" label="actions.document.extract-metadata">
+				<param name="function">onActionSimpleRepoAction</param>
+				<!-- Additional parameters for onRepoAction function -->
+				<param name="action">extract-metadata</param>
+				<param name="successMessage">message.extract-metadata.success</param>
+				<param name="failureMessage">message.extract-metadata.failure</param>
+			</action>
 
-         <!-- Transform -->
-         <action id="document-transform" type="javascript" label="actions.document.transform">
-            <param name="function">onActionFormDialog</param>
-            <!-- Additional parameters for onFormDialog function  -->
-            <param name="itemKind">action</param>
-            <param name="itemId">transform</param>
-            <param name="mode">create</param>
-            <param name="destination">{node.nodeRef}</param>
-            <param name="successMessage">message.transform.success</param>
-            <param name="failureMessage">message.transform.failure</param>
-         </action>
+			<!-- Transform -->
+			<action id="document-transform" type="javascript" label="actions.document.transform">
+				<param name="function">onActionFormDialog</param>
+				<!-- Additional parameters for onFormDialog function -->
+				<param name="itemKind">action</param>
+				<param name="itemId">transform</param>
+				<param name="mode">create</param>
+				<param name="destination">{node.nodeRef}</param>
+				<param name="successMessage">message.transform.success</param>
+				<param name="failureMessage">message.transform.failure</param>
+			</action>
 
-         <!-- Transform Image -->
-         <action id="document-transform-image" type="javascript" label="actions.document.transform-image">
-            <param name="function">onActionFormDialog</param>
-            <!-- Additional parameters for onFormDialog function  -->
-            <param name="itemKind">action</param>
-            <param name="itemId">transform-image</param>
-            <param name="mode">create</param>
-            <param name="destination">{node.nodeRef}</param>
-            <param name="successMessage">message.transform-image.success</param>
-            <param name="failureMessage">message.transform-image.failure</param>
-         </action>
+			<!-- Transform Image -->
+			<action id="document-transform-image" type="javascript" label="actions.document.transform-image">
+				<param name="function">onActionFormDialog</param>
+				<!-- Additional parameters for onFormDialog function -->
+				<param name="itemKind">action</param>
+				<param name="itemId">transform-image</param>
+				<param name="mode">create</param>
+				<param name="destination">{node.nodeRef}</param>
+				<param name="successMessage">message.transform-image.success</param>
+				<param name="failureMessage">message.transform-image.failure</param>
+			</action>
 
-         <!-- Execute Script -->
-         <action id="document-execute-script" type="javascript" label="actions.document.execute-script">
-            <param name="function">onActionFormDialog</param>
-            <!-- Additional parameters for onFormDialog function  -->
-            <param name="itemKind">action</param>
-            <param name="itemId">script</param>
-            <param name="mode">create</param>
-            <param name="destination">{node.nodeRef}</param>
-            <param name="successMessage">message.execute-script.success</param>
-            <param name="failureMessage">message.execute-script.failure</param>
-         </action>
+			<!-- Execute Script -->
+			<action id="document-execute-script" type="javascript" label="actions.document.execute-script">
+				<param name="function">onActionFormDialog</param>
+				<!-- Additional parameters for onFormDialog function -->
+				<param name="itemKind">action</param>
+				<param name="itemId">script</param>
+				<param name="mode">create</param>
+				<param name="destination">{node.nodeRef}</param>
+				<param name="successMessage">message.execute-script.success</param>
+				<param name="failureMessage">message.execute-script.failure</param>
+			</action>
 
-         <!-- Locate with path view -->
-         <action id="document-locate" type="javascript" label="actions.document.locate">
-            <param name="function">onActionLocate</param>
-            <evaluator>evaluator.doclib.action.locateAction</evaluator>
-         </action>
+			<!-- Locate with path view -->
+			<action id="document-locate" type="javascript" label="actions.document.locate">
+				<param name="function">onActionLocate</param>
+				<evaluator>evaluator.doclib.action.locateAction</evaluator>
+			</action>
 
-         <!-- Upload new version -->
-         <action id="document-upload-new-version" type="javascript" label="actions.document.upload-new-version">
-            <param name="function">onActionUploadNewVersion</param>
+			<!-- Upload new version -->
+			<action id="document-upload-new-version" type="javascript" label="actions.document.upload-new-version">
+				<param name="function">onActionUploadNewVersion</param>
             <permissions>
                <permission allow="true">Write</permission>
             </permissions>
@@ -1224,13 +1277,13 @@
             <evaluator>evaluator.doclib.action.notEditBrowser</evaluator>
             <evaluator negate="true">evaluator.doclib.action.isLockedForAos</evaluator>
             <evaluator>evaluator.doclib.action.isMimetypeEditableAos</evaluator>
-         </action>
+			</action>
 
-         <!-- Edit offline -->
-         <action id="document-edit-offline" type="javascript" label="actions.document.edit-offline">
-            <param name="function">onActionEditOffline</param>
-            <permissions>
-               <permission allow="true">Write</permission>
+			<!-- Edit offline -->
+			<action id="document-edit-offline" type="javascript" label="actions.document.edit-offline">
+				<param name="function">onActionEditOffline</param>
+				<permissions>
+					<permission allow="true">Write</permission>
             </permissions>
             <evaluator>evaluator.doclib.action.offlineEdit</evaluator>
             <evaluator>evaluator.doclib.action.hasContent</evaluator>
@@ -1263,15 +1316,15 @@
             <evaluator>evaluator.doclib.action.isDeletable</evaluator>
          </action>
 
-         <!-- Assign workflow -->
-         <action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
-            <param name="function">onActionAssignWorkflow</param>
-         </action>
+			<!-- Assign workflow -->
+			<action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
+				<param name="function">onActionAssignWorkflow</param>
+			</action>
 
-         <!-- Manage permissions (granular permissions) -->
-         <action id="document-manage-granular-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
-             <param name="href">{managePermissionsUrl}</param>
-            <permissions>
+			<!-- Manage permissions (granular permissions) -->
+			<action id="document-manage-granular-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
+				<param name="href">{managePermissionsUrl}</param>
+				<permissions>
                <permission allow="true">ChangePermissions</permission>
             </permissions>
             <evaluator>evaluator.doclib.action.siteBased</evaluator>
@@ -1289,8 +1342,8 @@
          </action>
 
          <!-- Manage aspects -->
-         <action id="document-manage-aspects" type="javascript" label="actions.document.manage-aspects">
-            <param name="function">onActionManageAspects</param>
+			<action id="document-manage-aspects" type="javascript" label="actions.document.manage-aspects">
+				<param name="function">onActionManageAspects</param>
             <permissions>
                <permission allow="true">Write</permission>
             </permissions>
@@ -1318,88 +1371,88 @@
             <param name="page">document-details?nodeRef={workingCopy.workingCopyNodeRef}</param>
             <!-- cm:workingcopy aspect -->
             <evaluator>evaluator.doclib.action.hasWorkingCopy</evaluator>
-         </action>
+			</action>
 
-         <!-- Cancel editing -->
-         <action id="document-cancel-editing" type="javascript" label="actions.document.cancel-editing">
-            <param name="function">onActionCancelEditing</param>
-            <permissions>
-               <permission allow="true">CancelCheckOut</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.cancelEditing</evaluator>
-         </action>
+			<!-- Cancel editing -->
+			<action id="document-cancel-editing" type="javascript" label="actions.document.cancel-editing">
+				<param name="function">onActionCancelEditing</param>
+				<permissions>
+					<permission allow="true">CancelCheckOut</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.cancelEditing</evaluator>
+			</action>
 
-         <!-- Cancel editing (unlock) -->
-         <action id="document-cancel-editing-unlock" type="javascript" label="actions.document.cancel-editing-unlock">
-            <param name="function">onActionUnlockDocument</param>
-            <permissions>
-               <permission allow="true">Unlock</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.metadata.isWorkingCopyLocked</evaluator>
-            <evaluator>evaluator.doclib.action.notHasWorkingCopy</evaluator>
-            <evaluator>evaluator.doclib.action.cancelLockedBlacklist</evaluator>
-         </action>
+			<!-- Cancel editing (unlock) -->
+			<action id="document-cancel-editing-unlock" type="javascript" label="actions.document.cancel-editing-unlock">
+				<param name="function">onActionUnlockDocument</param>
+				<permissions>
+					<permission allow="true">Unlock</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.metadata.isWorkingCopyLocked</evaluator>
+				<evaluator>evaluator.doclib.action.notHasWorkingCopy</evaluator>
+				<evaluator>evaluator.doclib.action.cancelLockedBlacklist</evaluator>
+			</action>
 
-         <!-- Manage folder rules -->
-         <action id="folder-manage-rules" type="pagelink" label="actions.folder.rules">
-            <param name="page">folder-rules?nodeRef={node.nodeRef}</param>
-            <permissions>
-               <permission allow="true">ChangePermissions</permission>
-            </permissions>
-         </action>
+			<!-- Manage folder rules -->
+			<action id="folder-manage-rules" type="pagelink" label="actions.folder.rules">
+				<param name="page">folder-rules?nodeRef={node.nodeRef}</param>
+				<permissions>
+					<permission allow="true">ChangePermissions</permission>
+				</permissions>
+			</action>
 
-         <!-- View on Google Maps -->
-         <action id="document-view-googlemaps" type="pagelink" label="actions.document.view-google-map">
-            <param name="page">geographic-map?nodeRef={node.nodeRef}</param>
-            <!-- aspect cm:geographic -->
-            <evaluator>evaluator.doclib.action.googleMaps</evaluator>
-         </action>
+			<!-- View on Google Maps -->
+			<action id="document-view-googlemaps" type="pagelink" label="actions.document.view-google-map">
+				<param name="page">geographic-map?nodeRef={node.nodeRef}</param>
+				<!-- aspect cm:geographic -->
+				<evaluator>evaluator.doclib.action.googleMaps</evaluator>
+			</action>
 
-         <!-- Transferred node: View in source repository -->
-         <action id="document-view-in-source-repository" type="link" label="actions.document.view-source-repository">
-            <!-- calculated from siteId, item.location.repositoryId, replicationUrlMapping from share-config-custom.xml and node.type -->
-            <param name="href">{sourceRepositoryUrl}</param>
-            <param name="target">_blank</param>
-            <!-- aspect trx:transferred -->
-            <evaluator>evaluator.doclib.action.transferred</evaluator>
-         </action>
+			<!-- Transferred node: View in source repository -->
+			<action id="document-view-in-source-repository" type="link" label="actions.document.view-source-repository">
+				<!-- calculated from siteId, item.location.repositoryId, replicationUrlMapping from share-config-custom.xml and node.type -->
+				<param name="href">{sourceRepositoryUrl}</param>
+				<param name="target">_blank</param>
+				<!-- aspect trx:transferred -->
+				<evaluator>evaluator.doclib.action.transferred</evaluator>
+			</action>
 
-         <!-- Cloud Sync: Create -->
-         <action id="document-cloud-sync" type="javascript" label="actions.document.cloud-sync">
-            <param name="function">onActionCloudSync</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.isSyncable</evaluator>
-         </action>
+			<!-- Cloud Sync: Create -->
+			<action id="document-cloud-sync" type="javascript" label="actions.document.cloud-sync">
+				<param name="function">onActionCloudSync</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.isSyncable</evaluator>
+			</action>
 
-         <!-- Cloud Sync: Delete -->
-         <action id="document-cloud-unsync" type="javascript" label="actions.document.cloud-unsync">
-            <param name="function">onActionCloudUnsync</param>
-            <permissions>
-               <permission allow="true">Delete</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.isUnsyncable</evaluator>
-            <override>document-cloud-sync</override>
-         </action>
+			<!-- Cloud Sync: Delete -->
+			<action id="document-cloud-unsync" type="javascript" label="actions.document.cloud-unsync">
+				<param name="function">onActionCloudUnsync</param>
+				<permissions>
+					<permission allow="true">Delete</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.isUnsyncable</evaluator>
+				<override>document-cloud-sync</override>
+			</action>
 
-         <!-- Cloud Sync: View In Cloud -->
-         <action id="document-view-in-cloud" type="link" label="actions.document.view-in-cloud">
-            <param name="href">{cloudViewUrl}</param>
-            <param name="target">_blank</param>
-            <evaluator>evaluator.doclib.action.isSyncedFromLocal</evaluator>
-         </action>
-         
-         <!-- Cloud Sync: Request Sync -->
-         <action id="document-request-sync" type="javascript" label="actions.document.request-sync">
-            <param name="function">onActionCloudSyncRequest</param>
-            <evaluator>evaluator.doclib.action.isSyncedFromLocal</evaluator>
-         </action>
+			<!-- Cloud Sync: View In Cloud -->
+			<action id="document-view-in-cloud" type="link" label="actions.document.view-in-cloud">
+				<param name="href">{cloudViewUrl}</param>
+				<param name="target">_blank</param>
+				<evaluator>evaluator.doclib.action.isSyncedFromLocal</evaluator>
+			</action>
 
-         <!-- Download folder -->
-         <action id="folder-download" type="javascript" label="actions.folder.download" icon="document-download">
-            <param name="function">onActionFolderDownload</param>
-         </action>
+			<!-- Cloud Sync: Request Sync -->
+			<action id="document-request-sync" type="javascript" label="actions.document.request-sync">
+				<param name="function">onActionCloudSyncRequest</param>
+				<evaluator>evaluator.doclib.action.isSyncedFromLocal</evaluator>
+			</action>
+
+			<!-- Download folder -->
+			<action id="folder-download" type="javascript" label="actions.folder.download" icon="document-download">
+				<param name="function">onActionFolderDownload</param>
+			</action>
 
       </actions>
 
@@ -1433,7 +1486,7 @@
             <action index="210" id="document-edit-offline" />
 -->     
             <action index="250" id="document-copy-to" />
-            <action index="260" id="document-move-to" />
+				<action index="260" id="document-move-to" />
             <action index="270" id="document-delete" />
 <!--     
             <action index="280" id="document-assign-workflow" />
@@ -1494,20 +1547,20 @@
 -->     
          </actionGroup>
 
-         <actionGroup id="folder-browse">
-            <action index="100" id="folder-download"/>
-            <action index="105" id="folder-view-details" />
-            <action index="110" id="document-edit-properties" icon="folder-edit-properties" label="actions.folder.edit-metadata" />
-            <action index="120" id="document-approve" icon="folder-approve" />
-            <action index="130" id="document-reject" icon="folder-reject" />
-            <action index="140" id="document-locate" icon="document-locate" label="actions.folder.locate" />
-            <action index="150" id="document-copy-to" icon="folder-copy-to" label="actions.folder.copy-to" />
-            <action index="160" id="document-move-to" icon="folder-move-to" label="actions.folder.move-to" />
-            <action index="170" id="folder-manage-rules" />
-            <action index="180" id="document-delete" icon="folder-delete" label="actions.folder.delete" />
-            <action index="190" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
-            <action index="200" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
-            <action index="210" id="document-manage-aspects" label="actions.folder.manage-aspects" />
+			<actionGroup id="folder-browse">
+				<action index="100" id="folder-download" />
+				<action index="105" id="folder-view-details" />
+				<action index="110" id="document-edit-properties" icon="folder-edit-properties" label="actions.folder.edit-metadata" />
+				<action index="120" id="document-approve" icon="folder-approve" />
+				<action index="130" id="document-reject" icon="folder-reject" />
+				<action index="140" id="document-locate" icon="document-locate" label="actions.folder.locate" />
+				<action index="150" id="document-copy-to" icon="folder-copy-to" label="actions.folder.copy-to" />
+				<action index="160" id="document-move-to" icon="folder-move-to" label="actions.folder.move-to" />
+				<action index="170" id="folder-manage-rules" />
+				<action index="180" id="document-delete" icon="folder-delete" label="actions.folder.delete" />
+				<action index="190" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
+				<action index="200" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
+				<action index="210" id="document-manage-aspects" label="actions.folder.manage-aspects" />
             <action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
             <action index="310" id="document-view-googlemaps" />
 <!--            
@@ -1545,30 +1598,83 @@
 
          <actionGroup id="document-link-browse">
             <action index="100" id="document-locate" label="actions.link.locate">
-               <evaluator />
-            </action>
-            <action index="110" id="document-delete" label="actions.link.delete" />
-         </actionGroup>
+					<evaluator />
+				</action>
+				<action index="110" id="document-delete" label="actions.link.delete" />
+			</actionGroup>
 
-         <actionGroup id="document-link-details">
-            <action index="100" id="document-delete" label="actions.link.delete" />
-         </actionGroup>
- 
-         <actionGroup id="folder-link-browse">
-            <action index="100" id="folder-view-details" />
-            <action index="110" id="document-locate" label="actions.link.locate">
-               <evaluator />
-            </action>
-            <action index="120" id="document-delete" icon="folder-delete" label="actions.link.delete" />
-         </actionGroup>
+			<actionGroup id="document-link-details">
+				<action index="100" id="document-delete" label="actions.link.delete" />
+			</actionGroup>
 
-         <actionGroup id="folder-link-details">
-            <action index="100" id="document-delete" icon="folder-delete" label="actions.link.delete" />
-         </actionGroup>
+			<actionGroup id="folder-link-browse">
+				<action index="100" id="folder-view-details" />
+				<action index="110" id="document-locate" label="actions.link.locate">
+					<evaluator />
+				</action>
+				<action index="120" id="document-delete" icon="folder-delete" label="actions.link.delete" />
+			</actionGroup>
 
-      </actionGroups>
+			<actionGroup id="folder-link-details">
+				<action index="100" id="document-delete" icon="folder-delete" label="actions.link.delete" />
+			</actionGroup>
 
-   </config>
+		</actionGroups>
 
-    
+	</config>
+
+	<config evaluator="string-compare" condition="Search" replace="true">
+		<search>
+			<!-- default minimum length for search terms -->
+			<min-search-term-length>1</min-search-term-length>
+
+			<!-- default maximum number of results for a search -->
+			<max-search-results>500</max-search-results>
+
+			<!-- Repository search configuration option -->
+			<!-- The 'repository-search' config element value can be one of: none - disable repository wide search option context - search depending on
+				current context, including repository, all sites, current site (default) always - always search full repository no matter what the context, disables
+				search context options always-options - always search full repository no matter what the context, still shows the search context options -->
+			<repository-search>always-options</repository-search>
+		</search>
+
+		<!-- sorting fields and labels -->
+		<!-- The 'sort' config element contains the name of the content model field to sort against and can be of the form: . Short QName string e.g.
+			"cm:name" . Pseudo cm:content field starting with a "." e.g. ".size" . Any other valid sortable fts-alfresco special field e.g. "TYPE" The field
+			can be optionally followed by |true or |false to indicate sort direction, where true = ascending, false = descending The element supports the
+			following optional attributes: label = label text to display labelId = I18N message id of label text to display isSortable = true or false for
+			if the field contains sortable data -->
+		<sorting>
+			<sort labelId="search.sort.relevance" isSortable="false"></sort>
+			<sort labelId="label.name" isSortable="true">cm:name</sort>
+			<sort labelId="label.title" isSortable="true">cm:title</sort>
+			<sort labelId="label.description" isSortable="false">cm:description
+			</sort>
+			<sort labelId="label.author" isSortable="false">cm:author</sort>
+			<sort labelId="label.modifier" isSortable="true">cm:modifier</sort>
+			<sort labelId="label.modified" isSortable="true">cm:modified|false
+			</sort>
+			<sort labelId="label.creator" isSortable="true">cm:creator</sort>
+			<sort labelId="label.created" isSortable="true">cm:created|false</sort>
+			<sort labelId="search.sort.size" isSortable="true">.size|true</sort>
+			<sort labelId="search.sort.mimetype" isSortable="true">.mimetype</sort>
+			<sort labelId="search.sort.type" isSortable="true">TYPE</sort>
+		</sorting>
+	</config>
+
+	<config evaluator="string-compare" condition="AdvancedSearch" replace="true">
+		<advanced-search>
+			<!-- Forms for the advanced search type list -->
+			<forms>
+				<!-- The 'form' config element contains the name of the model type of the form to display. The element supports the following optional attributes:
+					id = form id, the id of "search" will be assumed if not set label = label text to display - defaults to model type if not set labelId = I18N
+					message id of label text to display description = description text to display descriptionId = I18N message id of description text to display -->
+				<form labelId="search.form.label.ucm_artifact" descriptionId="search.form.desc.ucm_artifact">ucm:artifact
+				</form>
+				<form labelId="search.form.label.ucm_site" descriptionId="search.form.desc.ucm_site">ucm:site
+				</form>
+			</forms>
+		</advanced-search>
+	</config>
+
 </alfresco-config>

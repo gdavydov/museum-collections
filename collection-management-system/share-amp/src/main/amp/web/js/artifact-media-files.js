@@ -7,7 +7,6 @@ function safeAccess() {
 	return object;
 }
 
-
 function ucmIsEditable() {
     var actionsComponent = Alfresco.util.ComponentManager.findFirst("Alfresco.DocumentActions");
     return !!safeAccess(actionsComponent, 'options', 'documentDetails', 'item', 'node', 'permissions', 'user', 'Write');

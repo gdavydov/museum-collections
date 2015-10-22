@@ -1,0 +1,48 @@
+<webscript>
+	<shortname>ucm-search-artifacts</shortname>
+	<description>Search UCM aftifacts in all UCM sites</description>
+	<!-- This webscript is based on /slingshot/search webscript -->
+	<url>/ucm/search</url>
+	<format default="json" />
+	<authentication runas="user">none</authentication>
+	<args>
+		<arg>
+			<name>datatype</name>
+			<description>Either "ucm:artifact" or "ucm:site"</description>
+		</arg>
+		<arg>
+			<name>siteType</name>
+			<description>Type of site ("All", "Modern", "Classical", "Sculpture	only", ...)</description>
+		</arg>
+		<arg>
+			<name>siteLocation</name>
+			<description>Path of site address</description>
+		</arg>
+		<arg>
+			<name>siteName</name>
+			<description>Site name (or part of it)</description>
+		</arg>
+		<arg>
+			<name>artifactName</name>
+			<description>Artifact name (or part of it)</description>
+		</arg>
+		<arg>
+			<name>artistName</name>
+			<description>Artist name (or part of it)</description>
+		</arg>
+		<arg>
+			<name>period</name>
+			<description>Artifact creation period</description>
+		</arg>
+		<arg>
+			<name>tags</name>
+			<description>Comma-separated list of tags</description>
+		</arg>
+		<arg>
+			<name>maxResults</name>
+			<description>Results count limit (integer)</description>
+		</arg>
+	</args>
+	<transaction allow="readonly">required</transaction>
+	<lifecycle>internal</lifecycle>
+</webscript>

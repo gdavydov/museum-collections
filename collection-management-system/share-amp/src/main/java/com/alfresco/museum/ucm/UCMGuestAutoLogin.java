@@ -26,6 +26,7 @@ import org.springframework.extensions.webscripts.connector.HttpMethod;
 import org.springframework.extensions.webscripts.servlet.WebScriptServletRequest;
 import org.springframework.extensions.webscripts.servlet.WebScriptServletResponse;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 
 /**
  * This web script authenticates user as a "anonymous" user, and redirects to
@@ -40,7 +41,7 @@ import org.springframework.http.MediaType;
 public class UCMGuestAutoLogin extends AbstractWebScript {
 	private static Log LOGGER = LogFactory.getLog(UCMGuestAutoLogin.class);
 
-	public static final java.lang.String ENDPOINT_ID = "alfresco";
+	public static final String ENDPOINT_ID = "alfresco";
 
 	private UserFactory userFactory;
 	private ConnectorService connectorService;
@@ -91,7 +92,11 @@ public class UCMGuestAutoLogin extends AbstractWebScript {
 		// req.getContextPath() = "/share"
 		// req.getParameter("pageId") = "site/test/documentlibrary"
 		// "/share" + "/page/" + "site/test/documentlibrary";
-		return req.getContextPath() + "/page/" + req.getServiceMatch().getTemplateVars().get("pageId");
+		String newPath = req.getContextPath() + "/page/" + req.getServiceMatch().getTemplateVars().get("pageId");
+		if (!StringUtils.isEmpty(req.getQueryString())) {
+			newPath += "?" + req.getQueryString();
+		}
+		return newPath;
 	}
 
 	public void redirect(WebScriptRequest req, HttpServletResponse response) throws IOException {
