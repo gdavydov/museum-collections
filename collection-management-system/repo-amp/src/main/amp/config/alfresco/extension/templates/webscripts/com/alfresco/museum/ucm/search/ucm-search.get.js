@@ -36,7 +36,7 @@ function main()
 
 	var queryParams = {"datatype": args.datatype};
 	for (var queryParamName in QUERY_NAME_TO_PROPERTY_NAME) {
-		if (args[queryParamName] !== null && QUERY_NAME_TO_PROPERTY_NAME[queryParamName] !== null) {
+		if (args[queryParamName] !== null && args[queryParamName].length > 0 && QUERY_NAME_TO_PROPERTY_NAME[queryParamName] !== null) {
 			var propertyName = QUERY_NAME_TO_PROPERTY_NAME[queryParamName];
 			var propertyValue = args[queryParamName];
 			queryParams[propertyName] = propertyValue;
@@ -46,7 +46,7 @@ function main()
 	// E.g.:
 	// {"prop_ucm_artist_name":"testname","prop_ucm_artifact_name":"","prop_ucm_artifact_on_display":"false","datatype":"ucm:artifact"}
 	var query = jsonUtils.toJSONString(queryParams);
-	var maxResults = (args.maxResults !== null) ? parseInt(args.maxResults, 10) : DEFAULT_MAX_RESULTS;
+	var maxResults = (args.maxResults !== null && args.maxResults.length > 0) ? parseInt(args.maxResults, 10) : DEFAULT_MAX_RESULTS;
 
 	var params = {
 			siteId: null,
