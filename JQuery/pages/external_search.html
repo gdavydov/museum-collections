@@ -70,7 +70,8 @@
 	        });
 		}
 
-		function searchSites() {
+		function searchSites(ev) {
+			ev.preventDefault();
 			resetResult();
 			search($('#sitesForm'), function(data) {
 				$(data.items).each(function (idx, item) {
@@ -89,7 +90,8 @@
 			});
 		}
 
-		function searchArtifacts() {
+		function searchArtifacts(ev) {
+			ev.preventDefault();
 			resetResult();
 			search($('#artifactsForm'), function(data) {
 				$(data.items).each(function (idx, item) {
@@ -141,11 +143,10 @@
 			<label>You can limit result to rows</label>
 			<input name="maxResults" type="text" /><br>
 
-			<button type="button" onclick="searchSites(); return false;">Search</button>
+			<button>Search</button>
 		</fieldset>
 		</form>
 	</div>
-
 	<div id="artifacts" class="ucmHidden">
 		<form id="artifactsForm" method="GET" action="http://localhost:8080/share/proxy/alfresco-noauth/ucm/search">
 		<fieldset><legend>Artifact</legend>
@@ -166,12 +167,16 @@
 			<label>You can limit result to rows</label>
 			<input name="maxResults" type="text" /><br>
 
-			<button type="button" onclick="searchArtifacts(); return false;">Search</button>
+			<button>Search</button>
 		</fieldset>
 		</form>
 	</div>
 	<div id="searchResult">
 
 	</div>
+	<script type="text/javascript">
+		$("#sitesForm").submit(searchSites);
+		$("#artifactsForm").submit(searchArtifacts);
+	</script>
 </body>
 </html>

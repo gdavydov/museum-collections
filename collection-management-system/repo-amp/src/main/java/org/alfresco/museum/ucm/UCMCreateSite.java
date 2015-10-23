@@ -509,7 +509,6 @@ public class UCMCreateSite extends DeclarativeWebScript {
 			return null;
 		}
 
-		// Have the thumbnail created
 		try {
 			// Create the thumbnail
 			result = thumbnailService.createThumbnail(nodeRef, ContentModel.PROP_CONTENT, details.getMimetype(),
