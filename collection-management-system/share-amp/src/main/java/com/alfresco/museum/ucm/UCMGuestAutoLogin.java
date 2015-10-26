@@ -51,20 +51,31 @@ public class UCMGuestAutoLogin extends AbstractWebScript {
 		HttpServletRequest request = ((WebScriptServletRequest) req).getHttpServletRequest();
 		HttpServletResponse response = ((WebScriptServletResponse) res).getHttpServletResponse();
 
-		try {
-			JSONObject userCredentialsJson = configureAnonymousUser();
-			authenticate(request, response, userCredentialsJson);
-		} catch (ConnectorServiceException | JSONException e) {
-			String message = "Failed to configure anonymous user!";
-			LOGGER.error(message, e);
+		//discard current session
+		//HttpSession currentSession = ServletUtil.getSession();
+		//if (currentSession != null) {
+		//	currentSession.invalidate();
+		//}
+
+		HttpSession newSession = ServletUtil.getSession(true);
+		//TODO: Do nothing if user is already logged in?
+		boolean loggedIn = StringUtils.isEmpty(newSession.getAttribute("_alf_USER_ID"));
+		if (!loggedIn) {
+			try {
+				JSONObject userCredentialsJson = configureAnonymousUser(newSession);
+				authenticate(request, response, userCredentialsJson);
+			} catch (ConnectorServiceException | JSONException e) {
+				String message = "Failed to configure anonymous user!";
+				LOGGER.error(message, e);
+			}
 		}
 		// if authentication failed redirect user anyway so it can see login dialog
 		redirect(req, response);
 	}
 
-	public JSONObject configureAnonymousUser() throws ConnectorServiceException, JSONException {
+	public JSONObject configureAnonymousUser(HttpSession currentSession) throws ConnectorServiceException, JSONException {
 		String currentUserId = ThreadLocalRequestContext.getRequestContext().getUserId();
-		HttpSession currentSession = ServletUtil.getSession(true);
+
 		Connector connector = this.getConnectorService().getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
 		ConnectorContext context = new ConnectorContext(HttpMethod.GET);

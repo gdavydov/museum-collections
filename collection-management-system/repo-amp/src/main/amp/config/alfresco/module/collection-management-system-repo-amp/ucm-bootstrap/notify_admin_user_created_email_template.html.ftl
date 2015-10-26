@@ -7,14 +7,14 @@
          font-size: 14px;
          color: #4c4c4c;
       }
-      
+
       a, a:visited
       {
          color: #0072cf;
       }
       --></style>
    </head>
-   
+
    <body bgcolor="#dddddd">
       <table width="100%" cellpadding="20" cellspacing="0" border="0" bgcolor="#dddddd">
          <tr>
@@ -45,20 +45,20 @@
                                           </table>
                                           <div style="font-size: 14px; margin: 12px 0px 24px 0px; padding-top: 10px; border-top: 1px solid #aaaaaa;">
                                              <p>Hi ${first_name},</p>
-      
+
                                              <p>Site <b>${site_name}</b> has been created successfully.</p>
-                                             
+
                                              <p>You are an Admin of this site. Your login details are:<br />
                                              <br />Username: <b>${user_name}</b>
                                              <br />Password: <b>${user_password}</b>
                                              </p>
-                                             
+
                                              <p><b>We strongly advise you to change your password when you log in for the first time.</b><br />
                                              You can do this by going to <b>My Profile</b> and selecting <b>Change Password</b>.</p>
-                                             
+
                                              <p>To log in and start using your new site use this link:<br />
-                                             <a href="${shareUrl}/page/${site_short_name}/dashboard">${shareUrl}/page/${site_short_name}/dashboard</a></p>
-                                             
+                                             <a href="${shareUrl}/page/${site_short_name}/dashboard">${shareUrl}/page/site/${site_short_name}/dashboard</a></p>
+
                                              <p>Sincerely,<br />
                                              Universal Collection Management System (UCM) team.</p>
                                           </div>

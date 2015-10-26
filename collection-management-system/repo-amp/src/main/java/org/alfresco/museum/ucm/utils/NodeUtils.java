@@ -66,15 +66,15 @@ public class NodeUtils {
 	public NodeRef createContentNode(NodeRef parent, String name, String text) {
 		return createContentNode(parent, name, text, ContentModel.TYPE_CONTENT);
 	}
-	
+
 	public NodeRef createContentNode(NodeRef parent, String name, String text, QName nodeType) {
 		return createContentNode(parent, name, new ByteArrayInputStream(text.getBytes()), nodeType, null, null);
 	}
-	
+
 	public NodeRef createContentNode(NodeRef parent, String name, UCMContentImpl content, QName nodeType) {
 		return createContentNode(parent, name, content.getInputStream(), nodeType, content.getMimetype(), content.getEncoding());
 	}
-	
+
 	/**
 	 * See <a
 	 * href="http://docs.alfresco.com/5.0/tasks/api-java-content-create.html"
@@ -93,17 +93,17 @@ public class NodeUtils {
 		// Use the content service to set the content onto the newly created
 		// node
 		ContentWriter writer = this.getContentService().getWriter(node, ContentModel.PROP_CONTENT, true);
-		
+
 		writer.setMimetype(ObjectUtils.defaultIfNull(mimetype, MimetypeMap.MIMETYPE_TEXT_PLAIN));
 		writer.setEncoding(ObjectUtils.defaultIfNull(encoding, StandardCharsets.UTF_8.name()));
-		
+
 		writer.putContent(content);
 
 		// Return a node reference to the newly created node
 		return node;
 	}
-	
-	
+
+
 	/*
 	 * Fills properties of "to" node with values of "from" node. To be updated
 	 * property should: 1. be defined in child node type description in types
@@ -165,11 +165,11 @@ public class NodeUtils {
 		}
 		return result;
 	}
-	
+
 	public boolean isSiteNode(NodeRef nodeRef) {
 		return isNodeSubClassOf(nodeRef, SiteModel.TYPE_SITE);
 	}
-	
+
 	public boolean isNodeSubClassOf(NodeRef nodeRef, QName type) {
 		boolean result = false;
 		if (nodeRef != null) {
@@ -178,7 +178,7 @@ public class NodeUtils {
 		}
 		return result;
 	}
-	
+
 	public NodeRef getSiteRefByNode(NodeRef nodeRef) {
 		while (nodeRef != null && !isSiteNode(nodeRef)) {
 			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
@@ -195,9 +195,10 @@ public class NodeUtils {
 	 * See <a href=
 	 * "https://forums.alfresco.com/forum/developer-discussions/repository-services/get-company-home-noderef-solved-06222009-1515"
 	 * >discussion</a>
-	 * 
+	 *
 	 * @return
 	 */
+	//TODO: repository.getCompanyHome() ?
 	public NodeRef getCompanyHomeNodeRef() {
 		StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 		ResultSet rs = searchService.query(storeRef, SearchService.LANGUAGE_XPATH, "/app:company_home");
