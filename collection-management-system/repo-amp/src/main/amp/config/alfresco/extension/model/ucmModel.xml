@@ -683,6 +683,28 @@
 					<title>Contact Phone</title>
 					<type>d:text</type>
 				</property>
+				
+				<property name="ucm:site_visibility">
+					<title>Site Type</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+            		<default>PUBLIC</default> 
+					<index enabled="true">
+						<atomic>false</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
+					<constraints>
+						<constraint name="ucm:site_aspect_visibility_types" type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>PUBLIC</value>
+									<value>PRIVATE</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
 			</properties>
 		</aspect>
 
@@ -826,6 +848,13 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory> <!-- TODO: true? -->
 					<multiple>true</multiple><!--TODO: set false to allow values with comma -->
+				</property>
+
+				<property name="ucm:artist_known_for">
+					<title>Known For</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+					<multiple>false</multiple>
 				</property>
 
 				<property name="ucm:artist_period">
