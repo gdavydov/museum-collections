@@ -121,29 +121,29 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	 * @param nodeRef
 	 * @return
 	 */
-	public String getSiteName(NodeRef nodeRef) 
+	public String getSiteName(NodeRef nodeRef)
 	{
 		while (nodeRef != null && !SiteModel.TYPE_SITE.equals(this.getNodeService().getType(nodeRef))) {
 			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
 		}
 
 		NodeRef siteNodeRef = nodeRef;
-		return getNodeName(siteNodeRef, UCMConstants.PROP_UCM_SITE_QNAME);
-		
+		return getNodeName(siteNodeRef, UCMConstants.TYPE_UCM_SITE_QNAME);
+
 /*
 		int sitePosition = 3;
 		Path path = this.getNodeService().getPaths(nodeRef, true).get(0);
 		return path.get(3).getElementString(); //siteName
-*/		
+*/
 	}
 
 	/**
 	 * Return node name for specified QName
 	 * @param nodeRef
 	 * @param qName
-	 * @return String 
+	 * @return String
 	 */
-	public String getNodeName(NodeRef nodeRef, QName qName) 
+	public String getNodeName(NodeRef nodeRef, QName qName)
 	{
 		return getNodeService().getProperty(nodeRef, qName).toString();
 	}
@@ -152,7 +152,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	 * @param nodeRef
 	 * @return String
 	 */
-	public String getNodeName(NodeRef nodeRef) 
+	public String getNodeName(NodeRef nodeRef)
 	{
 		return getNodeService().getProperty(nodeRef, UCMConstants.PROP_CM_CMOBJECTNAME_QNAME).toString();
 	}
@@ -166,7 +166,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	{
 		try {
 			ContentReader reader = this.getContentService().getReader(nodeRef, ContentModel.PROP_CONTENT);
-			return reader.getContentInputStream();	
+			return reader.getContentInputStream();
 		}
 		catch(org.alfresco.service.cmr.dictionary.InvalidTypeException ite) {
 			LOGGER.error("Invalid node type for "+getNodeName(nodeRef));
@@ -205,10 +205,10 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 					else {
 						ucmContent = new UCMContentImpl(contentField, mimetype);
 					}
-					
+
 					//process lat/lon data, etc
 					processMetadata(ucmContent.getInputStream(), persistedObject);
-					
+
 					// write the content
 					ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
 							true);
@@ -280,7 +280,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		String artifactName = artifactNameValue.toString();
 
 		NodeRef systemFolder = this.getUtils().getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
-		
+
 //		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
 //		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
 		/*
@@ -300,7 +300,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 
 		return mediaFolder;
 	}
-	
+
 	protected void resolvePossibleFilenameConflict(TypeDefinition item, FormData data) {
 		// firstly, ensure we have a destination to create the node in
 		NodeRef parentRef = null;
@@ -317,7 +317,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		// Use name of uploaded file as new content name
 		data.addFieldData(NAME_PROP_DATA, validFilename, true);
 	}
-	
+
 	@Override
 	public void beforeGenerate(T item, List<String> fields, List<String> forcedFields, Form form,
 			Map<String, Object> context) {
@@ -335,7 +335,7 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	@Override
 	public void afterPersist(T item, FormData data, NodeRef persistedObject) {
 	}
-	
+
 	public NodeUtils getUtils() {
 		return utils;
 	}
