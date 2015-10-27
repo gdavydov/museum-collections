@@ -57,7 +57,7 @@
                                              You can do this by going to <b>My Profile</b> and selecting <b>Change Password</b>.</p>
 
                                              <p>To log in and start using your new site use this link:<br />
-                                             <a href="${shareUrl}/page/${site_short_name}/dashboard">${shareUrl}/page/site/${site_short_name}/dashboard</a></p>
+                                             <a href="${shareUrl}/page/site/${site_short_name}/dashboard">${shareUrl}/page/site/${site_short_name}/dashboard</a></p>
 
                                              <p>Sincerely,<br />
                                              Universal Collection Management System (UCM) team.</p>
