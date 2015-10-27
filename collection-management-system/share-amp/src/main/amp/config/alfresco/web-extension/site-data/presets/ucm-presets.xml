@@ -84,6 +84,8 @@
             <authentication>user</authentication>
             <properties>
                 <sitePages>[{"pageId":"documentlibrary"}]</sitePages>
+                <sitePages>[{"pageId":"wiki"}]</sitePages>
+                <sitePages>[{"pageId":"blog-postlist"}]</sitePages>
             </properties>
          </page>
       </pages>
