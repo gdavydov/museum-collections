@@ -1,0 +1,19 @@
+Artium Gallery Collection Management System is based on open source based platform, and implemented as cloud-based SaaS (software as a services) solution. There are the following types of licenses offered for all Artium Gallery customers.
+
+<i><strong>Note</strong> : All levels will allow unlimited number of participants and visitors on the site</i>
+<ul>
+<ul>
+<li><strong>Free</strong> : customers will get own site on shared space. Each customer will get predefined amount of the server storage where they can create as many objects as space permits. Customers will manage own collection. The site will be white labeled, except customers cannot use own logo. Customers will get regular reports on disk usage and site activities. Inactive sites will be removed after 3 month. Customers will have free upgrades and forum-based support. The system will be fully-functional, except functionality allowing building mobile applications by visitors.</li>
+<li><strong>Bronze tier</strong>: Customers will have the same service as ‘Free’ tier customers, however in addition they will have 2 High Availability (HA) dedicated servers (their site will never be down, except for the deployment of the new software) as well as more predefined storage. <a href="http://52.88.230.142/wordpress/index.php/contact-us">Please contact us for the information</a></li>
+<li><strong>Silver tier</strong>: It will include 2 High availability dedicated servers, more predefined storage than Bronze tier and certain amount of predefined configurations-only changes (mostly for look and feel) for their site. Also it will include free upgrades and email and phone based support.<a href="http://52.88.230.142/wordpress/index.php/contact-us">Please contact us for the information</a>.</li>
+<li><strong>Gold tier</strong> - It will include 4 high availability dedicated servers, more storage than silver tier  and certain amount of predefined configurations and customizations changes for their site. Also it will include free upgrades and email and phone based support. <a href="http://52.88.230.142/wordpress/index.php/contact-us">Please contact us for the information</a>.
+<br>
+<i>Note: Bronze, Silver and Gold tiers might have more, that predefined storage, but it will increase cost of the system. Any high availability systems have to be discussed separately and will increase cost of the system as well.<a href="http://52.88.230.142/wordpress/index.php/contact-us">Please contact us for details</a>.</i>
+
+<i>Silver and Gold tiers will allow visitors to build mobile tour application based on their preferences as well as for museum integrate with exiting mobile application publishing systems. Also this tier will allow to use record management and archiving functionality.<a href="http://52.88.230.142/wordpress/index.php/contact-us">Please contact us for details</a>.</i></li>
+</ul>
+</ul>
+<i><strong>Notes</strong>:
+➢ Bronze, Silver and Gold tiers are subscription-based with annual renewed licenses.
+➢ Customers can scale up and down between Bronze and Gold support and additional storage and high avalability servers any time during the current subscription term for extra fee, but no more than 4 times a year.
+</i>

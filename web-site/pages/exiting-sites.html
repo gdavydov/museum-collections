@@ -1,0 +1,53 @@
+<!--more-->
+<style>
+label
+{
+  display: inline-block;
+  width: 150px;
+}
+
+input[type="text"]
+{
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-left: 5px
+}
+
+.visible{
+  display:block;
+  }
+.hidden{
+  display:none; 
+}
+
+
+</style>
+Examples of  exisintg sites
+<strong><em>Modern</em></strong>
+<a href="http://54.201.109.87:8080/share/page/site/museum-test-site/documentlibrary#filter=path|%2FMunch%2520Collection|&amp;page=1" target="new">Edward Munch</a>
+<a href="http://54.201.109.87:8080/share/page/site/museum-test-site/documentlibrary#filter=path%7C%2FGeorgii%2520Kurasov%7C&amp;page=1" target="new">Georgii Kurasov</a>
+<strong><u>Classical</u></strong>
+<a href="http://54.201.109.87:8080/share/page/site/museum-test-site/documentlibrary#filter=path%7C%2FClassical%2520art%2FNGA%2520Wtewael%2520Subcollection%2FJoachim%2520Wtewael%7C&amp;page=1" target="new">NGA Wtewael Subcollection</a>
+<a href="http://54.201.109.87:8080/share/page/site/museum-test-site/documentlibrary#filter=path%7C%2FClassical%2520art%2FAntonello%2520di%2520Giovanni%2520di%2520Antonio%2520%2528Antonello%2520degli%2520Antoni%2529%7C&amp;page=1" target="new">Antonello Da Messina</a>
+<a href="http://54.201.109.87:8080/share/page/site/museum-test-site/documentlibrary#filter=path%7C%2FClassical%2520art%2FAlbrecht%2520Durer%7C&amp;page=1" target="new">Albrecht Durer</a>
+<p>
+Also you you can search <a id="sitelink" href="javascript:void(0)" onclick="document.getElementById('sites').setAttribute('class', 'visible');document.getElementById('artifacts').setAttribute('class', 'hidden')">Sites</a> or <a id="artifactlink" href="javascript:void(0)" onclick="document.getElementById('sites').setAttribute('class', 'hidden');document.getElementById('artifacts').setAttribute('class', 'visible')">Artifact</a>
+
+<div id="sites" class="hidden">
+<form>
+<fieldset><legend>Sites</legend><label>Site Type</label><input type="text" />
+<label>Site Location</label><input type="text" />
+<label>Site Name</label><input type="text" />
+<label>You can limit result to rows</label><input type="text" /></fieldset>
+</form>Site Search result goes here
+</div>
+
+<div id="artifacts" class="hidden">
+<form>
+<fieldset><legend>Artifact</legend><label>Name</label><input type="text" />
+<label>Artist/Autor Name</label><input type="text" />
+<label>Period</label><input type="text" />
+<label>Additional Tags (Comma separated)</label><input type="text" />
+<label>You can limit result to rows</label><input type="text" /></fieldset>
+</form>Artifact Search result goes here
+</div>
