@@ -17,7 +17,7 @@
             <url>/components/navigation/collaboration-navigation</url>
          </component>
          <!-- dashboard components -->
- <!--        
+ <!--
           <component>
             <scope>page</scope>
             <region-id>component-1-1</region-id>
@@ -42,7 +42,7 @@
             <source-id>site/${siteid}/dashboard</source-id>
             <url>/components/dashlets/activityfeed</url>
          </component>
--->         
+-->
           <component>
             <scope>page</scope>
             <region-id>component-1-1</region-id>
@@ -83,9 +83,7 @@
             <template-instance>dashboard-2-columns-wide-right</template-instance>
             <authentication>user</authentication>
             <properties>
-                <sitePages>[{"pageId":"documentlibrary"}]</sitePages>
-                <sitePages>[{"pageId":"wiki"}]</sitePages>
-                <sitePages>[{"pageId":"blog-postlist"}]</sitePages>
+                <sitePages>[{"pageId":"documentlibrary"}, {"pageId":"wiki"}, {"pageId":"blog-postlist"}]</sitePages>
             </properties>
          </page>
       </pages>

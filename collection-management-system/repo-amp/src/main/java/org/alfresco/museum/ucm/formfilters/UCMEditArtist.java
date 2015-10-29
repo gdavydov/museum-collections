@@ -28,15 +28,15 @@ public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 				NodeRef artistArtifactRef = new NodeRef(artistArtifactString);
 				TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 						UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
-				writeContent(artistArtifactType, data, artistArtifactRef);
+				writeContent(artistArtifactType, data, artistArtifactRef, false);
 				updateArtistArtifact(data, persistedObject, artistArtifactRef);
 			}
 		}
 	}
-	
+
 	/**
 	 * Update artist artifact if artist got changed.
-	 * 
+	 *
 	 * @param data
 	 * @param artistRef
 	 */

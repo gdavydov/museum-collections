@@ -5,13 +5,13 @@
     <name>Museum Collection Management System Repository AMP Module</name>
     <packaging>amp</packaging>
     <description>This is Museum collection management system Share AMP project, containing all the Repository customizations</description>
-    
+
     <parent>
         <groupId>com.alfresco.museum</groupId>
         <artifactId>collection-management-system</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    
+
     <properties>
         <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
         .    | Allowed values: alfresco | share. Defaults to a repository AMP, but could point to your custom corporate Alfresco WAR -->
@@ -34,8 +34,13 @@
 			<artifactId>customise-site-logo-alfresco</artifactId>
 			<version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+        	<groupId>com.thetransactioncompany</groupId>
+        	<artifactId>cors-filter</artifactId>
+        	<version>2.4</version>
+        </dependency>
     </dependencies>
-    
+
     <profiles>
         <!-- RM profile, manually activated, automatically adds support for RM development (dependencies) and install the RM amps in the WARs -->
         <profile>

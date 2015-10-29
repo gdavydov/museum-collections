@@ -130,7 +130,7 @@ public class UCMPresetsManager {
 	 * See
 	 * {@link org.springframework.extensions.surf.PresetsManager#constructPreset(String, Map)
 	 * PresetsManager.constructPreset()}.
-	 * 
+	 *
 	 * @throws JSONException
 	 */
 	@SuppressWarnings("unchecked")

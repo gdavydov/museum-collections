@@ -158,23 +158,6 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	}
 
 	/**
-	 * TODO Do I need it?
-	 * @param nodeRef
-	 * @return
-	 */
-	private InputStream getContent(NodeRef nodeRef)
-	{
-		try {
-			ContentReader reader = this.getContentService().getReader(nodeRef, ContentModel.PROP_CONTENT);
-			return reader.getContentInputStream();
-		}
-		catch(org.alfresco.service.cmr.dictionary.InvalidTypeException ite) {
-			LOGGER.error("Invalid node type for "+getNodeName(nodeRef));
-		}
-		return  null;
-	}
-
-	/**
 	 * Store "cm:content" property value, which is ignored by default handler.<br/>
 	 * See
 	 * {@link org.alfresco.repo.forms.processor.node.ContentModelFormProcessor#persistNode(NodeRef, FormData)
@@ -187,6 +170,10 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 	 * >discussion thread</a>
 	 */
 	protected void writeContent(TypeDefinition item, FormData data, NodeRef persistedObject) {
+		writeContent(item, data, persistedObject, true);
+	}
+
+	protected void writeContent(TypeDefinition item, FormData data, NodeRef persistedObject, boolean allowResetContent) {
 		FieldData contentField = data.getFieldData(CONTENT_PROP_DATA);
 		if (contentField != null && contentField.isFile()) {
 			// if we have a property definition attempt the persist
@@ -206,15 +193,20 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 						ucmContent = new UCMContentImpl(contentField, mimetype);
 					}
 
-					//process lat/lon data, etc
-					processMetadata(ucmContent.getInputStream(), persistedObject);
+					boolean isContentReset = ucmContent.isEmpty();
+					boolean isUpdateAllowed = (!isContentReset) || allowResetContent;
 
-					// write the content
-					ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
-							true);
-					writer.setMimetype(ucmContent.getMimetype());
-					writer.setEncoding(ucmContent.getEncoding());
-					writer.putContent(ucmContent.getInputStream());
+					if (isUpdateAllowed) {
+						//process lat/lon data, etc
+						processMetadata(ucmContent.getInputStream(), persistedObject);
+
+						// write the content
+						ContentWriter writer = this.getContentService().getWriter(persistedObject, ContentModel.PROP_CONTENT,
+								true);
+						writer.setMimetype(ucmContent.getMimetype());
+						writer.setEncoding(ucmContent.getEncoding());
+						writer.putContent(ucmContent.getInputStream());
+					}
 				} catch (IOException e) {
 					LOGGER.error("Can't create copy of image stream", e);
 				}

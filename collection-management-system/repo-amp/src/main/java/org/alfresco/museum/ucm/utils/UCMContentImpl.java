@@ -26,17 +26,17 @@ public class UCMContentImpl implements Content {
 	private final byte[] content;
 	private final String mimetype;
 	private final String encoding;
-	
+
 	/**
 	 * Constructs content impl from FormField implementation used in web scripts.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public UCMContentImpl(org.springframework.extensions.webscripts.servlet.FormData.FormField formField) throws IOException {
 		this.content = IOUtils.toByteArray(formField.getInputStream());
 		this.mimetype = formField.getContent().getMimetype();
 		this.encoding = formField.getContent().getEncoding();
 	}
-	
+
 	/*
 	 * TODO: ideally metadata should be extracted in the same way it is done in
 	 * upload.post.js:extractMetadata
@@ -58,7 +58,7 @@ public class UCMContentImpl implements Content {
 		this.content = IOUtils.toByteArray(contentField.getInputStream());
 		this.mimetype = mimetypeService.guessMimetype(contentField.getName(), this.getInputStream());
 	}
-	
+
 	/**
 	 * Constructs content impl from FormData implementation used in FormFilter methods.
 	 */
@@ -99,5 +99,9 @@ public class UCMContentImpl implements Content {
 	public Reader getReader() throws IOException {
 		return new BufferedReader(new InputStreamReader(this.getInputStream()));
 	}
-	
+
+
+	public boolean isEmpty() {
+		return getSize() == 0;
+	}
 }

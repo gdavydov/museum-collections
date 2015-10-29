@@ -51,16 +51,18 @@ public class UCMGuestAutoLogin extends AbstractWebScript {
 		HttpServletRequest request = ((WebScriptServletRequest) req).getHttpServletRequest();
 		HttpServletResponse response = ((WebScriptServletResponse) res).getHttpServletResponse();
 
-		//discard current session
-		//HttpSession currentSession = ServletUtil.getSession();
-		//if (currentSession != null) {
-		//	currentSession.invalidate();
-		//}
+		HttpSession currentSession = ServletUtil.getSession();
+		boolean isCurrentSessionExist = (currentSession != null);
+		boolean isLoggedIn = false;
+
+		if (isCurrentSessionExist) {
+			//NOTE: currentSession.invalidate(); will delete present session, allowing admin to log in as anonymous
+			isLoggedIn = !StringUtils.isEmpty(currentSession.getAttribute("_alf_USER_ID"));
+		}
 
 		HttpSession newSession = ServletUtil.getSession(true);
-		//TODO: Do nothing if user is already logged in?
-		boolean loggedIn = StringUtils.isEmpty(newSession.getAttribute("_alf_USER_ID"));
-		if (!loggedIn) {
+
+		if (!isLoggedIn) {
 			try {
 				JSONObject userCredentialsJson = configureAnonymousUser(newSession);
 				authenticate(request, response, userCredentialsJson);
@@ -69,6 +71,7 @@ public class UCMGuestAutoLogin extends AbstractWebScript {
 				LOGGER.error(message, e);
 			}
 		}
+
 		// if authentication failed redirect user anyway so it can see login dialog
 		redirect(req, response);
 	}

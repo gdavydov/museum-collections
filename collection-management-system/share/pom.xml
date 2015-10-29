@@ -27,11 +27,6 @@
             <version>${project.version}</version>
             <type>amp</type>
         </dependency>
-        <dependency>
-        	<groupId>com.thetransactioncompany</groupId>
-        	<artifactId>cors-filter</artifactId>
-        	<version>2.4</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -39,10 +34,10 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <!-- Here is can control the order of overlay of your (WAR, AMP, etc.) dependencies
-                        | NOTE: At least one WAR dependency must be uncompressed first 
-                        | NOTE: In order to have a dependency effectively added to the WAR you need to 
-                        | explicitly mention it in the overlay section. 
-                        | NOTE: First-win resource strategy is used by the WAR plugin 
+                        | NOTE: At least one WAR dependency must be uncompressed first
+                        | NOTE: In order to have a dependency effectively added to the WAR you need to
+                        | explicitly mention it in the overlay section.
+                        | NOTE: First-win resource strategy is used by the WAR plugin
                         -->
                     <overlays>
                         <!-- The current project customizations -->

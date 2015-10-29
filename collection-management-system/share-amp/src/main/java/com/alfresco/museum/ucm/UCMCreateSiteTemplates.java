@@ -29,9 +29,9 @@ import com.yahoo.platform.yui.javascript.Scriptable;
  */
 public class UCMCreateSiteTemplates extends DeclarativeWebScript {
 	private static Log LOGGER = LogFactory.getLog(UCMCreateSiteTemplates.class);
-	
+
 	private UCMPresetsManager presetsManager;
-	
+
 	@Override
 	protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
 		String presetId = req.getParameter("presetId");
@@ -39,7 +39,7 @@ public class UCMCreateSiteTemplates extends DeclarativeWebScript {
 		Map<String, String> tokens = Collections.singletonMap("siteid", siteId);
 		Object json = "";
 		try {
-			json = presetsManager.constructPreset(presetId, tokens);
+			json = this.getPresetsManager().constructPreset(presetId, tokens);
 		} catch (JSONException e) {
 			LOGGER.error("Can't create site templates", e);
 		}
