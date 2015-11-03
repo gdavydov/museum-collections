@@ -1,0 +1,15 @@
+<extension>
+<!-- https://www.alfresco.com/blogs/developer/2013/09/04/customizing-the-share-header-menu-part-1/ -->
+  <modules>
+    <module>
+      <id>Update Admin Menu</id>
+      <version>1.0</version>
+      <customizations>
+        <customization>
+          <targetPackageRoot>org.alfresco.share.header</targetPackageRoot>
+          <sourcePackageRoot>org.alfresco.components.share.ucm-header</sourcePackageRoot>
+        </customization>
+      </customizations>
+    </module>
+  </modules>
+</extension>
