@@ -56,11 +56,12 @@
                                              <p><b>We strongly advise you to change your password when you log in for the first time.</b><br />
                                              You can do this by going to <b>My Profile</b> and selecting <b>Change Password</b>.</p>
 
-                                             <p>To log in and start using your new site use this link:<br />
+                                             <p>To log in and start using your new site use this link:<br/>
                                              <a href="${shareUrl}/page/site/${site_short_name}/dashboard">${shareUrl}/page/site/${site_short_name}/dashboard</a></p>
+                                             <p>We strongly recommend to add this link to your favorites.<br/>
 
                                              <p>Sincerely,<br />
-                                             Universal Collection Management System (UCM) team.</p>
+                                             Artium Gallery Collection Management System (UCM) team.</p>
                                           </div>
                                        </td>
                                     </tr>

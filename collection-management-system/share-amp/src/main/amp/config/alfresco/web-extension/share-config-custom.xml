@@ -74,6 +74,10 @@
 				<subtype name="ucm:collection" />
 			</type>
 
+			<type name="cm:folder">
+				<subtype name="ucm:artist" />
+			</type>
+
 			<type name="ucm:collection">
 				<subtype name="ucm:artist" />
 			</type>
@@ -107,10 +111,17 @@
 			<type name="ucm:collection" display-label="FCollection" display-label-id="fcollection" icon="folder" itemid="ucm:collection" />
 		</folder-types>
 
+<!--  http://sharextras.org/jsdoc/share/community-head/symbols/Alfresco.QuickShare.html--> -->
 		<metadata-templates>
 			<template id="isArtifact">
 				<evaluator>evaluator.doclib.metadata.isArtifact</evaluator>
-				<line index="10" id="date" view="detailed">{date}{size}</line>
+				<line index="10" id="date" view="detailed">{date}{size}{artifact_date}</line>
+				<line index="20" id="social" view="detailed">{social}</line>
+ 				<line index="30" id="description" view="detailed">{description}</line>
+ 			</template>
+			<template id="isArtist">
+				<evaluator>evaluator.doclib.metadata.isArtist</evaluator>
+				<line index="10" id="date" view="detailed">{date}</line>
 				<line index="20" id="social" view="detailed">{social}</line>
 			</template>
 		</metadata-templates>
