@@ -55,6 +55,7 @@
 			<parent>st:site</parent>
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
+				<aspect>ucm:inherit_properties_source_aspect</aspect>
 			</mandatory-aspects>
 		</type>
 
@@ -128,6 +129,8 @@
 			</associations>
 			<mandatory-aspects>
 				<aspect>ucm:site_aspect</aspect>
+				<aspect>ucm:inherit_properties_source_aspect</aspect>
+				<aspect>ucm:inherit_properties_target_aspect</aspect>
 			</mandatory-aspects>
 		</type>
 
@@ -195,6 +198,9 @@
 		<type name="ucm:document">
 			<title>Document</title>
 			<parent>ucm:content</parent>
+			<mandatory-aspects>
+				<aspect>ucm:inherit_properties_target_aspect</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="ucm:attached_file">
@@ -206,8 +212,8 @@
 					<title>Type</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
-<!--					
-            		<default>Media</default> 
+<!--
+            		<default>Media</default>
 					<constraints>
 						<constraint name="ucm:allowed_attach_types" type="LIST">
 							<parameter name="allowedValues">
@@ -683,12 +689,12 @@
 					<title>Contact Phone</title>
 					<type>d:text</type>
 				</property>
-				
+
 				<property name="ucm:site_visibility">
 					<title>Site Type</title>
 					<type>d:text</type>
 					<mandatory>false</mandatory>
-            		<default>PUBLIC</default> 
+            		<default>PUBLIC</default>
 					<index enabled="true">
 						<atomic>false</atomic>
 						<stored>true</stored>
@@ -751,7 +757,7 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 				</property>
-<!-- 
+<!--
 				<property name="ucm:archeological_aspect_excavated_lat">
 					<title>Excavated Lat.</title>
 					<type>d:double</type>
@@ -924,5 +930,13 @@
 			</properties>
 		</aspect>
 
+		<aspect name="ucm:inherit_properties_source_aspect">
+			<title>Children of this node may inherit it's properties</title>
+		</aspect>
+
+		<!-- Flag aspect to enable property inheriting behavior -->
+		<aspect name="ucm:inherit_properties_target_aspect">
+			<title>This node inherits properties from parent nodes</title>
+		</aspect>
 	</aspects>
 </model>

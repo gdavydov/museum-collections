@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.service.namespace.QName;
+import org.alfresco.util.collections.CollectionUtils;
 
 public class UCMConstants {
 
@@ -93,6 +94,12 @@ public class UCMConstants {
 	public static final String TYPE_UCM_SITE = "site";
 	public static final QName TYPE_UCM_SITE_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_SITE);
 
+	public static final String ASPECT_ARTIST = "artist_aspect";
+	public static final QName ASPECT_ARTIST_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_ARTIST);
+
+	public static final String ASPECT_MUSEUM_ARTIFACT = "museum_artifact_aspect";
+	public static final QName ASPECT_MUSEUM_ARTIFACT_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_MUSEUM_ARTIFACT);
+
 	public static final String ASPECT_SITE = "site_aspect";
 	public static final QName ASPECT_SITE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_SITE);
 
@@ -123,14 +130,23 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE = "site_aspect_contact_phone";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE);
 
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY = "site_visibility";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY);
+
 //	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX = "site_aspect_contact_fax";
 //	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
 
-	public static final Set<QName> NOT_SYNC_PROPERTIES = Collections.singleton(PROP_UCM_ARTIST_ARTIFACT_QNAME);
-
+	public static final Set<QName> INHERITABLE_ASPECTS = CollectionUtils.unmodifiableSet(ASPECT_SITE_QNAME,
+			ASPECT_MUSEUM_ARTIFACT_QNAME, ASPECT_ARTIST_QNAME);
 
 	public static final String UPLOADER_NAMESPACE = "https://github.com/softwareloop/uploader-plus/model/1.0";
 
 	public static final String PROP_ALLOWED_TYPES = "allowedTypes";
 	public static final QName PROP_UPLOADER_ALLOWED_TYPES = QName.createQName(UPLOADER_NAMESPACE, PROP_ALLOWED_TYPES);
+
+	public static final String ASPECT_INHERIT_PROPERTIES_SOURCE = "inherit_properties_source_aspect";
+	public static final QName ASPECT_INHERIT_PROPERTIES_SOURCE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_INHERIT_PROPERTIES_SOURCE);
+
+	public static final String ASPECT_INHERIT_PROPERTIES_TARGET = "inherit_properties_target_aspect";
+	public static final QName ASPECT_INHERIT_PROPERTIES_TARGET_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_INHERIT_PROPERTIES_TARGET);
 }

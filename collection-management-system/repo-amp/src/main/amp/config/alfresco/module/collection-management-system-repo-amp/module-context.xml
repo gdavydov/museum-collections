@@ -126,4 +126,16 @@
 		<property name="permissionService" ref="PermissionService" />
 		<property name="authenticationService" ref="AuthenticationService" />
 	</bean>
+
+	<bean id="ucm.inheritPropertiesSourceAspect" class="org.alfresco.museum.ucm.aspects.UCMInheritPropertiesSourceAspect" init-method="init">
+		<property name="policyComponent" ref="policyComponent"/>
+		<property name="nodeService" ref="NodeService" />
+		<property name="utils" ref="ucm.nodeUtils"/>
+	</bean>
+
+	<bean id="ucm.inheritPropertiesTargetAspect" class="org.alfresco.museum.ucm.aspects.UCMInheritPropertiesTargetAspect" init-method="init">
+		<property name="policyComponent" ref="policyComponent"/>
+		<property name="nodeService" ref="NodeService" />
+		<property name="utils" ref="ucm.nodeUtils"/>
+	</bean>
 </beans>

@@ -103,21 +103,9 @@ public class NodeUtils {
 		return node;
 	}
 
-
-	/*
-	 * Fills properties of "to" node with values of "from" node. To be updated
-	 * property should: 1. be defined in child node type description in types
-	 * model file; 2. be set in parent node.
-	 */
-	public void inheritProperties(TypeDefinition toType, NodeRef fromNode, NodeRef toNode) {
-		Set<QName> propsSet = getAllProperties(toType).keySet();
-		for (QName property : propsSet) {
-			Serializable fromValue = this.getNodeService().getProperty(fromNode, property);
-			Serializable toValue = this.getNodeService().getProperty(toNode, property);
-			if (toValue == null && fromValue != null) {
-				this.getNodeService().setProperty(toNode, property, fromValue);
-			}
-		}
+	public TypeDefinition getNodeTypeDefinition(NodeRef nodeRef) {
+		QName nodeTypeQName = this.getNodeService().getType(nodeRef);
+		return this.getDictionaryService().getType(nodeTypeQName);
 	}
 
 	public void fillMandatoryProperties(TypeDefinition type, NodeRef node, Serializable value) {
@@ -131,30 +119,18 @@ public class NodeUtils {
 		}
 	}
 
-	public void synchronizeUCMPropertyValues(NodeRef from, NodeRef to, Set<QName> exclude) {
-		QName fromType = this.getNodeService().getType(from);
-		QName toType = this.getNodeService().getType(to);
+	public void synchronizeUCMPropertyValues(NodeRef from, NodeRef to) {
+		Set<QName> fromAspects = this.getNodeService().getAspects(from);
+		for (QName aspect : UCMConstants.INHERITABLE_ASPECTS) {
+			if (fromAspects.contains(aspect)) {
+				Set<QName> allAspectProperties = this.getDictionaryService().getAspect(aspect).getProperties().keySet();
 
-		Set<QName> fromProps = getAllProperties(fromType).keySet();
-		Set<QName> toProps = getAllProperties(toType).keySet();
+				Map<QName, Serializable> fromProperties = this.getNodeService().getProperties(from);
+				fromProperties.keySet().retainAll(allAspectProperties);
 
-		Set<QName> commonProps = new HashSet<QName>(fromProps);
-		commonProps.retainAll(toProps);
-		commonProps.removeAll(exclude);
-
-		for (QName propQname : commonProps) {
-			if (UCMConstants.UCM_NAMESPACE.equals(propQname.getNamespaceURI())) {
-				Serializable value = this.getNodeService().getProperty(from, propQname);
-				if (value != null) {
-					this.getNodeService().setProperty(to, propQname, value);
-				}
+				this.getNodeService().addAspect(to, aspect, fromProperties);
 			}
 		}
-	}
-
-	public HashMap<QName, PropertyDefinition> getAllProperties(QName typeQname) {
-		TypeDefinition typeDef = this.getDictionaryService().getType(typeQname);
-		return getAllProperties(typeDef);
 	}
 
 	public static HashMap<QName, PropertyDefinition> getAllProperties(TypeDefinition type) {

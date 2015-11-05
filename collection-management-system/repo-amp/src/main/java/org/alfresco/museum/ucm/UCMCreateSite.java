@@ -131,6 +131,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 					this.put("museumPhone", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE_QNAME);
 					// this.put("museumFax",
 					// UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME);
+					this.put(MODEL_SITE_IS_PRIVATE, UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME);
 				}
 			});
 
@@ -205,7 +206,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 		String siteName = getOnlyValue(formData, "siteName");
 		String siteDescription = getOnlyValue(formData, "siteDescription");
-		boolean isPrivate = StringUtils.equals("true", getOnlyValue(formData, MODEL_SITE_IS_PRIVATE));
+		boolean isPrivate = StringUtils.equals("on", getOnlyValue(formData, MODEL_SITE_IS_PRIVATE));
 
 		UCMSite site = new UCMSite(siteName, siteDescription, isPrivate);
 		Map<QName, Serializable> siteData = fillPropertiesWithFormData(FORM_FIELD_TO_SITE_ASPECT_PROPERTY, formData);
@@ -298,6 +299,10 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	public UCMSite createSite(UCMSite site, Map<QName, Serializable> siteData) {
 		SiteVisibility visibility = (site.isPrivate) ? SiteVisibility.PRIVATE : SiteVisibility.MODERATED;
+
+		//ensure that visibility property contains safe value: "PRIVATE" or "PUBLIC"
+		String siteVisibilityPropValue = (site.isPrivate) ? "PRIVATE" : "PUBLIC";
+		siteData.put(UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME, siteVisibilityPropValue);
 
 		// create site node
 		site.site = this.getSiteService().createSite(SITE_TEMPLATE, site.shortName, site.name, site.description,
@@ -609,7 +614,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		// add user to site managers group
 		this.getAuthorityService().addAuthority(getSiteManagerGroupName(site.shortName), site.adminName);
 
-		String email = userProps.get(ContentModel.PROP_EMAIL).toString();
+		String email = userProps.get(UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME).toString();
 		String password = createPassword();
 
 		// create the ACEGI Authentication instance for the new user

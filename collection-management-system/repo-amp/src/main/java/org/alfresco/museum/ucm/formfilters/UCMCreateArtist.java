@@ -8,6 +8,7 @@ import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_QNAME;
 
 import java.io.Serializable;
 
+import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
@@ -71,7 +72,7 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 
 			TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 					TYPE_UCM_ARTIST_ARTIFACT_QNAME);
-			super.getUtils().inheritProperties(artistArtifactType, artistFolder, artistArtifactRef);
+			super.getUtils().synchronizeUCMPropertyValues(artistFolder, artistArtifactRef);
 			writeContent(artistArtifactType, data, artistArtifactRef);
 			super.getUtils().fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
 			getOrCreateArtistMediaFolder(artistArtifactRef);

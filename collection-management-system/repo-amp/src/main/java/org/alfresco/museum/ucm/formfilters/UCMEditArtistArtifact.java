@@ -36,7 +36,7 @@ public class UCMEditArtistArtifact extends UCMGenericFilter<NodeRef> {
 
 	/**
 	 * Retroactively update artist if about artist got changed.
-	 * 
+	 *
 	 * @param data
 	 * @param artistArtifactRef
 	 */
@@ -44,6 +44,6 @@ public class UCMEditArtistArtifact extends UCMGenericFilter<NodeRef> {
 		// TODO: LOG
 		NodeRef artistNodeRef = this.getNodeService().getPrimaryParent(artistArtifactRef).getParentRef();
 		// TODO: what to do with lat/lon?
-		super.getUtils().synchronizeUCMPropertyValues(artistArtifactRef, artistNodeRef, UCMConstants.NOT_SYNC_PROPERTIES);
+		super.getUtils().synchronizeUCMPropertyValues(artistArtifactRef, artistNodeRef);
 	}
 }

@@ -52,7 +52,7 @@
    </filter>
 
    <!-- UCM modification begin -->
-   <!--filter>
+   <filter>
       <filter-name>CORS</filter-name>
       <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
       <init-param>
@@ -64,7 +64,7 @@
    <filter-mapping>
       <filter-name>CORS</filter-name>
       <url-pattern>/proxy/alfresco-noauth/ucm/*</url-pattern>
-   </filter-mapping-->
+   </filter-mapping>
    <!-- UCM modification end -->
 
    <filter-mapping>

@@ -29,19 +29,7 @@ public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 				TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 						UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
 				writeContent(artistArtifactType, data, artistArtifactRef, false);
-				updateArtistArtifact(data, persistedObject, artistArtifactRef);
 			}
 		}
-	}
-
-	/**
-	 * Update artist artifact if artist got changed.
-	 *
-	 * @param data
-	 * @param artistRef
-	 */
-	protected void updateArtistArtifact(FormData data, NodeRef artistRef, NodeRef artistArtifactRef) {
-		// TODO: what to do with lat/lon?
-		super.getUtils().synchronizeUCMPropertyValues(artistRef, artistArtifactRef, UCMConstants.NOT_SYNC_PROPERTIES);
 	}
 }

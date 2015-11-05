@@ -13,10 +13,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <!-- 
+    <!--
        | SDK properties have sensible defaults in the SDK parent,
-       | but you can override the properties below to use another version. 
-       | For more available properties see the alfresco-sdk-parent POM. 
+       | but you can override the properties below to use another version.
+       | For more available properties see the alfresco-sdk-parent POM.
        -->
     <properties>
         <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
@@ -33,9 +33,9 @@
         <app.log.root.level>WARN</app.log.root.level>
     </properties>
 
-   
-    <!-- Following dependencies are needed for compiling Java code in src/main/java; 
-         <scope>provided</scope> is inherited for each of the following; 
+
+    <!-- Following dependencies are needed for compiling Java code in src/main/java;
+         <scope>provided</scope> is inherited for each of the following;
          for more info, please refer to alfresco-platform-distribution POM -->
     <dependencies>
         <dependency>
@@ -59,6 +59,11 @@
         	<groupId>org.apache.maven.plugins</groupId>
         	<artifactId>maven-resources-plugin</artifactId>
         	<version>2.4.3</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.thetransactioncompany</groupId>
+        	<artifactId>cors-filter</artifactId>
+        	<version>2.4</version>
         </dependency>
     </dependencies>
 

@@ -29,7 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
 /**
- * This web script authenticates user as a "anonymous" user, and redirects to
+ * This web script authenticates user as a "visitor" user, and redirects to
  * new URL, which is generally equal to current URL with "/ucm-guest" part
  * removed. E.g.<br/>
  * http://localhost:8080/share/page/ucm-guest/site/test/documentlibrary<br/>
