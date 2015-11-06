@@ -1166,7 +1166,7 @@ function getSearchResults(params)
       //UCM modification: PRIVATE sites and their content's should be excluded from search results
 //      ftsQuery = '(' + ftsQuery + ') AND -TYPE:"cm:thumbnail" AND -TYPE:"cm:failedThumbnail" AND -TYPE:"cm:rating" AND -TYPE:"st:site"' +
 //      ' AND -ASPECT:"st:siteContainer" AND -ASPECT:"sys:hidden" AND -cm:creator:system AND -QNAME:comment\\-*';
-      ftsQuery = '(' + ftsQuery + ') AND -TYPE:"ucm:about_artist_artifact" AND -ucm:site_visibility:\{en\}private AND -TYPE:"cm:thumbnail" AND -TYPE:"cm:failedThumbnail" AND -TYPE:"cm:rating" AND -ASPECT:"sys:hidden" AND -cm:creator:system AND -QNAME:comment\\-*';
+      ftsQuery = '(' + ftsQuery + ') AND -TYPE:"ucm:about_artist_artifact" AND -ucm:site_visibility:private AND -TYPE:"cm:thumbnail" AND -TYPE:"cm:failedThumbnail" AND -TYPE:"cm:rating" AND -ASPECT:"sys:hidden" AND -cm:creator:system AND -QNAME:comment\\-*';
 
       // sort field - expecting field to in one of the following formats:
       //  - short QName form such as: cm:name
