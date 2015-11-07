@@ -13,6 +13,12 @@
 		    margin-left: 5px
 		}
 
+		input[type="select"] {
+		    display: inline-block;
+		    margin-bottom: 8px;
+		    margin-left: 5px
+		}
+
 		.ucmHidden {
 		  display: none; 
 		}
@@ -51,6 +57,20 @@
 			text-decoration: initial;
 			text-transform: capitalize;
 		}
+		
+		div#searchScreen {
+			font-size:14pt;
+      font-family:museo slab;
+	 }
+	 
+	 #searchScreen a:link, 
+	 #searchScreen a:visited, 
+   #searchScreen a:hover { 
+ 			color: #A55D50; 
+ 			text-decoration: none; 
+ 			font-style: italic;
+	} 
+	 	
 	</style>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
@@ -132,6 +152,7 @@
 </head>
 <body>
 
+<div id="searchScreen">
 	<a id="sitelink" href="javascript:void(0)" onclick="selectForm('sites');">Sites</a>
 	or
 	<a id="artifactlink" href="javascript:void(0)" onclick="selectForm('artifacts');">Artifact</a>
@@ -188,12 +209,13 @@
 		</fieldset>
 		</form>
 	</div>
-	<div id="searchResult">
+</div>
+<div id="searchResult">
 
-	</div>
-	<script type="text/javascript">
+</div>
+<script type="text/javascript">
 		$("#sitesForm").submit(searchSites);
 		$("#artifactsForm").submit(searchArtifacts);
-	</script>
+</script>
 </body>
 </html>
