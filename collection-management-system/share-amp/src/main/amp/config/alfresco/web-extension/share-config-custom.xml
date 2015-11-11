@@ -76,6 +76,7 @@
 
 			<type name="cm:folder">
 				<subtype name="ucm:artist" />
+				<subtype name="ucm:artist" />
 			</type>
 
 			<type name="ucm:collection">
@@ -88,6 +89,10 @@
 			
 			<type name="cm:folder"></type>
 -->
+			<type name="cm:content">
+				<subtype name="ucm:artifact" />
+			</type>
+
 			<type name="trx:transferTarget">
 				<subtype name="trx:fileTransferTarget" />
 			</type>
