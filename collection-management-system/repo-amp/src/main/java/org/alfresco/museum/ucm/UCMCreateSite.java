@@ -259,9 +259,15 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 		// museum document has no specific fields except those inherited from
 		// site aspect
-		LOGGER.info("Creatind \"About museum\" document.");
+		LOGGER.info("Creating \"About museum\" document.");
 		site = createAboutMuseumDocument(site, siteData);
-		LOGGER.info("\"About museum\" document have been created.");
+		LOGGER.info("\"About museum\" document has been created.");
+
+		// museum document has no specific fields except those inherited from
+		// site aspect
+		LOGGER.info("Creating \"Wiki template\" document.");
+		site = createWikiTemplateDocument(site, siteData);
+		LOGGER.info("\"AWiki template\" document has been created.");
 
 		LOGGER.info("Creating custom folders.");
 		site = createAdditionalFolders(site, formData.getParameters().get("siteFoldersSelectedOptions"));
@@ -282,7 +288,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 			site = createAdminUser(site, adminData);
 			LOGGER.info("Admin user created. New user name: " + site.adminName);
 		} catch (FileNotFoundException e) {
-			logAndThrow("Can't add site moderator.", e);
+			logAndThrow("Can not create site Adminstrator. Mail template not found ",e);
 			return null;
 		}
 
@@ -579,43 +585,18 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	 * Create node of type cm:wiki inside site:wiki, and set site
 	 * aspect properties to it.
 	 */
-	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> museumProps) 
+	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> siteData) 
 	{
-		String documentName = "First_wiki_page";
-		String documentTitle = "Your first wiki page";
-		museumProps.put(ContentModel.PROP_TITLE, documentTitle);
-
-		// create empty "about museum" document
-		NodeRef wikiPage = this.getUtils().createContentNode(site.documentLibrary, documentName, "",
-				UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
-
-		/**
-		 * Add aspects here if necessary
-		 */
-//		this.getNodeService().addAspect(aboutMuseum, UCMConstants.ASPECT_SITE_QNAME, museumProps);
-
-		String encoding = StandardCharsets.UTF_8.name();
+		String documentName = "Main_Page";
+		String documentTitle = "Main_Page";
 		String defaultWikiMessage="Add content to your first wiki page.";
+		siteData.put(ContentModel.PROP_TITLE, documentTitle);
+
+		// create empty "Wiki" document
+		NodeRef wikiPage = this.getUtils().createContentNode(site.wiki, documentName, defaultWikiMessage,
+				UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
+		this.getNodeService().addAspect(wikiPage, UCMConstants.ASPECT_SITE_QNAME, siteData);
 		
-		ContentWriter writer = this.getContentService().getWriter(wikiPage, ContentModel.PROP_CONTENT, true);
-		writer.setEncoding(encoding);
-		writer.setMimetype(MimetypeMap.MIMETYPE_HTML);
-		writer.setEncoding(ObjectUtils.defaultIfNull(encoding, StandardCharsets.UTF_8.name()));
-
-		try {
-			writer.putContent(new ByteArrayInputStream(defaultWikiMessage.getBytes(encoding)));// .putContent(content);
-		}
-        catch (UnsupportedEncodingException e) {
-        	LOGGER.error("Can not create initial wiki page : "+ e.getLocalizedMessage()+e.fillInStackTrace());
-	        LOGGER.error("... Continue");
-	        e.printStackTrace();
-        }
-		catch(ContentIOException ex) {
-        	LOGGER.error("Can not create initial wiki page : "+ ex.getLocalizedMessage()+ex.fillInStackTrace());
-	        LOGGER.error("... Continue");
-	        ex.printStackTrace();
-		}
-
 		return site;
 	}
 
