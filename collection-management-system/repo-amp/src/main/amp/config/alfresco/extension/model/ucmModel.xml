@@ -391,6 +391,13 @@
 					<type>d:text</type>
 					<mandatory>false</mandatory>
 				</property>
+
+				<property name="ucm:artifact_copyright">
+					<title>Copyright</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
 			</properties>
 
 			<associations>
