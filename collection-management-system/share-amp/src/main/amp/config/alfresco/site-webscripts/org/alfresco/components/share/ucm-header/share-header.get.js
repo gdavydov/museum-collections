@@ -1,6 +1,4 @@
-///<import resource="classpath:/alfresco/site-webscripts/org/alfresco/share/imports/share-header.lib.js">
-
-//widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_MY_FILES");
+<import resource="classpath:/alfresco/site-webscripts/org/alfresco/share/imports/share-header.lib.js">
 
 var siteData = getSiteData();
 
@@ -19,7 +17,7 @@ if (!user.isAdmin)
   widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_LEAVE_SITE");
 
   // the following only for public sites. Need configuration item
-  if (! siteData.userIsSiteManager) {
+  if (siteData == null || !siteData.userIsSiteManager) {
   	widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_CUSTOMIZE_SITE_DASHBOARD");
   }
 
