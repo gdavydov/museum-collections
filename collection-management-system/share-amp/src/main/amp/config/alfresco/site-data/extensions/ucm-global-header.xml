@@ -11,9 +11,11 @@ localhost:8080/share/page/modules/deploy
         <customization>
           <targetPackageRoot>org.alfresco.share.header</targetPackageRoot>
           <sourcePackageRoot>org.alfresco.components.share.ucm-header</sourcePackageRoot>
+ <!-- 
           <dependencies>
               <css>/components/header/header.css</css>
           </dependencies>
+-->      
         </customization>
       </customizations>
     </module>
