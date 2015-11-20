@@ -76,6 +76,7 @@
 
 			<type name="cm:folder">
 				<subtype name="ucm:artist" />
+				<subtype name="ucm:artist" />
 			</type>
 
 			<type name="ucm:collection">
@@ -88,6 +89,10 @@
 			
 			<type name="cm:folder"></type>
 -->
+			<type name="cm:content">
+				<subtype name="ucm:artifact" />
+			</type>
+
 			<type name="trx:transferTarget">
 				<subtype name="trx:fileTransferTarget" />
 			</type>
@@ -345,6 +350,7 @@
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
 					<show id="ucm:artifact_comments" />
+					<show id="ucm:artifact_copyright" />
 					<!--show id="ucm:artifact_referenced_objects" / -->
 					<show id="ucm:artist_nickname" />
 					<show id="ucm:artist_dob" />
@@ -356,6 +362,7 @@
 					<show id="ucm:artist_period" />
 					<show id="ucm:artist_comments" />
 					<show id="ucm:museum_artifact_gallery_location" />
+					<show id="ucm:artifact_copyright" />
 
 					<!-- cm:geographic aspect -->
 					<show id="cm:latitude" />
@@ -407,6 +414,7 @@
 					<field id="ucm:artifact_technique" set="artifactMain" />
 					<field id="ucm:artifact_dimension" set="artifactMain" />
 					<field id="ucm:artifact_status" set="artifactMain" />
+					<field id="ucm:artifact_copyright" set="artifactMain"/>
 
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
@@ -414,6 +422,7 @@
 					<!-- <field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
+					
 					<!-- <field id="ucm:artifact_comments" set="artifactAdditional" /> -->
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
 
@@ -547,6 +556,7 @@
 					<show id="ucm:artifact_donor" />
 					<show id="ucm:artifact_type" />
 					<show id="ucm:artifact_on_display" />
+					<show id="ucm:artifact_copyright" />
 					<show id="ucm:artifact_comments" />
 					<!--show id="ucm:artifact_referenced_objects" / -->
 					<show id="ucm:artist_nickname" />
@@ -644,6 +654,7 @@
 					<!-- <field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
+					<field id="ucm:artifact_copyright" set="artifactAdditional" />
 					<!-- <field id="ucm:artifact_comments" set="artifactAdditional" /> -->
 
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->

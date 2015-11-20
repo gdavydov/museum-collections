@@ -20,7 +20,12 @@ public class UCMConstants {
 	public static final QName PROP_CM_CMOBJECT_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_CM_CMOBJECT);
 	public static final String PROP_NODE_CMNAME = "name";
 	public static final QName PROP_CM_CMOBJECTNAME_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMNAME);
+	public static final String PROP_NODE_CMCREATEDON = "createdOn";
+	public static final QName PROP_CM_CMCREATEDON_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMCREATEDON);
+	public static final String PROP_NODE_CMCREATOR = "creator";
+	public static final QName PROP_CM_CMCREATOR_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMCREATOR);
 
+	
 	public static final String PROP_UCM_SITE_LOGO_REF = "site_logo_ref";
 	public static final QName PROP_UCM_SITE_LOGO_REF_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_SITE_LOGO_REF);
 

@@ -14,7 +14,7 @@ if (!user.isAdmin) {
 	var siteData = getSiteData();
 	//"Public" UCM site has actually "MODERATED" visibility under the hood
 	if (siteData != null && siteData.profile != null && siteData.profile.visibility === "MODERATED") {
-		if (!siteData.userIsSiteManager) {
+  if (siteData == null || !siteData.userIsSiteManager) {
 			widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_CUSTOMIZE_SITE_DASHBOARD");
 		}
 		widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_CUSTOMIZE_SITE");

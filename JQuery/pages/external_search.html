@@ -13,11 +13,17 @@
 		    margin-left: 5px
 		}
 
+		input[type="select"] {
+		    display: inline-block;
+		    margin-bottom: 8px;
+		    margin-left: 5px
+		}
+
 		.ucmHidden {
 		  display: none; 
 		}
 
-		.ucmArtifact, .ucmSite {
+		.ucmArtifact, .ucmSite. ucmAtrist {
 			display: block;
 			margin: 5px;
 			height: 60px;
@@ -51,6 +57,20 @@
 			text-decoration: initial;
 			text-transform: capitalize;
 		}
+		
+		div#searchScreen {
+			font-size:14pt;
+      font-family:museo slab;
+	 }
+	 
+	 #searchScreen a:link, 
+	 #searchScreen a:visited, 
+   #searchScreen a:hover { 
+ 			color: #A55D50; 
+ 			text-decoration: none; 
+ 			font-style: italic;
+	} 
+	 	
 	</style>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
@@ -76,36 +96,66 @@
 			search($('#sitesForm'), function(data) {
 				$(data.items).each(function (idx, item) {
 					var span = $('<span>').addClass('ucmSite');
-					var imgLink = 'http://localhost:8080/share/proxy/alfresco-noauth/' + item.thumbnailUrl;
+					var linkTarget='target="_blank"';
+					var imgLink = 'http://'+getHost()+'/share/proxy/alfresco-noauth/' + item.thumbnailUrl;
 					var imgSpan = $('<div>').addClass('ucmImgDiv');
 					$('<span>').addClass('ucmVerticalAlignHelper').appendTo(imgSpan);
 					$('<img>', {src: imgLink}).addClass('ucmSiteImg').one('error', function() { $(this).addClass('ucmHidden'); }).appendTo(imgSpan);
 					imgSpan.appendTo(span);
 					$("<a>", {
 						text: item.ucmTitle,
-						href: 'http://localhost:8080/share/page/ucm-guest' + item.ucmLink
+						href: 'http://'+getHost()+'/share/page/ucm-guest' + item.ucmLink,
+						target: linkTarget
 					}).addClass('ucmLink').appendTo(span);
 					span.appendTo('#searchResult');
 				});
 			});
 		}
 
-		function searchArtifacts(ev) {
+		function searchArtist(ev) {
 			ev.preventDefault();
 			resetResult();
-			search($('#artifactsForm'), function(data) {
+			search($('#artistForm'), function(data) {
 				$(data.items).each(function (idx, item) {
 					var span = $('<span>').addClass('ucmArtifact');
-					var imgLink = 'http://localhost:8080/share/proxy/alfresco-noauth/' + item.thumbnailUrl;
+					var linkTarget='target="_blank"';
+					var imgLink = 'http://'+getHost()+'/share/proxy/alfresco-noauth/' + item.thumbnailUrl;
 					var imgSpan = $('<div>').addClass('ucmImgDiv');
 					$('<span>').addClass('ucmVerticalAlignHelper').appendTo(imgSpan);
 					$('<img>', {src: imgLink}).addClass('ucmArtifactImg').one('error', function() { $(this).addClass('ucmHidden'); }).appendTo(imgSpan);
 					imgSpan.appendTo(span);
 					$("<a>", {
 						text: item.ucmTitle,
-						href: 'http://localhost:8080/share/page/ucm-guest' + item.ucmLink
+						href: 'http://'+getHost()+'/share/page/ucm-guest' + item.ucmLink,
+						target: linkTarget
 					}).addClass('ucmLink').appendTo(span);
-					$('<span>', {text: ' (' + item.site.title + ')'}).appendTo(span);
+					$('<span>', {text: ' (' + item.site.title+' )'}).appendTo(span);
+					span.appendTo('#searchResult');
+					$('<br>').appendTo(span);
+					span.appendTo('#searchResult');
+				});
+			});
+		}
+		function searchArtifacts(ev) {
+			ev.preventDefault();
+			resetResult();
+			search($('#artifactsForm'), function(data) {
+				$(data.items).each(function (idx, item) {
+					var span = $('<span>').addClass('ucmArtifact');
+					var linkTarget='target="_blank"';
+					var imgLink = 'http://'+getHost()+'/share/proxy/alfresco-noauth/' + item.thumbnailUrl;
+					var imgSpan = $('<div>').addClass('ucmImgDiv');
+					$('<span>').addClass('ucmVerticalAlignHelper').appendTo(imgSpan);
+					$('<img>', {src: imgLink}).addClass('ucmArtifactImg').one('error', function() { $(this).addClass('ucmHidden'); }).appendTo(imgSpan);
+					imgSpan.appendTo(span);
+					$("<a>", {
+						text: item.ucmTitle,
+						href: 'http://'+getHost()+'/share/page/ucm-guest' + item.ucmLink,
+						target: linkTarget
+					}).addClass('ucmLink').appendTo(span);
+					$('<span>', {text: ' (' + item.site.title+' )'}).appendTo(span);
+					span.appendTo('#searchResult');
+					$('<br>').appendTo(span);
 					span.appendTo('#searchResult');
 				});
 			});
@@ -115,24 +165,44 @@
 			if ($('#' + formId).hasClass('ucmHidden')) {
 				resetResult();
 			}
-			$("#sites, #artifacts").addClass('ucmHidden');
+			$("#sites, #artifacts, #artist").addClass('ucmHidden');
 			$('#' + formId).removeClass('ucmHidden');
 		}
+		function getHost() {
+			return '54.186.255.97:8080';
+			//http://54.186.255.97:8080/share/proxy/alfresco-noauth/ucm/search?datatype=ucm:artifact&artistName=messina
+			//http://54.186.255.97:8080/share/proxy/alfresco-noauth/ucm/search?datatype=ucm:artifact&artifactName=Condotti
+	  }
+
 	</script>
 </head>
 <body>
 
+<div id="searchScreen">
 	<a id="sitelink" href="javascript:void(0)" onclick="selectForm('sites');">Sites</a>
+	,
+	<a id="artistlink" href="javascript:void(0)" onclick="selectForm('artist');">Artists</a>
 	or
 	<a id="artifactlink" href="javascript:void(0)" onclick="selectForm('artifacts');">Artifact</a>
+	<img src="images/icon_info.gif" class="infoButton" alt="info"
+				title="When creating a site, you have the option of making it public or private.<br/>All users can view a public site, whether or not they have joined the site.<br/>Users who join the site are listed as site members and can work with the site content, depending on their assigned roles.<br/>A private site is available only to the site manager and any users invited to join the site.<br/>Company administrator (superuser)  will ALWAYS have access to your site.">
 
-	<div id="sites">
-		<form id="sitesForm" method="GET" action="http://localhost:8080/share/proxy/alfresco-noauth/ucm/search">
+
+	<div id="sites" class="ucmHidden">
+		<form id="sitesForm" method="GET" action="http://54.186.255.97:8080/share/proxy/alfresco-noauth/ucm/search">
 		<fieldset><legend>Sites</legend>
 			<input name="datatype" type="hidden" value="ucm:site"/>
 
 			<label>Site Type</label>
-			<input name="siteType" type="text" /><br>
+			<select name="siteType">
+        <option value = "All">All</option>
+        <option value = "Modern Art">Modern Art</option>
+        <option value = "Classical Art">Classical Art</option>
+        <option value = "Photo">Photo</option>
+        <option value = "Archive">Archive</option>
+				<option value="Sculpture only">Sculpture</option>
+      </select><br>
+<!--			<input name="siteType" type="text" /><br> -->
 			
 			<label>Site Location</label>
 			<input name="siteLocation" type="text" /><br>
@@ -147,8 +217,29 @@
 		</fieldset>
 		</form>
 	</div>
+	<div id="artist" class="ucmHidden">
+		<form id="artistForm" method="GET" action="http://54.186.255.97:8080/share/proxy/alfresco-noauth/ucm/search">
+		<fieldset><legend>Artist</legend>
+			<input name="datatype" type="hidden" value="ucm:artifact"/>
+
+			<label>Artist/Autor Name</label>
+			<input name="artistName" type="text" /><br>
+
+			<label>Period</label>
+			<input name="period" type="text" /><br>
+
+			<label>Additional Tags (Comma separated)</label>
+			<input name="tags" type="text" /><br>
+
+			<label>You can limit result to rows</label>
+			<input name="maxResults" type="text" /><br>
+
+			<button>Search</button>
+		</fieldset>
+		</form>
+	</div>
 	<div id="artifacts" class="ucmHidden">
-		<form id="artifactsForm" method="GET" action="http://localhost:8080/share/proxy/alfresco-noauth/ucm/search">
+		<form id="artifactsForm" method="GET" action="http://54.186.255.97:8080/share/proxy/alfresco-noauth/ucm/search">
 		<fieldset><legend>Artifact</legend>
 			<input name="datatype" type="hidden" value="ucm:artifact"/>
 
@@ -171,12 +262,14 @@
 		</fieldset>
 		</form>
 	</div>
-	<div id="searchResult">
+</div>
+<div id="searchResult">
 
-	</div>
-	<script type="text/javascript">
+</div>
+<script type="text/javascript">
 		$("#sitesForm").submit(searchSites);
 		$("#artifactsForm").submit(searchArtifacts);
-	</script>
+		$("#artistForm").submit(searchArtist);
+</script>
 </body>
 </html>
