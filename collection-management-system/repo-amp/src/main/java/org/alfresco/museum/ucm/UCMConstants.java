@@ -3,7 +3,6 @@ package org.alfresco.museum.ucm;
 import static org.alfresco.repo.forms.processor.node.FormFieldConstants.DATA_KEY_SEPARATOR;
 import static org.alfresco.repo.forms.processor.node.FormFieldConstants.PROP_DATA_PREFIX;
 
-import java.util.Collections;
 import java.util.Set;
 
 import org.alfresco.model.ContentModel;
@@ -149,4 +148,6 @@ public class UCMConstants {
 
 	public static final String ASPECT_INHERIT_PROPERTIES_TARGET = "inherit_properties_target_aspect";
 	public static final QName ASPECT_INHERIT_PROPERTIES_TARGET_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_INHERIT_PROPERTIES_TARGET);
+
+	public static final String ANONIMOUS_USER_DETAILS_WEBSCRIPT_PATH = "/ucm/anonymous-user";
 }

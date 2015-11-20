@@ -4,6 +4,7 @@
     <module>
       <id>Update Admin Menu</id>
       <version>1.0</version>
+      <!--auto-deploy>true</auto-deploy-->
       <customizations>
         <customization>
           <targetPackageRoot>org.alfresco.share.header</targetPackageRoot>

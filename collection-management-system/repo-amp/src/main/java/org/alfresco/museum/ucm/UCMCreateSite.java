@@ -265,6 +265,14 @@ public class UCMCreateSite extends DeclarativeWebScript {
 			LOGGER.info("Copyright document created.");
 		}
 
+		try {
+			LOGGER.info("Adding user \"visitor\" to site consumers group.");
+			site = giveAccessToVisitor(site);
+			LOGGER.info("User \"visitor\" was granted site consumer privilegies.");
+		} catch (RuntimeException | JSONException e) {
+			LOGGER.warn("Can't add user visitor to site consumers group!", e);
+		}
+
 		// Admin is created in the end of site creation. Nothing should rollback
 		// transaction after notification email was sent.
 		Map<QName, Serializable> adminData = fillPropertiesWithFormData(FORM_FIELD_TO_ADMIN_PROPERTY, formData);
@@ -433,7 +441,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	}
 
 	public UCMSite createSiteLogo(UCMSite site, FormField logoField) throws IOException, JSONException {
-		if (logoField != null && logoField.getContent() != null) {
+		if (logoField != null && logoField.getContent() != null && logoField.getContent().getSize() > 0) {
 			LOGGER.info("Saving site logo to database.");
 			NodeRef logoNodeRef = this.getUtils().createContentNode(site.system, LOGO_NAME,
 					new UCMContentImpl(logoField), UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
@@ -588,6 +596,20 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		return site;
 	}
 
+	// add visitor to site consumers group
+	public UCMSite giveAccessToVisitor(UCMSite site) throws JSONException {
+		if (!site.isPrivate) {
+			ScriptRemoteConnector connector = remote.connect();
+			Response response = connector.call(UCMConstants.ANONIMOUS_USER_DETAILS_WEBSCRIPT_PATH);
+			if (response != null) {
+				JSONObject visitorUserDetails = new JSONObject(response.getText());
+				String visitorUsername = visitorUserDetails.getString(UCMAnonymousUser.USERNAME_PROERTY_NAME);
+				this.getAuthorityService().addAuthority(getSiteConsumerGroupName(site.shortName), visitorUsername);
+			}
+		}
+		return site;
+	}
+
 	/**
 	 * See <a href=
 	 * "https://forums.alfresco.com/forum/general/non-technical-alfresco-discussion/creating-users-using-java-api-10032008-1248"
@@ -689,6 +711,12 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		return RandomStringUtils.randomAlphanumeric(PASSWORD_LENGTH);
 	}
 
+	//GROUP_site_testsite_SiteConsumer
+	public static String getSiteConsumerGroupName(String shortSiteName) {
+		return "GROUP_site_" + shortSiteName + "_SiteConsumer";
+	}
+
+	//GROUP_site_testsite_SiteManager
 	public static String getSiteManagerGroupName(String shortSiteName) {
 		return "GROUP_site_" + shortSiteName + "_SiteManager";
 	}

@@ -1,21 +1,25 @@
+<import resource="classpath:/alfresco/site-webscripts/org/alfresco/share/imports/share-header.lib.js">
+
 var siteConfig = widgetUtils.findObject(model.jsonModel, "id",
 		"HEADER_SITE_CONFIGURATION_DROPDOWN");
 if (siteConfig != null) {
-
-	// Add Customize Dashboard
-	siteConfig.config.widgets.push({
-		id : "HEADER_CUSTOMIZE_SITE_LOGO",
-		name : "alfresco/menus/AlfMenuItem",
-		config : {
+	var siteData = getSiteData();
+	if (user.isAdmin || siteData.userIsSiteManager) {
+		// Allow site manager to change site logo
+		siteConfig.config.widgets.push({
 			id : "HEADER_CUSTOMIZE_SITE_LOGO",
-			label : "link.changeSiteLogo",
-			title: "link.changeSiteLogo",
-            iconAltText: "link.changeSiteLogo",
-			iconClass : "alf-cog-icon",
-			targetUrl : "site/" + page.url.templateArgs.site
-					+ "/change-site-logo"
-		}
-	});
+			name : "alfresco/menus/AlfMenuItem",
+			config : {
+				id : "HEADER_CUSTOMIZE_SITE_LOGO",
+				label : "link.changeSiteLogo",
+				title: "link.changeSiteLogo",
+				iconAltText: "link.changeSiteLogo",
+				iconClass : "alf-cog-icon",
+				targetUrl : "site/" + page.url.templateArgs.site
+				+ "/change-site-logo"
+			}
+		});
+	}
 }
 
 var headerLogoConfig = widgetUtils.findObject(model.jsonModel, "id",

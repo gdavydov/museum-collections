@@ -1,9 +1,9 @@
 <extension>
 	<modules>
 		<module>
-			<id>Habilita Editar Logo</id>
+			<id>Site Logo Editor</id>
 			<version>1.0</version>
-			<auto-deploy>true</auto-deploy>  
+			<auto-deploy>true</auto-deploy>
 			<customizations>
 				<customization>
 					<targetPackageRoot>org.alfresco.share.header</targetPackageRoot>

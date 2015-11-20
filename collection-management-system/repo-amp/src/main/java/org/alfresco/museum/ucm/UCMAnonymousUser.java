@@ -21,6 +21,9 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
  * this webscript. It is also the only valid way to get user credentials.
  */
 public class UCMAnonymousUser extends DeclarativeWebScript {
+	public static final String USERNAME_PROERTY_NAME = "username";
+	public static final String PASSWORD_PROERTY_NAME = "password";
+
 	private static final String USERNAME = "visitor";
 	private static final String PASSWORD = "visitor";
 
@@ -33,8 +36,8 @@ public class UCMAnonymousUser extends DeclarativeWebScript {
 	protected Map<String, Object> executeImpl(WebScriptRequest req, Status status) {
 		configureAnonymousUser();
 		HashMap<String, Object> model = new HashMap<String, Object>();
-		model.put("username", USERNAME);
-		model.put("password", PASSWORD);
+		model.put(USERNAME_PROERTY_NAME, USERNAME);
+		model.put(PASSWORD_PROERTY_NAME, PASSWORD);
 		return model;
 	};
 
