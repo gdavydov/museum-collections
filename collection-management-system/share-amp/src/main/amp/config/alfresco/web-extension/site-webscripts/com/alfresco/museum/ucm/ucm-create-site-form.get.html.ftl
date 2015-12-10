@@ -76,11 +76,11 @@
 	        <label for="siteType">Type</label>
 	        <select id="siteType" name="siteType" class="siteType required" value="All">
 		        <option value = "All">All</option>
-		        <option value = "Modern Art">Modern Art</option>
-		        <option value = "Classical Art">Classical Art</option>
+		        <option value = "Modern">Modern Art</option>
+		        <option value = "Classical">Classical Art</option>
 		        <option value = "Photo">Photo</option>
 		        <option value = "Archive">Archive</option>
-						<option value="Sculpture only">Sculpture</option>
+		        <option value = "Sculpture only">Sculpture</option>
 	        </select>
 
 	        <label for="museumAddress">Address</label>

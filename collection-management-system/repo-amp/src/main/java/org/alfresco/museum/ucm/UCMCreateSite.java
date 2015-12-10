@@ -1,9 +1,7 @@
 package org.alfresco.museum.ucm;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import org.alfresco.museum.ucm.formfilters.UCMCreateCollection;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.action.executer.MailActionExecuter;
-import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.repo.domain.node.ContentDataWithId;
 import org.alfresco.repo.thumbnail.ThumbnailDefinition;
 import org.alfresco.repo.thumbnail.ThumbnailRegistry;
@@ -35,9 +32,7 @@ import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.model.FileNotFoundException;
 import org.alfresco.service.cmr.repository.ContentData;
-import org.alfresco.service.cmr.repository.ContentIOException;
 import org.alfresco.service.cmr.repository.ContentService;
-import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.MimetypeService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
@@ -52,11 +47,9 @@ import org.alfresco.service.cmr.site.SiteVisibility;
 import org.alfresco.service.cmr.thumbnail.ThumbnailService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.tika.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -402,7 +395,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				.getNodeRef();
 		site.wiki = this.getFileFolderService().create(siteNodeRef, SYSTEM_WIKI_NAME, ContentModel.TYPE_FOLDER)
 				.getNodeRef();
-		
+
 
 		for (Iterator<String> iterator = objectsData.keys(); iterator.hasNext();) {
 			// E.g. "pages" or "components"
@@ -593,7 +586,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	 * Create node of type cm:wiki inside site:wiki, and set site
 	 * aspect properties to it.
 	 */
-	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> siteData) 
+	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> siteData)
 	{
 		String documentName = "Main_Page";
 		String documentTitle = "Main_Page";
@@ -604,7 +597,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		NodeRef wikiPage = this.getUtils().createContentNode(site.wiki, documentName, defaultWikiMessage,
 				UCMConstants.TYPE_UCM_DOCUMENT_QNAME);
 		this.getNodeService().addAspect(wikiPage, UCMConstants.ASPECT_SITE_QNAME, siteData);
-		
+
 		return site;
 	}
 

@@ -660,6 +660,7 @@
 						<tokenised>true</tokenised>
 					</index>
 					<constraints>
+						<!-- TODO: remove constraint/load list dynamically? -->
 						<constraint name="ucm:site_aspect_allowed_types" type="LIST">
 							<parameter name="allowedValues">
 								<list>
@@ -667,6 +668,8 @@
 									<value>Modern</value>
 									<value>Classical</value>
 									<value>Sculpture only</value>
+									<value>Photo</value>
+									<value>Archive</value>
 								</list>
 							</parameter>
 						</constraint>
