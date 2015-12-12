@@ -8,7 +8,6 @@ import static org.alfresco.museum.ucm.UCMConstants.TYPE_UCM_ARTIST_QNAME;
 
 import java.io.Serializable;
 
-import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.processor.node.UCMGenericFilter;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;

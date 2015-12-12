@@ -46,8 +46,27 @@ Desired event sequence is:
 			//TODO: Don't show file picker if artifact creation was initiated via file uploading
 				//if (typeof SoftwareLoop == 'undefined') {
 					window.setTimeout(function(){
+						// initialize file preview
 						$("#${fieldHtmlId}-input").simpleFilePreview();
-						//TODO: show current image preview
+						<#if field.value?has_content>
+						// show existing image preview (if present)
+						var previewElement = $("#${fieldHtmlId}-input").parent();
+						//var src = Alfresco.constants.PROXY_URI + "api/node/" + '${field.value}'.replace(":/", "") + "/content/thumbnails/doclib?c=queue&ph=true&lastModified=1";
+						var src = Alfresco.constants.PROXY_URI + "api/node/content/" + '${field.value}'.replace(":/", "");
+
+						function showPreview(element, src) {
+							var input = element.find('.simpleFilePreview_input');
+							input.hide();
+							element.find('input.simpleFilePreview_formInput').attr('title', "Replace file");
+							$("<img src='" + src + "' class='simpleFilePreview_preview' alt='File Preview' title='Replace file'/>")
+								.on("error", function() {
+									element.find('.simpleFilePreview_input').show();
+								})
+								.appendTo(element);
+						}
+
+						showPreview(previewElement, src);
+						</#if>
 				}, 1);
 				//}
 				//else {
