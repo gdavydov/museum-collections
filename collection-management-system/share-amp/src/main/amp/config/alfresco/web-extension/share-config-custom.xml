@@ -1172,27 +1172,29 @@
 			</action>
 
 			<!-- Approve simple workflow -->
+			<!-- 
 			<action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function -->
+				<!-- Additional parameters for onRepoAction function ->
 				<param name="action">accept-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.approved</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value -->
+				<!-- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleApprove</evaluator>
 			</action>
-
+			-->
 			<!-- Reject simple workflow -->
+			<!-- 
 			<action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function -->
+				<!-- Additional parameters for onRepoAction function ->
 				<param name="action">reject-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.rejected</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value -->
+				<!-- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleReject</evaluator>
 			</action>
-
+			-->
 			<!-- Increment Counter -->
 			<action id="document-increment-counter" type="javascript" label="actions.document.increment-counter">
 				<param name="function">onActionSimpleRepoAction</param>
@@ -1339,10 +1341,12 @@
          </action>
 
 			<!-- Assign workflow -->
+			<!-- 
 			<action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
 				<param name="function">onActionAssignWorkflow</param>
 			</action>
-
+			-->
+			
 			<!-- Manage permissions (granular permissions) -->
 			<action id="document-manage-granular-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
 				<param name="href">{managePermissionsUrl}</param>
