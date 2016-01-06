@@ -60,6 +60,9 @@
 		<property name="evaluator" ref="com.alfresco.museum.ucm.evaluators.edit" />
 	</bean>
 
+	<bean id="evaluator.doclib.action.isAdmin" class="com.alfresco.museum.ucm.evaluators.IsAdminUserEvaluator" />
+
+
 	<!-- See spring-surf-presets-context.xml for reference -->
 	<bean id="ucm.presetsManager" class="com.alfresco.museum.ucm.UCMPresetsManager">
 		<property name="modelObjectService" ref="webframework.service.modelobject" />

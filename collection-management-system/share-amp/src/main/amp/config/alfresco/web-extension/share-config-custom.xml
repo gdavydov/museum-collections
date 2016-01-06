@@ -1175,11 +1175,11 @@
 			<!-- 
 			<action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function ->
+				<!- Additional parameters for onRepoAction function ->
 				<param name="action">accept-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.approved</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value ->
+				<!- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleApprove</evaluator>
 			</action>
 			-->
@@ -1187,11 +1187,11 @@
 			<!-- 
 			<action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function ->
+				<!- Additional parameters for onRepoAction function ->
 				<param name="action">reject-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.rejected</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value ->
+				<!- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleReject</evaluator>
 			</action>
 			-->
