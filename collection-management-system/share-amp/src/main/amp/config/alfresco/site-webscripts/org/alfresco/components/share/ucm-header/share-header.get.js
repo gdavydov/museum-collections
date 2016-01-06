@@ -5,6 +5,8 @@ if (!user.isAdmin) {
 	var sitesMenu = widgetUtils.findObject(model.jsonModel, "id", "HEADER_SITES_MENU");
 	if (sitesMenu != null) {
 		sitesMenu.config.showCreateSite = false;
+		sitesMenu.config.showMySites=false;
+		sitesMenu.config.showRecentSites=false;
 	}
 
 	//	widgetUtils.deleteObjectFromArray(model.jsonModel, "id", "HEADER_HOME");
