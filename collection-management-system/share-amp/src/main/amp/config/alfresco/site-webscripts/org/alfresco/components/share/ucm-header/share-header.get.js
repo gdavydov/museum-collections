@@ -48,6 +48,7 @@ if (!isPrivateSite && isVisitor) {
 	//The "My Sites", Favorites, "Remove Current site from favorites" should be removed for visitor only
 	if (sitesMenu != null) {
 		sitesMenu.config.showMySites = false;
+		sitesMenu.config.showRecentSites=false;
 		//hides "add" and "remove" buttons as well as "Favourites" button itself
 		sitesMenu.config.showFavourites = false;
 	}
