@@ -3,11 +3,11 @@
 	<!-- Global config section -->
 	<config replace="true">
 		<flags>
-			<!-- Developer debugging setting to turn on DEBUG mode for client scripts 
+			<!-- Developer debugging setting to turn on DEBUG mode for client scripts
 				in the browser -->
 			<client-debug>true</client-debug>
 
-			<!-- LOGGING can always be toggled at runtime when in DEBUG mode (Ctrl, 
+			<!-- LOGGING can always be toggled at runtime when in DEBUG mode (Ctrl,
 				Ctrl, Shift, Shift). This flag automatically activates logging on page load. -->
 			<client-debug-autologging>false</client-debug-autologging>
 		</flags>
@@ -16,14 +16,14 @@
 	<config evaluator="string-compare" condition="WebFramework">
 		<web-framework>
 			<!-- SpringSurf Autowire Runtime Settings -->
-			<!-- Developers can set mode to 'development' to disable; SpringSurf caches, 
+			<!-- Developers can set mode to 'development' to disable; SpringSurf caches,
 				FreeMarker template caching and Rhino JavaScript compilation. -->
 			<autowire>
 				<!-- Pick the mode: "production" or "development" -->
 				<mode>production</mode>
 			</autowire>
 
-			<!-- Allows extension modules with <auto-deploy> set to true to be automatically 
+			<!-- Allows extension modules with <auto-deploy> set to true to be automatically
 				deployed -->
 			<module-deployment>
 				<mode>manual</mode>
@@ -34,7 +34,7 @@
 
 	<!-- Document Library config section -->
 	<config evaluator="string-compare" condition="DocumentLibrary">
-		<!-- Used by the "Manage Aspects" action For custom aspects, remember to 
+		<!-- Used by the "Manage Aspects" action For custom aspects, remember to
 			also add the relevant i18n string(s) cm_myaspect=My Aspect -->
 		<aspects>
 			<!-- Aspects that a user can see -->
@@ -62,8 +62,8 @@
 			</removeable>
 		</aspects>
 
-		<!-- Used by the "Change Type" action Define valid subtypes using the following 
-			example: <type name="cm:content"> <subtype name="cm:mysubtype" /> </type> 
+		<!-- Used by the "Change Type" action Define valid subtypes using the following
+			example: <type name="cm:content"> <subtype name="cm:mysubtype" /> </type>
 			Remember to also add the relevant i18n string(s): cm_mysubtype=My SubType -->
 		<types>
 			<type name="cm:content">
@@ -82,11 +82,11 @@
 			<type name="ucm:collection">
 				<subtype name="ucm:artist" />
 			</type>
-			
+
 			<type name="ucm:artifact"></type>
-<!-- 
+<!--
 			<type name="ucm:collection"></type>
-			
+
 			<type name="cm:folder"></type>
 -->
 			<type name="cm:content">
@@ -422,7 +422,7 @@
 					<!-- <field id="ucm:artifact_donor" set="artifactAdditional" /> -->
 					<field id="ucm:artifact_type" set="artifactAdditional" />
 					<field id="ucm:artifact_on_display" set="artifactAdditional" />
-					
+
 					<!-- <field id="ucm:artifact_comments" set="artifactAdditional" /> -->
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
 
@@ -618,7 +618,7 @@
 						</control>
 					</field>
 
-<!-- 					
+<!--
 					<field id="cm:content" label-id="">
 						<control>
 							<control-param name="editorAppearance">explorer</control-param>
@@ -732,10 +732,10 @@
 				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
-<!--					
+<!--
 					<show id="cm:name" />
 					<show id="cm:title" />
--->					
+-->
 					<!-- <show id="cm:content" /> -->
 					<!-- <show id="ucm:artifact_name"/> -->
 					<show id="ucm:artist_name" />
@@ -761,25 +761,25 @@
 <!--
 	                <show id="cm:latitude" />
 	                <show id="cm:longitude" />
--->	
+-->
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artistMain" appearance="fieldset" label="About Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
-<!--					
+<!--
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
 -->
-<!--										
+<!--
 					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
--->		            
+-->
 					<!-- <field id="ucm:artifact_name" label="Known As (Name)"/> -->
 					<field id="ucm:artist_name" label="Given Name" />
 					<field id="cm:description">
@@ -787,7 +787,7 @@
 							<control-param name="activateLinks">true</control-param>
 						</control>
 					</field>
-<!--		
+<!--
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
 
@@ -812,11 +812,11 @@
 					<field id="ucm:artist_period" set="artistMain" />
 					<!-- <field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
 					<field id="ucm:artifact_comments" set="artistMain" />
-<!--					
+<!--
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
 					<field id="cm:latitude" set="artifactMuseum"/>
 	                <field id="cm:longitude" set="artifactMuseum"/>
--->	                
+-->
 				</appearance>
 			</form>
 
@@ -824,10 +824,10 @@
 				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
-<!--					
+<!--
 					<show id="cm:name" />
 					<show id="cm:title" />
--->					
+-->
 					<!-- <show id="cm:content" /> -->
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
@@ -852,29 +852,29 @@
 <!--
 	                <show id="cm:latitude" />
 	                <show id="cm:longitude" />
--->	
+-->
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artistMain" appearance="fieldset" label="Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
-<!--					
+<!--
 					<field id="cm:name">
 						<control>
 							<control-param name="maxLength">255</control-param>
 						</control>
 					</field>
 -->
-<!--										
+<!--
 					<field id="cm:title" />
 					<field id="cm:content">
 		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
 		            </field>
--->		            
+-->
 					<field id="ucm:artifact_name" label="Known As (Name)" />
 					<field id="ucm:artist_name" set="artistMain" label="Given Name" />
-<!--		
+<!--
 					<field id="ucm:artifact_status" set="artifactMain" />
 -->
 					<field id="cm:description">
@@ -905,11 +905,11 @@
 					<field id="ucm:museum_artifact_gallery_location" set="artistMain" />
 					<field id="cm:title" set="artistMain" label="Comments" />
 					<field id="ucm:artifact_comments" set="artistMain" />
-<!--					
+<!--
 					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
 					<field id="cm:latitude" set="artifactMuseum"/>
 	                <field id="cm:longitude" set="artifactMuseum"/>
--->	                
+-->
 				</appearance>
 			</form>
 		</forms>
@@ -1012,10 +1012,10 @@
 			<display-web-preview>true</display-web-preview>
 		</document-details>
 
-		<!-- Sorting Options The 'sort' config element contains the name of the 
-			content model field to sort against and can be of the form: - short QName 
-			string e.g. "cm:name" - any other valid sortable fts-alfresco special field 
-			e.g. "TYPE" The field can be optionally followed by |true or |false to indicate 
+		<!-- Sorting Options The 'sort' config element contains the name of the
+			content model field to sort against and can be of the form: - short QName
+			string e.g. "cm:name" - any other valid sortable fts-alfresco special field
+			e.g. "TYPE" The field can be optionally followed by |true or |false to indicate
 			sort direction, where true = ascending, false = descending -->
 		<sorting>
 			<sort label="label.name">cm:name|true</sort>
@@ -1034,14 +1034,14 @@
 
 	<!-- Document Library config section -->
 	<config evaluator="string-compare" condition="DocumentLibraryViews" replace="true">
-         <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and 
+         <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and
               Repository pages. This list can be added to or removed to control the views displayed. Use the a module
-              that provides evaluated configuration to have the options change based on criteria (e.g. site name, 
+              that provides evaluated configuration to have the options change based on criteria (e.g. site name,
               site preset, user group, etc)
-              
-              Remember to include all dependencies, even those duplicated by another view - Surf will ensure only 
+
+              Remember to include all dependencies, even those duplicated by another view - Surf will ensure only
               one version of each is loaded - but if a view is removed that depends on a dependency defined in another
-              view then it will cause an error. 
+              view then it will cause an error.
            -->
 		<view-renderers>
 <!--          <view-renderer id="simple" iconClass="simple" label="button.view.simple" index="10" widget="Alfresco.DocumentListSimpleViewRenderer">
@@ -1172,26 +1172,26 @@
 			</action>
 
 			<!-- Approve simple workflow -->
-			<!-- 
+			<!--
 			<action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function ->
+				<!- Additional parameters for onRepoAction function ->
 				<param name="action">accept-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.approved</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value ->
+				<!- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleApprove</evaluator>
 			</action>
 			-->
 			<!-- Reject simple workflow -->
-			<!-- 
+			<!--
 			<action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!-- Additional parameters for onRepoAction function ->
+				<!- Additional parameters for onRepoAction function ->
 				<param name="action">reject-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.rejected</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!-- aspect check, property != null check, action name = property value ->
+				<!- aspect check, property != null check, action name = property value ->
 				<evaluator>evaluator.doclib.action.simpleReject</evaluator>
 			</action>
 			-->
@@ -1341,12 +1341,12 @@
          </action>
 
 			<!-- Assign workflow -->
-			<!-- 
+			<!--
 			<action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
 				<param name="function">onActionAssignWorkflow</param>
 			</action>
 			-->
-			
+
 			<!-- Manage permissions (granular permissions) -->
 			<action id="document-manage-granular-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
 				<param name="href">{managePermissionsUrl}</param>
@@ -1500,36 +1500,36 @@
             <action index="120" id="document-locate" />
             <action index="130" id="document-edit-properties" />
             <action index="140" id="document-upload-new-version" />
-<!--    
+<!--
             <action index="150" id="document-view-original" />
             <action index="160" id="document-view-working-copy" />
-     
+
             <action index="170" id="document-approve" />
             <action index="180" id="document-reject" />
             <action index="190" id="document-inline-edit" />
             <action index="200" id="document-edit-online" />
             <action index="201" id="document-edit-online-aos" />
             <action index="210" id="document-edit-offline" />
--->     
+-->
             <action index="250" id="document-copy-to" />
 				<action index="260" id="document-move-to" />
             <action index="270" id="document-delete" />
-<!--     
+<!--
             <action index="280" id="document-assign-workflow" />
 -->
             <action index="290" id="document-cancel-editing" />
             <action index="295" id="document-cancel-editing-unlock" icon="document-cancel-editing"/>
             <action index="297" id="document-manage-granular-permissions" />
-    
+
             <action index="298" id="document-manage-repo-permissions" />
             <action index="310" id="document-view-googlemaps" />
-<!--              
+<!--
             <action index="320" id="document-view-in-source-repository" />
             <action index="330" id="document-cloud-sync" />
             <action index="340" id="document-cloud-unsync" />
             <action index="350" id="document-view-in-cloud" />
-            <action index="360" id="document-request-sync"/> 
--->     
+            <action index="360" id="document-request-sync"/>
+-->
          </actionGroup>
 
          <actionGroup id="document-details">
@@ -1539,22 +1539,22 @@
             <action index="130" id="document-upload-new-version" />
             <action index="140" id="document-view-original" />
             <action index="150" id="document-view-working-copy" />
-<!--              
+<!--
             <action index="160" id="document-approve" />
             <action index="170" id="document-reject" />
--->     
+-->
             <action index="180" id="document-inline-edit" />
             <action index="190" id="document-edit-online" />
-    
+
             <action index="191" id="document-edit-online-aos" />
             <action index="200" id="document-edit-offline" />
-     
+
             <action index="240" id="document-copy-to" />
             <action index="250" id="document-move-to" />
             <action index="260" id="document-delete" />
-<!--    
+<!--
             <action index="270" id="document-assign-workflow" />
--->      
+-->
             <action index="280" id="document-cancel-editing" />
             <action index="285" id="document-cancel-editing-unlock" icon="document-cancel-editing"/>
             <action index="290" id="document-manage-granular-permissions" />
@@ -1565,12 +1565,12 @@
             <action index="330" id="document-view-in-source-repository" />
 -->
             <action index="350" id="document-view-googlemaps" />
-<!--      
+<!--
             <action index="360" id="document-cloud-sync" />
             <action index="370" id="document-cloud-unsync" />
             <action index="380" id="document-view-in-cloud" />
             <action index="390" id="document-request-sync"/>
--->     
+-->
          </actionGroup>
 
 			<actionGroup id="folder-browse">
@@ -1589,12 +1589,12 @@
 				<action index="210" id="document-manage-aspects" label="actions.folder.manage-aspects" />
             <action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
             <action index="310" id="document-view-googlemaps" />
-<!--            
+<!--
             <action index="360" id="document-cloud-sync" />
             <action index="370" id="document-cloud-unsync" />
             <action index="380" id="document-view-in-cloud" />
             <action index="390" id="document-request-sync"/>
--->    
+-->
          </actionGroup>
 
          <actionGroup id="folder-details">
@@ -1609,17 +1609,17 @@
             <action index="170" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
             <action index="180" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
             <action index="190" id="document-manage-aspects" label="actions.folder.manage-aspects" />
-<!--            
+<!--
             <action index="200" id="document-change-type" label="actions.folder.change-type" />
--->            
+-->
             <action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
             <action index="350" id="document-view-googlemaps" />
-<!--             
+<!--
             <action index="360" id="document-cloud-sync" />
             <action index="370" id="document-cloud-unsync" />
             <action index="380" id="document-view-in-cloud" />
             <action index="390" id="document-request-sync"/>
--->         
+-->
          </actionGroup>
 
          <actionGroup id="document-link-browse">

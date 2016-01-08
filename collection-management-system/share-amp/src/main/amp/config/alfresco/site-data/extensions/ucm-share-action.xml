@@ -1,0 +1,16 @@
+<extension>
+  <modules>
+    <module>
+      <id>Add "Share" action to UCM artists and collections in detailed view of document list</id>
+      <!-- See http://stackoverflow.com/questions/11115822/how-to-customize-the-document-list-in-alfresco -->
+      <version>${project.version}</version>
+      <auto-deploy>false</auto-deploy>
+      <customizations>
+        <customization>
+          <targetPackageRoot>org.alfresco</targetPackageRoot>
+          <sourcePackageRoot>ucm-share-action</sourcePackageRoot>
+        </customization>
+      </customizations>
+    </module>
+  </modules>
+</extension>

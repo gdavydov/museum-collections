@@ -109,7 +109,7 @@
 	        <input id="collectionID" name="collectionID" type="text">
 
 			<legend>Additional Site Folders (Optional)
-				<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info" title="Selected folders woll be created inside site root folder">
+				<img src="${url.context}/res/images/icon_info.gif" class="infoButton" alt="info" title="Selected folders will be created inside site root folder">
 			</legend>
 
 	        <table width="400px" border="0" cellspacing="0" cellpadding="0">

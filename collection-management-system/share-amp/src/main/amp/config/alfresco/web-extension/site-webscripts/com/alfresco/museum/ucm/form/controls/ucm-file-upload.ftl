@@ -1,4 +1,4 @@
-<#-- Image uploading preview  -->
+<#-- Image uploading preview  --> <#-- TODO: readonly mode -->
 <link rel="stylesheet" type="text/css" href="${url.context}/res/css/simple-file-preview.css"/>
 
 <div id="${fieldHtmlId}" class="form-field">
