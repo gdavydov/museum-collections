@@ -795,7 +795,7 @@
 
       <multi-select>
          <action type="action-link" id="onActionDownload" icon="document-download" label="menu.selected-items.download" />
-         <action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Edit" label="menu.selected-items.copy">
+         <action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Delete" label="menu.selected-items.copy">
          	<evaluator negate="true">evaluator.doclib.action.isSiteCollaborator</evaluator>
          	<evaluator negate="true">evaluator.doclib.action.isSiteContributor</evaluator>
          	<evaluator negate="true">evaluator.doclib.action.isSiteConsumer</evaluator>
@@ -803,7 +803,7 @@
          
          <action type="action-link" id="onActionMoveTo" icon="document-move-to" permission="Delete" label="menu.selected-items.move"/>
 <!--          <action type="action-link" id="onActionAssignWorkflow" asset="document" icon="document-assign-workflow" label="menu.selected-items.assign-workflow"/> -->
-         <action type="action-link" id="onActionChangeType" icon="document-move-to" permission="Edit" label="actions.document.change-type"/>
+         <action type="action-link" id="onActionChangeTypeToArtifact" icon="document-move-to" permission="Delete" label="menu.selected-items.convert_to_artifact"/>
          <action type="action-link" id="onActionDelete" icon="document-delete" permission="Delete" label="menu.selected-items.delete" notAspect="hwf:hybridWorkflow,sys:undeletable" />
          <action type="action-link" id="onActionCloudSync" asset="document" icon="document-cloud-sync"  permission="CreateChildren" label="menu.selected-items.cloudSync" notAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
          <action type="action-link" id="onActionCloudSyncRequest" icon="document-request-sync" label="menu.selected-items.cloudRequestSync" hasAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
@@ -1094,6 +1094,15 @@
          <!-- Manage aspects -->
          <action id="document-manage-aspects" type="javascript" label="actions.document.manage-aspects">
             <param name="function">onActionManageAspects</param>
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
+            <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+         </action>
+
+         <!-- Change type -->
+         <action id="document-change-type_to_artifact" type="javascript" label="actions.document.change-type">
+            <param name="function">onActionChangeTypeToArtifact</param>
             <permissions>
                <permission allow="true">Write</permission>
             </permissions>

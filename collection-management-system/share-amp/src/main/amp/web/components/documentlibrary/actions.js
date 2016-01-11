@@ -1779,6 +1779,61 @@
       },
 
       /**
+       * Change Type to Artifact
+       *
+       * @method onActionChangeTypeToArtifact
+       * @param record {object} Object literal representing the file or folder to be actioned
+       */
+      onActionChangeTypeToArtifact: function dlA_onActionChangeTypeToArtifact(records)
+      {
+      for (var recno in records) 
+      {
+         record = records[recno];
+         var jsNode = record.jsNode;
+         var currentType = jsNode.type,
+            displayName = record.displayName,
+            actionUrl = Alfresco.constants.PROXY_URI + $combine("slingshot/doclib/type/node", jsNode.nodeRef.uri);
+  		
+//		remote.call(actionUrl);
+		
+        Alfresco.util.Ajax.jsonPost(
+        {
+        	url: actionUrl,
+            dataObj:
+            {
+            	type: "ucm:artifact"
+            },
+            onSuccess:
+            {
+            	fn: function dlA_onActionChangeType_success(response)
+                {
+            		YAHOO.Bubbling.fire("metadataRefresh",
+                    {
+                            highlightFile: displayName
+                    });
+                    Alfresco.util.PopupManager.displayMessage(
+                    {
+                            text: this.msg("message.change-type.success", displayName)
+                    });
+                },
+                scope: this
+            },
+            onFailure:
+            {
+            	fn: function dlA_onActionChangeType_failure(response)
+                {
+            		Alfresco.util.PopupManager.displayMessage(
+                    {
+                    	text: this.msg("message.change-type.failure", "("+type+") "+displayName)
+                    });
+                },
+                scope: this
+            }
+       });
+      } // this is for each            
+      },
+
+      /**
        * View in source Repository URL helper
        *
        * @method viewInSourceRepositoryURL
