@@ -73,6 +73,8 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 					TYPE_UCM_ARTIST_ARTIFACT_QNAME);
 			super.getUtils().synchronizeUCMPropertyValues(artistFolder, artistArtifactRef);
 			writeContent(artistArtifactType, data, artistArtifactRef);
+			// artist artifact width should be no less than 510 px
+			this.resizeImage(artistArtifactRef, 510);
 			super.getUtils().fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
 			getOrCreateArtistMediaFolder(artistArtifactRef);
 		}

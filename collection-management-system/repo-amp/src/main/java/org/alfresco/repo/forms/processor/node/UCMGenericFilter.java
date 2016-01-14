@@ -17,6 +17,7 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
+import org.alfresco.repo.content.transform.magick.ImageTransformationOptions;
 import org.alfresco.repo.forms.Form;
 import org.alfresco.repo.forms.FormData;
 import org.alfresco.repo.forms.FormData.FieldData;
@@ -211,6 +212,23 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 					LOGGER.error("Can't create copy of image stream", e);
 				}
 			}
+		}
+	}
+
+	protected void resizeImage(NodeRef image, int minWidth) {
+		// property is updated only after writer stream is closed so it is safe to read and write from same node.
+		ContentReader reader = this.getContentService().getReader(image, ContentModel.PROP_CONTENT);
+		ContentWriter writer = this.getContentService().getWriter(image, ContentModel.PROP_CONTENT, true);
+
+		ImageTransformationOptions options = new ImageTransformationOptions();
+		//If width is less than minWidth then upscale image. Do nothing otherwise ('<')
+		options.setCommandOptions(String.format("-resize %dx<", minWidth));
+
+		try {
+			this.getContentService().getImageTransformer().transform(reader, writer, options);
+		} catch (Exception e) {
+			//It is ok to have error here, because node may actually be non-image node.
+			LOGGER.warn("Image resize failed!", e);
 		}
 	}
 

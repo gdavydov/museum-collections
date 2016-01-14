@@ -30,6 +30,9 @@ public class UCMCreateMediaAttachment extends UCMGenericFilter<TypeDefinition> {
 		boolean isMedia = item.getName().equals(UCMConstants.TYPE_UCM_MEDIA_ATTACHMENT_QNAME);
 		if (isMedia) {
 			writeContent(item, data, persistedObject);
+			// attachment width should be no less than 510 px
+			//TODO: resize by height or width?
+			//this.resizeImage(persistedObject, 510);
 		}
 	}
 }

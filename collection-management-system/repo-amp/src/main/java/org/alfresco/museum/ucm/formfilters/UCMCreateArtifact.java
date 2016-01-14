@@ -34,6 +34,9 @@ public class UCMCreateArtifact extends UCMGenericFilter<TypeDefinition> {
 		boolean isArtifact = item.getName().equals(UCMConstants.TYPE_UCM_ARTIFACT_QNAME);
 		if (isArtifact) {
 			writeContent(item, data, persistedObject);
+			// artifact width should be no less than 510 px
+			this.resizeImage(persistedObject, 510);
+
 			getOrCreateArtistMediaFolder(persistedObject);
 
 			//set ucm:artifact_name
