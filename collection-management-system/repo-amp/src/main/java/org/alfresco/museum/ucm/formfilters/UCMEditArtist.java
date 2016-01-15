@@ -45,6 +45,8 @@ public class UCMEditArtist extends UCMGenericFilter<NodeRef> {
 				TypeDefinition artistArtifactType = this.getDictionaryService().getType(
 						UCMConstants.TYPE_UCM_ARTIST_ARTIFACT_QNAME);
 				writeContent(artistArtifactType, data, artistArtifactRef, false);
+				// artist artifact width should be no less than 510 px
+				this.resizeImage(artistArtifactRef, 510);
 			}
 		}
 	}

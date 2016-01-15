@@ -6,6 +6,7 @@ import static org.alfresco.repo.forms.processor.node.FormFieldConstants.PROP_DAT
 import java.util.Set;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.util.collections.CollectionUtils;
 
@@ -13,19 +14,18 @@ public class UCMConstants {
 
 	public static final String UCM_NAMESPACE = "http://www.ucm.org/model/1.0";
 
-	public static final String ALFRESCO_NAMESPACE = "http://www.alfresco.org/model/content/1.0";
 	public static final String ALFRESCO_NAMESPACE_SHORT = "ucm";
 
 	public static final String PROP_CM_CMOBJECT = "cmobject";
-	public static final QName PROP_CM_CMOBJECT_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_CM_CMOBJECT);
+	public static final QName PROP_CM_CMOBJECT_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, PROP_CM_CMOBJECT);
 	public static final String PROP_NODE_CMNAME = "name";
-	public static final QName PROP_CM_CMOBJECTNAME_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMNAME);
+	public static final QName PROP_CM_CMOBJECTNAME_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, PROP_NODE_CMNAME);
 	public static final String PROP_NODE_CMCREATEDON = "createdOn";
-	public static final QName PROP_CM_CMCREATEDON_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMCREATEDON);
+	public static final QName PROP_CM_CMCREATEDON_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, PROP_NODE_CMCREATEDON);
 	public static final String PROP_NODE_CMCREATOR = "creator";
-	public static final QName PROP_CM_CMCREATOR_QNAME = QName.createQName(ALFRESCO_NAMESPACE, PROP_NODE_CMCREATOR);
+	public static final QName PROP_CM_CMCREATOR_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, PROP_NODE_CMCREATOR);
 
-	
+
 	public static final String PROP_UCM_SITE_LOGO_REF = "site_logo_ref";
 	public static final QName PROP_UCM_SITE_LOGO_REF_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_SITE_LOGO_REF);
 
@@ -128,6 +128,9 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED = "site_aspect_contact_tweed";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED);
 
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL = "site_aspect_admin_email";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL);
+
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL = "site_aspect_contact_email";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL);
 
@@ -153,6 +156,9 @@ public class UCMConstants {
 
 	public static final String ASPECT_INHERIT_PROPERTIES_TARGET = "inherit_properties_target_aspect";
 	public static final QName ASPECT_INHERIT_PROPERTIES_TARGET_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_INHERIT_PROPERTIES_TARGET);
+
+	public static final String DOCLIB = "doclib";
+	public static final QName DOCLIB_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, DOCLIB);
 
 	public static final String ANONIMOUS_USER_DETAILS_WEBSCRIPT_PATH = "/ucm/anonymous-user";
 }

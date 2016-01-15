@@ -1,19 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor
-	license agreements. See the NOTICE file distributed with this work for additional
-	information regarding copyright ownership. The ASF licenses this file to
-	You under the Apache License, Version 2.0 (the "License"); you may not use
-	this file except in compliance with the License. You may obtain a copy of
-	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required
-	by applicable law or agreed to in writing, software distributed under the
-	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
-	OF ANY KIND, either express or implied. See the License for the specific
-	language governing permissions and limitations under the License. -->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with
+	this work for additional information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+	Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations
+	under the License. -->
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 
 <beans>
-	<bean id="ucm.dictionaryBootstrap" parent="dictionaryModelBootstrap"
-		depends-on="dictionaryBootstrap">
+	<bean id="ucm.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
 		<property name="models">
 			<list>
 				<value>alfresco/extension/model/ucmModel.xml</value>
@@ -22,13 +17,11 @@
 		</property>
 	</bean>
 
-	<!--bean id="ucm.surfClientConfig" class="org.springframework.extensions.config.ConfigBootstrap"
-		init-method="register"> <property name="configService" ref="web.config" />
-		<property name="configs"> <list> <value>classpath:alfresco/module/collection-management-system-repo-amp/context/surf-config.xml</value>
+	<!--bean id="ucm.surfClientConfig" class="org.springframework.extensions.config.ConfigBootstrap" init-method="register"> <property name="configService"
+		ref="web.config" /> <property name="configs"> <list> <value>classpath:alfresco/module/collection-management-system-repo-amp/context/surf-config.xml</value>
 		</list> </property> </bean -->
 
-	<bean id="ucm.baseFormFilter" class="org.alfresco.repo.forms.processor.node.UCMGenericFilter"
-		parent="baseFormFilter">
+	<bean id="ucm.baseFormFilter" class="org.alfresco.repo.forms.processor.node.UCMGenericFilter" parent="baseFormFilter">
 		<property name="utils" ref="ucm.nodeUtils" />
 		<property name="contentService" ref="ContentService" />
 		<property name="fileFolderService" ref="FileFolderService" />
@@ -45,40 +38,31 @@
 		<property name="searchService" ref="SearchService" />
 	</bean>
 
-	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtifact"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtifact" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtist"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.createArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtist" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createMediaAttachment"
-		class="org.alfresco.museum.ucm.formfilters.UCMCreateMediaAttachment"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.createMediaAttachment" class="org.alfresco.museum.ucm.formfilters.UCMCreateMediaAttachment" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.createCollection" class="org.alfresco.museum.ucm.formfilters.UCMCreateCollection"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.createCollection" class="org.alfresco.museum.ucm.formfilters.UCMCreateCollection" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="typeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMEditArtist"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.editArtistFilter" class="org.alfresco.museum.ucm.formfilters.UCMEditArtist" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
 
-	<bean id="ucm.editArtistArtifactFilter"
-		class="org.alfresco.museum.ucm.formfilters.UCMEditArtistArtifact"
-		parent="ucm.baseFormFilter">
+	<bean id="ucm.editArtistArtifactFilter" class="org.alfresco.museum.ucm.formfilters.UCMEditArtistArtifact" parent="ucm.baseFormFilter">
 		<property name="filterRegistry" ref="nodeFilterRegistry" />
 	</bean>
 
-	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site.post"
-		class="org.alfresco.museum.ucm.UCMCreateSite" parent="webscript">
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-create-site.post" class="org.alfresco.museum.ucm.UCMCreateSite" parent="webscript">
 		<property name="authorityService" ref="AuthorityService" />
 		<property name="personService" ref="PersonService" />
 		<property name="permissionService" ref="PermissionService" />
@@ -97,11 +81,9 @@
 	</bean>
 
 	<!-- Put email template to the repository node. See http://docs.alfresco.com/5.0/concepts/dev-extensions-modules-importing-module-data.html -->
-	<bean id="ucm.spacesBootstrap" class="org.alfresco.repo.module.ImporterModuleComponent"
-		parent="module.baseComponent">
+	<bean id="ucm.spacesBootstrap" class="org.alfresco.repo.module.ImporterModuleComponent" parent="module.baseComponent">
 		<property name="moduleId" value="collection-management-system-repo-amp" />
-		<property name="name"
-			value="ucm.collection-management-system-repo-amp.bootstrapSpaces" />
+		<property name="name" value="ucm.collection-management-system-repo-amp.bootstrapSpaces" />
 		<property name="description" value="Initial data requirements" />
 		<property name="sinceVersion" value="1.0" />
 		<property name="appliesFromVersion" value="1.0" />
@@ -119,8 +101,7 @@
 		</property>
 	</bean>
 
-	<bean id="webscript.com.alfresco.museum.ucm.ucm-anonymous-user.get"
-		class="org.alfresco.museum.ucm.UCMAnonymousUser" parent="webscript">
+	<bean id="webscript.com.alfresco.museum.ucm.ucm-anonymous-user.get" class="org.alfresco.museum.ucm.UCMAnonymousUser" parent="webscript">
 		<property name="authorityService" ref="AuthorityService" />
 		<property name="personService" ref="PersonService" />
 		<property name="permissionService" ref="PermissionService" />
@@ -128,14 +109,14 @@
 	</bean>
 
 	<bean id="ucm.inheritPropertiesSourceAspect" class="org.alfresco.museum.ucm.aspects.UCMInheritPropertiesSourceAspect" init-method="init">
-		<property name="policyComponent" ref="policyComponent"/>
+		<property name="policyComponent" ref="policyComponent" />
 		<property name="nodeService" ref="NodeService" />
-		<property name="utils" ref="ucm.nodeUtils"/>
+		<property name="utils" ref="ucm.nodeUtils" />
 	</bean>
 
 	<bean id="ucm.inheritPropertiesTargetAspect" class="org.alfresco.museum.ucm.aspects.UCMInheritPropertiesTargetAspect" init-method="init">
-		<property name="policyComponent" ref="policyComponent"/>
+		<property name="policyComponent" ref="policyComponent" />
 		<property name="nodeService" ref="NodeService" />
-		<property name="utils" ref="ucm.nodeUtils"/>
+		<property name="utils" ref="ucm.nodeUtils" />
 	</bean>
 </beans>
