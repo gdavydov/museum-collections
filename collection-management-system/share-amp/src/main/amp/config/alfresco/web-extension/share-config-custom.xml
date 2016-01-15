@@ -1560,8 +1560,9 @@
             <action index="290" id="document-manage-granular-permissions" />
             <action index="300" id="document-manage-repo-permissions" />
             <action index="310" id="document-manage-aspects" />
-<!--
+
             <action index="320" id="document-change-type" />
+<!-- 
             <action index="330" id="document-view-in-source-repository" />
 -->
             <action index="350" id="document-view-googlemaps" />
@@ -1573,7 +1574,7 @@
 -->
          </actionGroup>
 
-			<actionGroup id="folder-browse">
+		<actionGroup id="folder-browse">
 				<action index="100" id="folder-download" />
 				<action index="105" id="folder-view-details" />
 				<action index="110" id="document-edit-properties" icon="folder-edit-properties" label="actions.folder.edit-metadata" />
@@ -1609,6 +1610,7 @@
             <action index="170" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
             <action index="180" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
             <action index="190" id="document-manage-aspects" label="actions.folder.manage-aspects" />
+
 <!--
             <action index="200" id="document-change-type" label="actions.folder.change-type" />
 -->

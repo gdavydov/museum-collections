@@ -290,7 +290,7 @@
       </component>
 -->
       <!-- Document Permissions -->
-<!--       <component>
+       <component>
          <region-id>document-permissions</region-id>
          <sub-components>
             <sub-component id="default">
@@ -308,7 +308,7 @@
                </evaluations>
             </sub-component>
          </sub-components>
-      </component> -->
+      </component>
 
       <!-- Document Workflows -->
        <component>
