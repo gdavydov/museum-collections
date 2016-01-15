@@ -676,6 +676,11 @@
 					</constraints>
 				</property>
 
+				<property name="ucm:site_aspect_admin_email">
+					<title>Site Admin Email</title>
+					<type>d:text</type>
+				</property>
+
 				<property name="ucm:site_aspect_contact_person">
 					<title>Contact Person</title>
 					<type>d:text</type>

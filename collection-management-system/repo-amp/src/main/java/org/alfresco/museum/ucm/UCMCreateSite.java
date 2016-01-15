@@ -95,8 +95,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				{
 					this.put("siteAdminFirstName", ContentModel.PROP_FIRSTNAME);
 					this.put("siteAdminLastName", ContentModel.PROP_LASTNAME);
-					this.put("siteAdminEmail", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME);
-					this.put("museumEmail", ContentModel.PROP_EMAIL);
+					this.put("siteAdminEmail", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME);
 					// TODO: ContentModel.PROP_ORGID,
 					// ContentModel.PROP_SIZE_CURRENT,
 					// ContentModel.PROP_SIZE_QUOTA ?
@@ -132,6 +131,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 					this.put("museumPhone", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE_QNAME);
 					// this.put("museumFax",
 					// UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME);
+					this.put("museumEmail", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME);
 					this.put(MODEL_SITE_IS_PRIVATE, UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME);
 				}
 			});
@@ -666,7 +666,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		// add user to site managers group
 		this.getAuthorityService().addAuthority(getSiteManagerGroupName(site.shortName), site.adminName);
 
-		String email = userProps.get(UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME).toString();
+		String email = userProps.get(UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME).toString();
 		String password = createPassword();
 
 		// create the ACEGI Authentication instance for the new user

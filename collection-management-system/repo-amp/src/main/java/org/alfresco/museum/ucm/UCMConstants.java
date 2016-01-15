@@ -128,6 +128,9 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED = "site_aspect_contact_tweed";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED);
 
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL = "site_aspect_admin_email";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL);
+
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL = "site_aspect_contact_email";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL);
 

@@ -26,8 +26,9 @@ fi
 
 ### Store current backups
 
-rm -rf /opt/alfresco-5.0.d.bak.old
-mv /opt/alfresco-5.0.d.bak /opt/alfresco-5.0.d.bak.old
+#rm -rf /opt/alfresco-5.0.d.bak.old
+#mv /opt/alfresco-5.0.d.bak /opt/alfresco-5.0.d.bak.old
+rm -rf /opt/alfresco-5.0.d.bak
 cp -pr /opt/alfresco-5.0.d /opt/alfresco-5.0.d.bak
 
 ### Clean up temporary folders
