@@ -9,9 +9,11 @@
       <#-- JS Dependencies -->
       <@script type="text/javascript" src="${url.context}/res/js/artifact-media-files.js" />
    </@>
-
+	
    <#assign el=args.htmlid?html>
-   <div id="${el}-heading" class="thin dark">${msg("header.media")}</div>
+   <p>	
+   <div id="${el}-heading" class="ucm-media-objects-header">${msg("header.media")}</div>
+   <p>
    
    <@markup id="${el}-upload">
       <div id="${el}-upload-target"></div>

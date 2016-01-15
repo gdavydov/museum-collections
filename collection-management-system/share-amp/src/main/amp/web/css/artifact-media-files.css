@@ -70,6 +70,12 @@
 	height: 100%;
 }
 
+.ucm-media-objects-header {
+	text-decoration: none;
+	color: blue;
+	font-weight: bold !important;
+	font-style: italic;	
+}
 .ucm-media-pdf, .ucm-media-video, .ucm-media-link, .ucm-media-other {
 	color: blue;
 }
