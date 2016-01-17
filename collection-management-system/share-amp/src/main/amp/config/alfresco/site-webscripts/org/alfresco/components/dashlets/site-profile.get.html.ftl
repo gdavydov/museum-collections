@@ -47,14 +47,14 @@
                </p>
       </#if>
                <p><span class="label">${msg("label.visibility")}</span>&nbsp;${msg("text." + (profile.visibility!"unknown")?lower_case)}</p>
-      <#if profile.props.ucm_site_address??>
-               <p><span class="label">${msg("label.site_address")}</span>&nbsp;${profile.props.ucm_site_address}</p>
+      <#if profile.ucmSiteAddress??>
+               <p><span class="label">${msg("label.site_address")}</span>&nbsp;${profile.ucmSiteAddress}</p>
       </#if>
-      <#if profile.props.ucm_site_aspect_contact_phone??>
-               <p><span class="label">${msg("label.site_phone")}</span>&nbsp;${profile.props.ucm_site_aspect_contact_phone}</p>
+      <#if profile.ucmSitePhone??>
+               <p><span class="label">${msg("label.site_phone")}</span>&nbsp;${profile.ucmSitePhone}</p>
       </#if>
-      <#if profile.props.ucm_site_aspect_contact_email??>
-               <p><span class="label">${msg("label.site_email")}</span>&nbsp;${profile.props.ucm_site_aspect_contact_email}</p>
+      <#if profile.ucmSiteEmail??>
+               <p><span class="label">${msg("label.site_email")}</span>&nbsp;${profile.ucmSiteEmail}</p>
       </#if>
             </div>
             <div class="clear"></div>

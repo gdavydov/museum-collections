@@ -9,8 +9,8 @@ function hideItemById() {
 /*  determine user type  */
 
 var isAdmin = user.isAdmin;
+var isVisitor = (user.id == "visitor");
 var isSiteAdmin = false;
-var isVisitor = true;
 var isPrivateSite = true;
 
 if (!isAdmin) {
@@ -19,7 +19,6 @@ if (!isAdmin) {
 		//"Public" UCM site has actually "MODERATED" visibility under the hood
 		isPrivateSite = (siteData.profile == null || siteData.profile.visibility !== "MODERATED");
 		isSiteAdmin = (siteData != null && siteData.userIsSiteManager);
-		isVisitor = !isSiteAdmin;
 	}
 }
 
@@ -41,14 +40,14 @@ if (isSiteAdmin || isVisitor) {
 }
 
 //visitor shouldn't be able to customize anything
-if (!isPrivateSite && isVisitor) {
+if (isVisitor) {
 	//remove whole submenu on the right side with cog icon
 	hideItemById("HEADER_CUSTOMIZE_SITE_DASHBOARD", "HEADER_SITE_CONFIGURATION_DROPDOWN");
 
 	//The "My Sites", Favorites, "Remove Current site from favorites" should be removed for visitor only
 	if (sitesMenu != null) {
 		sitesMenu.config.showMySites = false;
-		sitesMenu.config.showRecentSites=false;
+		sitesMenu.config.showRecentSites = false;
 		//hides "add" and "remove" buttons as well as "Favourites" button itself
 		sitesMenu.config.showFavourites = false;
 	}

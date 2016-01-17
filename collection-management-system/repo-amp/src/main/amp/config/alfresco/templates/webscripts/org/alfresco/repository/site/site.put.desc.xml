@@ -1,0 +1,25 @@
+<webscript>
+  <shortname>Update Web site</shortname>
+  <description>  <![CDATA[
+  Update the details of a Web site.
+
+  The following properties may be updated.
+
+  <dl>
+  <dt>title</dt><dd>the title of the web site</dd>
+  <dt>description</dt><dd>the description for the web site</dd>
+  <dt>visibility</dt><dd>the site visibility, one of (PUBLIC,MODERATED,PRIVATE)</dd>
+  <dt>type</dt><dd>the UCM site type, one of (All, Classic, Modern, etc.)</dd>
+  <dt>address</dt><dd>the UCM site address</dd>
+  <dt>email</dt><dd>the UCM site email</dd>
+  <dt>phone</dt><dd>the UCM site phone</dd>
+  <dt>fax</dt><dd>the UCM site fax</dd>
+  </dl>
+
+  ]]></description>
+  <url>/api/sites/{shortname}</url>
+  <format default="json">argument</format>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <lifecycle>draft_public_api</lifecycle>
+</webscript>
