@@ -6,18 +6,18 @@
          <display-web-preview>true</display-web-preview>
       </document-details>
    </config>
-   
+
 
    <!-- Document Library config section -->
    <config evaluator="string-compare" condition="DocumentLibraryViews">
-         <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and 
+         <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and
               Repository pages. This list can be added to or removed to control the views displayed. Use the a module
-              that provides evaluated configuration to have the options change based on criteria (e.g. site name, 
+              that provides evaluated configuration to have the options change based on criteria (e.g. site name,
               site preset, user group, etc)
-              
-              Remember to include all dependencies, even those duplicated by another view - Surf will ensure only 
+
+              Remember to include all dependencies, even those duplicated by another view - Surf will ensure only
               one version of each is loaded - but if a view is removed that depends on a dependency defined in another
-              view then it will cause an error. 
+              view then it will cause an error.
            -->
       <view-renderers>
          <view-renderer id="simple" iconClass="simple" label="button.view.simple" index="10" widget="Alfresco.DocumentListSimpleViewRenderer">
@@ -65,23 +65,23 @@
                <css src="components/preview/PdfJs.css" />
             </dependencies>
          </view-renderer>
-         
+
          <!-- The following entries are examples of how to create multiple instances of the
               same renderer. In this case they are different configurations of the table view
-              and the differences are controlled by the "json-config" element (although it should 
+              and the differences are controlled by the "json-config" element (although it should
               be noted that not although a view renderer may be supplied with the json-config the
               table view is the only renderer that makes use of it.
-              
+
               There are 4 columns that are always present in the table which need to be manually
               hidden if required (they will be displayed if included in the json-config:
               - actions (the drop-down menu of actions that can be peformed on the document)
               - indicators (the set of icons that visually communicate information about the document)
               - selector (the checkbox to use when selecting multiple documents)
               - thumbnail (the thumbnail sized preview of the document)
-              
+
               All other columns must be defined in the "propertyColumns" array. The property attribute
               can be set to EITHER a document property (e.g. "cm:name") or a metadata template renderer
-              such as "size", "tags" or "date". 
+              such as "size", "tags" or "date".
          -->
          <!--
          <view-renderer id="email" iconClass="table" label="button.view.email" index="50" widget="Alfresco.DocumentListTableViewRenderer">
@@ -467,30 +467,30 @@
             shall use when asking the repository for nodes.
           -->
          <data-url-resolver>resolver.doclib.doclistDataUrl</data-url-resolver>
-         
-         
+
+
       </doclist>
 
-      <!-- This defines a set of modes for pickers (e.g. the copy/move to picker, etc) that should be hidden. 
+      <!-- This defines a set of modes for pickers (e.g. the copy/move to picker, etc) that should be hidden.
            The mode names correlate to values in the Alfresco.module.DoclibGlobalFolder JavaScript widget.
            By default no view modes will be hidden, each view mode should be added as the value of it's own
            <mode> element.
         -->
       <hidden-picker-view-modes></hidden-picker-view-modes>
-       
+
       <tree>
          <!--
             Whether the folder Tree component should enumerate child folders or not.
             This is a relatively expensive operation, so should be set to "false" for Repositories with broad folder structures.
          -->
          <evaluate-child-folders>true</evaluate-child-folders>
-         
+
          <!--
             Optionally limit the number of folders shown in treeview throughout Share.
          -->
          <maximum-folder-count>-1</maximum-folder-count>
-         
-         <!--  
+
+         <!--
             Default timeout in milliseconds for folder Tree component to recieve response from Repository
          -->
          <timeout>7000</timeout>
@@ -588,7 +588,7 @@
             For these cases, it is useful to disable the Flash-based uploader for Share Document Libraries.
          -->
          <adobe-flash-enabled>true</adobe-flash-enabled>
-         
+
          <!--
             In order to support drag-and-drop file upload a browser must be able to support the HTML5 drag-and-drop events, however
             if the browser does not support the FormData type (that allows streamed multipart file uploads) then all files need to be
@@ -610,7 +610,7 @@
          The 'sort' config element contains the name of the content model field to sort against and can be of the form:
          - short QName string e.g. "cm:name"
          - any other valid sortable fts-alfresco special field e.g. "TYPE"
-         
+
          The field can be optionally followed by |true or |false to indicate sort direction,
          where true = ascending, false = descending
       -->
@@ -627,7 +627,7 @@
          <sort label="label.mimetype">cm:content.mimetype</sort>
          <sort label="label.type">TYPE</sort>
       </sorting>
-      
+
       <!--
          Filter configurations
       -->
@@ -637,7 +637,7 @@
          -->
          <maximum-tag-count>100</maximum-tag-count>
       </filters>
-      
+
       <!--
          Status Indicators
       -->
@@ -781,11 +781,11 @@
          <content id="html" label="create-content.html" type="pagelink" index="20">
             <param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/html</param>
          </content>
-          
+
          <content id="xml" label="create-content.xml" type="pagelink" index="30">
             <param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/xml</param>
          </content>
-         
+
          <content id="folder" label="create-content.folder" icon="folder" index="5" type="javascript">
             <param name="function">onNewFolder</param>
          </content>
@@ -795,12 +795,7 @@
 
       <multi-select>
          <action type="action-link" id="onActionDownload" icon="document-download" label="menu.selected-items.download" />
-         <action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Delete" label="menu.selected-items.copy">
-         	<evaluator negate="true">evaluator.doclib.action.isSiteCollaborator</evaluator>
-         	<evaluator negate="true">evaluator.doclib.action.isSiteContributor</evaluator>
-         	<evaluator negate="true">evaluator.doclib.action.isSiteConsumer</evaluator>
-         </action>
-         
+         <action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Delete" label="menu.selected-items.copy"/>
          <action type="action-link" id="onActionMoveTo" icon="document-move-to" permission="Delete" label="menu.selected-items.move"/>
 <!--          <action type="action-link" id="onActionAssignWorkflow" asset="document" icon="document-assign-workflow" label="menu.selected-items.assign-workflow"/> -->
          <action type="action-link" id="onActionChangeTypeToArtifact" icon="document-move-to" permission="Delete" label="menu.selected-items.convert_to_artifact"/>
@@ -810,7 +805,7 @@
       </multi-select>
 
    </config>
-   
+
    <!-- Repository Library config section -->
    <config evaluator="string-compare" condition="RepositoryLibrary">
       <!--
@@ -820,7 +815,7 @@
 
       <!-- Hide the Repository header link for non-Admin users -->
       <visible>false</visible>
-      
+
       <tree>
          <!--
             Whether the folder Tree component should enumerate child folders or not.
@@ -1042,6 +1037,9 @@
          <!-- Copy to -->
          <action id="document-copy-to" type="javascript" label="actions.document.copy-to">
             <param name="function">onActionCopyTo</param>
+            <permissions>
+               <permission allow="true">Write</permission>
+            </permissions>
             <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
          </action>
 
@@ -1066,7 +1064,7 @@
          </action>
 
          <!-- Assign workflow -->
-<!--          
+<!--
          <action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
             <param name="function">onActionAssignWorkflow</param>
          </action>
@@ -1201,7 +1199,7 @@
             <param name="target">_blank</param>
             <evaluator>evaluator.doclib.action.isSyncedFromLocal</evaluator>
          </action>
-         
+
          <!-- Cloud Sync: Request Sync -->
          <action id="document-request-sync" type="javascript" label="actions.document.request-sync">
             <param name="function">onActionCloudSyncRequest</param>
@@ -1254,7 +1252,7 @@
             <action index="330" id="document-cloud-sync" />
             <action index="340" id="document-cloud-unsync" />
             <action index="350" id="document-view-in-cloud" />
-            <action index="360" id="document-request-sync"/> 
+            <action index="360" id="document-request-sync"/>
          </actionGroup>
 
          <actionGroup id="document-details">
