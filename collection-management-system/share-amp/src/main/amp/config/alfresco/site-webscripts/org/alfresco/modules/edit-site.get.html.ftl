@@ -21,7 +21,7 @@
          </div>
 
 <#-- UCM modification begin: -->
-         <#if profile.ucmNodeRef??>
+         <#if profile.ucmNodeRef?? == true>
          <#-- TYPE -->
          <div class="yui-gd">
             <div class="yui-u first"><label for="${el}-type">${msg("label.type")}:</label></div>

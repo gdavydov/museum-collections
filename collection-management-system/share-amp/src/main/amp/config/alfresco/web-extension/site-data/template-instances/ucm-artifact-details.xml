@@ -82,7 +82,7 @@
                         <nodeRef>{nodeRef}</nodeRef>
                         <rootPage>documentlibrary</rootPage>
                         <rootLabelId>path.documents</rootLabelId>
-                        <showOnlyLocation>true</showOnlyLocation>
+                        <showOnlyLocation>false</showOnlyLocation>
                      </properties>
                   </evaluation>
                </evaluations>
@@ -126,7 +126,7 @@
             <activityType>document</activityType>
          </properties>
       </component>
-<!-- 
+<!--
       <component>
          <region-id>document-attachments</region-id>
          <url>/components/document-details/document-attachments</url>
@@ -141,7 +141,7 @@
             <nodeRef>{nodeRef}</nodeRef>
          </properties>
       </component> -->
-      
+
       <component>
          <region-id>ucm-media-files</region-id>
          <url>/components/ucm/artifact-media-files</url>
@@ -230,7 +230,7 @@
             <nodeRef>{nodeRef}</nodeRef>
          </properties>
       </component>
- 
+
       <component>
          <region-id>actions-common</region-id>
          <url>/components/documentlibrary/actions-common</url>
@@ -280,7 +280,7 @@
       </component> -->
 
       <!-- Document Sync -->
-<!--       
+<!--
        <component>
          <region-id>document-sync</region-id>
          <url>/components/document-details/document-sync</url>

@@ -82,7 +82,7 @@
 								<nodeRef>{nodeRef}</nodeRef>
 								<rootPage>documentlibrary</rootPage>
 								<rootLabelId>path.documents</rootLabelId>
-								<showOnlyLocation>true</showOnlyLocation>
+								<showOnlyLocation>false</showOnlyLocation>
 							</properties>
 						</evaluation>
 					</evaluations>
@@ -127,9 +127,9 @@
 				<activityType>document</activityType>
 			</properties>
 		</component>
-		<!-- <component> <region-id>document-attachments</region-id> <url>/components/document-details/document-attachments</url> 
-			<properties> <nodeRef>{nodeRef}</nodeRef> </properties> </component> <component> 
-			<region-id>repo-document-attachments</region-id> <url>/components/document-details/document-attachments</url> 
+		<!-- <component> <region-id>document-attachments</region-id> <url>/components/document-details/document-attachments</url>
+			<properties> <nodeRef>{nodeRef}</nodeRef> </properties> </component> <component>
+			<region-id>repo-document-attachments</region-id> <url>/components/document-details/document-attachments</url>
 			<properties> <nodeRef>{nodeRef}</nodeRef> </properties> </component> -->
 
 		<component>
@@ -261,13 +261,13 @@
 		</component>
 
 		<!-- Document Metadata -->
-		<!-- <component> <region-id>document-metadata</region-id> <url>/components/document-details/document-metadata</url> 
+		<!-- <component> <region-id>document-metadata</region-id> <url>/components/document-details/document-metadata</url>
 			<properties> <nodeRef>{nodeRef}</nodeRef> </properties> </component> -->
 
 		<!-- Document Sync -->
-		<!-- <component> <region-id>document-sync</region-id> <url>/components/document-details/document-sync</url> 
+		<!-- <component> <region-id>document-sync</region-id> <url>/components/document-details/document-sync</url>
 			<properties> <nodeRef>{nodeRef}</nodeRef> </properties> </component> -->
-			
+
       <!-- Document Permissions -->
        <component>
          <region-id>document-permissions</region-id>
@@ -315,7 +315,7 @@
          <properties>
             <nodeRef>{nodeRef}</nodeRef>
          </properties>
-      </component> 
+      </component>
  -->
 			<component>
 			<region-id>document-versions</region-id>

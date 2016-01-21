@@ -47,13 +47,13 @@
                </p>
       </#if>
                <p><span class="label">${msg("label.visibility")}</span>&nbsp;${msg("text." + (profile.visibility!"unknown")?lower_case)}</p>
-      <#if profile.ucmSiteAddress??>
+      <#if profile.ucmSiteAddress?? == true>
                <p><span class="label">${msg("label.site_address")}</span>&nbsp;${profile.ucmSiteAddress}</p>
       </#if>
-      <#if profile.ucmSitePhone??>
+      <#if profile.ucmSitePhone?? == true>
                <p><span class="label">${msg("label.site_phone")}</span>&nbsp;${profile.ucmSitePhone}</p>
       </#if>
-      <#if profile.ucmSiteEmail??>
+      <#if profile.ucmSiteEmail?? == true>
                <p><span class="label">${msg("label.site_email")}</span>&nbsp;${profile.ucmSiteEmail}</p>
       </#if>
             </div>
