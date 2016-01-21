@@ -1,0 +1,76 @@
+<extension>
+	<modules>
+		<module>
+			<id>UCM documentlibrary customization</id>
+			<auto-deploy>true</auto-deploy>
+			<components>
+				<!-- Sections "Documents", "Tags" should not be visible by site consumers (visitors) -->
+				<component>
+					<scope>template</scope>
+					<source-id>documentlibrary</source-id>
+					<region-id>filter</region-id>
+					<sub-components>
+						<sub-component id="default">
+							<evaluations>
+								<evaluation id="hideDocumentsFromVisitor">
+									<evaluators>
+										<evaluator type="evaluator.doclib.action.isUser">
+											<params>
+												<username>visitor</username>
+											</params>
+										</evaluator>
+									</evaluators>
+									<render>false</render>
+								</evaluation>
+							</evaluations>
+						</sub-component>
+					</sub-components>
+				</component>
+				<component>
+					<scope>template</scope>
+					<source-id>documentlibrary</source-id>
+					<region-id>tags</region-id>
+					<sub-components>
+						<sub-component id="default">
+							<evaluations>
+								<evaluation id="hideTagsFromVisitor">
+									<evaluators>
+										<evaluator type="evaluator.doclib.action.isUser">
+											<params>
+												<username>visitor</username>
+											</params>
+										</evaluator>
+									</evaluators>
+									<render>false</render>
+								</evaluation>
+							</evaluations>
+						</sub-component>
+					</sub-components>
+				</component>
+
+				<!-- Section "Categories" should be visible to system administrator ONLY. -->
+				<component>
+					<scope>template</scope>
+					<source-id>documentlibrary</source-id>
+					<region-id>categories</region-id>
+					<sub-components>
+						<sub-component id="default">
+							<evaluations>
+								<evaluation id="systemAdminOnly">
+									<evaluators>
+										<evaluator negate="true" type="evaluator.doclib.action.isUser">
+											<params>
+												<username>admin</username>
+											</params>
+										</evaluator>
+									</evaluators>
+									<render>false</render>
+								</evaluation>
+							</evaluations>
+						</sub-component>
+					</sub-components>
+				</component>
+			</components>
+		</module>
+	</modules>
+</extension>
