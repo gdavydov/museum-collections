@@ -81,7 +81,7 @@
                      <properties>
                         <nodeRef>{nodeRef}</nodeRef>
                         <rootPage>documentlibrary</rootPage>
-                        <rootLabelId>path.documents</rootLabelId>
+                        <rootLabelId>Collection</rootLabelId>
                         <showOnlyLocation>false</showOnlyLocation>
                      </properties>
                   </evaluation>

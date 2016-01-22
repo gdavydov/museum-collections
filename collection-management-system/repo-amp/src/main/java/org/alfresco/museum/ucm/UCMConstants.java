@@ -140,8 +140,8 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY = "site_visibility";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY);
 
-//	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX = "site_aspect_contact_fax";
-//	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX = "site_aspect_contact_fax";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
 
 	public static final Set<QName> INHERITABLE_ASPECTS = CollectionUtils.unmodifiableSet(ASPECT_SITE_QNAME,
 			ASPECT_MUSEUM_ARTIFACT_QNAME, ASPECT_ARTIST_QNAME);

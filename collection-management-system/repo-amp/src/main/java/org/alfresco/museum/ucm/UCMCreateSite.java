@@ -129,8 +129,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 					// this.put("siteContactTweed",
 					// UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED_QNAME);
 					this.put("museumPhone", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_PHONE_QNAME);
-					// this.put("museumFax",
-					// UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME);
+					this.put("museumFax", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME);
 					this.put("museumEmail", UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_EMAIL_QNAME);
 					this.put(MODEL_SITE_IS_PRIVATE, UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME);
 				}

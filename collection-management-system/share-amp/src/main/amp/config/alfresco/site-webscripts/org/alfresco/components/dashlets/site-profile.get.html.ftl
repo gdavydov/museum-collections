@@ -53,6 +53,9 @@
       <#if profile.ucmSitePhone?? == true>
                <p><span class="label">${msg("label.site_phone")}</span>&nbsp;${profile.ucmSitePhone}</p>
       </#if>
+      <#if profile.ucmSiteFax?? == true>
+               <p><span class="label">${msg("label.site_fax")}</span>&nbsp;${profile.ucmSiteFax}</p>
+      </#if>
       <#if profile.ucmSiteEmail?? == true>
                <p><span class="label">${msg("label.site_email")}</span>&nbsp;${profile.ucmSiteEmail}</p>
       </#if>
