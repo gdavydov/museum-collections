@@ -1,0 +1,11 @@
+/collection-management-system/alf_data_dev
+/collection-management-system/repo/target
+/collection-management-system/repo-amp/target
+/collection-management-system/share/target
+/collection-management-system/share-amp/target
+/collection-management-system/runner/target
+/collection-management-system/customise-site-logo/customise-site-logo-alfresco/target
+/collection-management-system/customise-site-logo/customise-site-logo-share-42/target
+/collection-management-system/solr/solr_home
+/collection-management-system/solr/target
+/collection-management-system/repo/src/main/properties/local/alfresco-global.properties

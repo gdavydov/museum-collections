@@ -130,6 +130,23 @@
 				<line index="20" id="social" view="detailed">{social}</line>
 			</template>
 		</metadata-templates>
+
+		<create-content-by-template>true</create-content-by-template>
+
+		<multi-select>
+			<action type="action-link" id="onActionDownload" icon="document-download" label="menu.selected-items.download" />
+			<action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Delete" label="menu.selected-items.copy" />
+			<action type="action-link" id="onActionMoveTo" icon="document-move-to" permission="Delete" label="menu.selected-items.move" />
+			<!-- <action type="action-link" id="onActionAssignWorkflow" asset="document" icon="document-assign-workflow" label="menu.selected-items.assign-workflow"/> -->
+			<action type="action-link" id="onActionChangeTypeToArtifact" icon="document-move-to" permission="Delete"
+				label="menu.selected-items.convert_to_artifact" />
+			<action type="action-link" id="onActionDelete" icon="document-delete" permission="Delete" label="menu.selected-items.delete"
+				notAspect="hwf:hybridWorkflow,sys:undeletable" />
+			<action type="action-link" id="onActionCloudSync" asset="document" icon="document-cloud-sync" permission="CreateChildren"
+				label="menu.selected-items.cloudSync" notAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
+			<action type="action-link" id="onActionCloudSyncRequest" icon="document-request-sync" label="menu.selected-items.cloudRequestSync"
+				hasAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
+		</multi-select>
 	</config>
 
 	<!-- ucm:collection type (creating nodes) -->
@@ -1044,12 +1061,6 @@
               view then it will cause an error.
            -->
 		<view-renderers>
-<!--          <view-renderer id="simple" iconClass="simple" label="button.view.simple" index="10" widget="Alfresco.DocumentListSimpleViewRenderer">
-            <dependencies>
-               <js src="components/documentlibrary/documentlist-view-detailed.js" />
-               <js src="components/documentlibrary/documentlist-view-simple.js" />
-            </dependencies>
-         </view-renderer> -->
 			<view-renderer id="detailed" iconClass="detailed" label="button.view.detailed" index="20" widget="Alfresco.DocumentListViewRenderer">
 				<dependencies>
 					<js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
@@ -1172,29 +1183,25 @@
 			</action>
 
 			<!-- Approve simple workflow -->
-			<!--
 			<action id="document-approve" type="javascript" label="{jsNode.properties.app_approveStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!- Additional parameters for onRepoAction function ->
+				<!-- Additional parameters for onRepoAction function -->
 				<param name="action">accept-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.approved</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!- aspect check, property != null check, action name = property value ->
+				<!-- aspect check, property != null check, action name = property value -->
 				<evaluator>evaluator.doclib.action.simpleApprove</evaluator>
 			</action>
-			-->
 			<!-- Reject simple workflow -->
-			<!--
 			<action id="document-reject" type="javascript" label="{jsNode.properties.app_rejectStep}">
 				<param name="function">onActionSimpleRepoAction</param>
-				<!- Additional parameters for onRepoAction function ->
+				<!-- Additional parameters for onRepoAction function -->
 				<param name="action">reject-simpleworkflow</param>
 				<param name="successMessage">message.simple-workflow.rejected</param>
 				<param name="failureMessage">message.simple-workflow.failure</param>
-				<!- aspect check, property != null check, action name = property value ->
+				<!-- aspect check, property != null check, action name = property value -->
 				<evaluator>evaluator.doclib.action.simpleReject</evaluator>
 			</action>
-			-->
 			<!-- Increment Counter -->
 			<action id="document-increment-counter" type="javascript" label="actions.document.increment-counter">
 				<param name="function">onActionSimpleRepoAction</param>
@@ -1562,7 +1569,7 @@
             <action index="310" id="document-manage-aspects" />
 
             <action index="320" id="document-change-type" />
-<!-- 
+<!--
             <action index="330" id="document-view-in-source-repository" />
 -->
             <action index="350" id="document-view-googlemaps" />
