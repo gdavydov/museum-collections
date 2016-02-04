@@ -18,7 +18,7 @@ import org.alfresco.service.namespace.QName;
  * copied to new location inherited properties should be updated.
  */
 public class UCMInheritPropertiesTargetAspect implements NodeServicePolicies.OnMoveNodePolicy, NodeServicePolicies.OnCreateNodePolicy,
-		CopyServicePolicies.OnCopyCompletePolicy {
+		CopyServicePolicies.OnCopyCompletePolicy, NodeServicePolicies.OnSetNodeTypePolicy {
 	private NodeService nodeService;
 	private PolicyComponent policyComponent;
 	private NodeUtils utils;
@@ -32,6 +32,9 @@ public class UCMInheritPropertiesTargetAspect implements NodeServicePolicies.OnM
 
 		this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.OnCreateNodePolicy.QNAME,
 				UCMConstants.ASPECT_INHERIT_PROPERTIES_TARGET_QNAME, new JavaBehaviour(this, "onCreateNode"));
+
+		this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.OnSetNodeTypePolicy.QNAME,
+				UCMConstants.ASPECT_INHERIT_PROPERTIES_TARGET_QNAME, new JavaBehaviour(this, "onSetNodeType"));
 	}
 
 	/**
@@ -68,6 +71,11 @@ public class UCMInheritPropertiesTargetAspect implements NodeServicePolicies.OnM
 	@Override
 	public void onCreateNode(ChildAssociationRef childAssocRef) {
 		processNode(childAssocRef.getChildRef());
+	}
+
+	@Override
+	public void onSetNodeType(NodeRef nodeRef, QName oldType, QName newType) {
+		processNode(nodeRef);
 	}
 
 	protected NodeRef getParentNodeRef(NodeRef parentRef) {
