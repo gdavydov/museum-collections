@@ -20,13 +20,10 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.formfilters.UCMCreateCollection;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
-import org.alfresco.repo.action.executer.MailActionExecuter;
 import org.alfresco.repo.domain.node.ContentDataWithId;
 import org.alfresco.repo.thumbnail.ThumbnailDefinition;
 import org.alfresco.repo.thumbnail.ThumbnailRegistry;
 import org.alfresco.service.ServiceRegistry;
-import org.alfresco.service.cmr.action.Action;
-import org.alfresco.service.cmr.action.ActionService;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
@@ -145,7 +142,6 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	private DictionaryService dictionaryService;
 	private FileFolderService fileFolderService;
 	private MimetypeService mimetypeService;
-	private ActionService actionService;
 	private ScriptRemote remote;
 	private NodeUtils utils;
 	private Properties properties;
@@ -172,6 +168,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		public NodeRef surfConfig;
 		public NodeRef documentLibrary;
 		public NodeRef wiki;
+		public NodeRef admin;
 		public String adminName;
 	}
 
@@ -288,7 +285,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 			site = createAdminUser(site, adminData);
 			LOGGER.info("Admin user created. New user name: " + site.adminName);
 		} catch (FileNotFoundException e) {
-			logAndThrow("Can not create site Adminstrator. Mail template not found ",e);
+			logAndThrow("Can not create site Adminstrator. Mail template not found ", e);
 			return null;
 		}
 
@@ -315,7 +312,8 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	public UCMSite createSite(UCMSite site, Map<QName, Serializable> siteData) {
 		SiteVisibility visibility = (site.isPrivate) ? SiteVisibility.PRIVATE : SiteVisibility.MODERATED;
 
-		//ensure that visibility property contains safe value: "PRIVATE" or "PUBLIC"
+		// ensure that visibility property contains safe value: "PRIVATE" or
+		// "PUBLIC"
 		String siteVisibilityPropValue = (site.isPrivate) ? "PRIVATE" : "PUBLIC";
 		siteData.put(UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_VISIBILITY_QNAME, siteVisibilityPropValue);
 
@@ -325,6 +323,18 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 		// fill site aspect properties
 		this.getNodeService().addAspect(site.site.getNodeRef(), UCMConstants.ASPECT_SITE_QNAME, siteData);
+
+		String currentUserName = this.getAuthenticationService().getCurrentUserName();
+		boolean isAdmin = this.getAuthorityService().isAdminAuthority(currentUserName);
+		// Unless site is created by admin
+		if (isAdmin) {
+			// add Size Quota aspect to site
+			LOGGER.info("Site " + site.name + " will be subject to content size limitations.");
+			this.getNodeService().addAspect(site.site.getNodeRef(), UCMConstants.ASPECT_SITE_SIZE_LIMITED_QNAME,
+					siteData);
+		} else {
+			LOGGER.info("Site " + site.name + " will not have content size limitations.");
+		}
 
 		return site;
 	}
@@ -394,7 +404,6 @@ public class UCMCreateSite extends DeclarativeWebScript {
 				.getNodeRef();
 		site.wiki = this.getFileFolderService().create(siteNodeRef, SYSTEM_WIKI_NAME, ContentModel.TYPE_FOLDER)
 				.getNodeRef();
-
 
 		for (Iterator<String> iterator = objectsData.keys(); iterator.hasNext();) {
 			// E.g. "pages" or "components"
@@ -495,7 +504,8 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	}
 
 	/**
-	 * @see {@link org.alfresco.repo.jscript.ScriptNode#createThumbnail(String) ScriptNode.createThumbnail()}
+	 * @see {@link org.alfresco.repo.jscript.ScriptNode#createThumbnail(String)
+	 *      ScriptNode.createThumbnail()}
 	 */
 	public NodeRef createThumbnail(NodeRef nodeRef, String thumbnailName) {
 		final ThumbnailService thumbnailService = this.getServiceRegistry().getThumbnailService();
@@ -582,14 +592,13 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	}
 
 	/**
-	 * Create node of type cm:wiki inside site:wiki, and set site
-	 * aspect properties to it.
+	 * Create node of type cm:wiki inside site:wiki, and set site aspect
+	 * properties to it.
 	 */
-	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> siteData)
-	{
+	public UCMSite createWikiTemplateDocument(UCMSite site, Map<QName, Serializable> siteData) {
 		String documentName = "Main_Page";
 		String documentTitle = "Main_Page";
-		String defaultWikiMessage="Add content to your first wiki page.";
+		String defaultWikiMessage = "Add content to your first wiki page.";
 		siteData.put(ContentModel.PROP_TITLE, documentTitle);
 
 		// create empty "Wiki" document
@@ -656,11 +665,14 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		userProps.put(ContentModel.PROP_USERNAME, site.adminName);
 
 		// create the node to represent the Person
-		NodeRef newPerson = this.getPersonService().createPerson(userProps);
+		site.admin = this.getPersonService().createPerson(userProps);
+
+		// save admin user node ref as site property
+		this.getNodeService().setProperty(site.site.getNodeRef(), UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_QNAME, site.admin);
 
 		String allPermission = this.getPermissionService().getAllPermission();
 		// ensure the user can access their own Person object
-		this.getPermissionService().setPermission(newPerson, site.adminName, allPermission, true);
+		this.getPermissionService().setPermission(site.admin, site.adminName, allPermission, true);
 
 		// add user to site managers group
 		this.getAuthorityService().addAuthority(getSiteManagerGroupName(site.shortName), site.adminName);
@@ -671,45 +683,18 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		// create the ACEGI Authentication instance for the new user
 		this.getAuthenticationService().createAuthentication(site.adminName, password.toCharArray());
 
-		// https://loftux.com/en/blog/fixing-the-invite-email-template-in-alfresco-share#sthash.IQx2RxYt.dpbs
-		sendNotificationEmail(email, site.name, site.shortName, firstName, lastName, site.adminName, password);
-		return site;
-	}
-
-	/**
-	 * See <a href=
-	 * "http://www.codified.com/alfresco-send-emails-using-html-email-template/"
-	 * >link</a>
-	 */
-	public void sendNotificationEmail(String email, String siteName, String siteShortName, String firstName,
-			String lastName, String adminName, String password) throws FileNotFoundException {
-		Action mailAction = this.getActionService().createAction(MailActionExecuter.NAME);
-		mailAction.setParameterValue(MailActionExecuter.PARAM_TO, email);
-		mailAction.setParameterValue(MailActionExecuter.PARAM_SUBJECT, "New site has been created successfully!");
-		// TODO: mailAction.setParameterValue(MailActionExecuter.PARAM_HTML,
-		// "true");
-
-		NodeRef companyHome = this.getUtils().getCompanyHomeNodeRef();
-		List<String> templatePath = Arrays.asList(StringUtils.split(NOTIFICATION_MAIL_TEMPLATE_PATH, '/'));
-		NodeRef emailTemplate = this.getFileFolderService().resolveNamePath(companyHome, templatePath).getNodeRef();
-		mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE, emailTemplate);
-
 		Map<String, Serializable> templateArgs = new HashMap<String, Serializable>();
-		templateArgs.put("site_name", siteName);
-		templateArgs.put("site_short_name", siteShortName);
+		templateArgs.put("site_name", site.name);
+		templateArgs.put("site_short_name", site.shortName);
 		templateArgs.put("first_name", firstName);
 		templateArgs.put("last_name", lastName);
-		templateArgs.put("user_name", adminName);
+		templateArgs.put("user_name", site.adminName);
 		templateArgs.put("user_password", password);
 
-		mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE_MODEL, (Serializable) templateArgs);
-
-		// mailAction.setParameterValue(MailActionExecuter.PARAM_FROM, "TODO!");
-
-		// send mail immediately
-		mailAction.setExecuteAsynchronously(false);
-
-		this.getActionService().executeAction(mailAction, null);
+		// https://loftux.com/en/blog/fixing-the-invite-email-template-in-alfresco-share#sthash.IQx2RxYt.dpbs
+		this.getUtils().sendNotificationEmail(NOTIFICATION_MAIL_TEMPLATE_PATH,
+				"New site has been created successfully!", email, templateArgs);
+		return site;
 	}
 
 	public String createFreeUserName(String firstName, String lastName) {
@@ -740,12 +725,12 @@ public class UCMCreateSite extends DeclarativeWebScript {
 		return RandomStringUtils.randomAlphanumeric(PASSWORD_LENGTH);
 	}
 
-	//GROUP_site_testsite_SiteConsumer
+	// GROUP_site_testsite_SiteConsumer
 	public static String getSiteConsumerGroupName(String shortSiteName) {
 		return "GROUP_site_" + shortSiteName + "_SiteConsumer";
 	}
 
-	//GROUP_site_testsite_SiteManager
+	// GROUP_site_testsite_SiteManager
 	public static String getSiteManagerGroupName(String shortSiteName) {
 		return "GROUP_site_" + shortSiteName + "_SiteManager";
 	}
@@ -885,14 +870,6 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 	public void setMimetypeService(MimetypeService mimetypeService) {
 		this.mimetypeService = mimetypeService;
-	}
-
-	public ActionService getActionService() {
-		return actionService;
-	}
-
-	public void setActionService(ActionService actionService) {
-		this.actionService = actionService;
 	}
 
 	public ScriptRemote getRemote() {

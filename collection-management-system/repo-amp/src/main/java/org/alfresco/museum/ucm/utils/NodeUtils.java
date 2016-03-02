@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,13 +13,18 @@ import java.util.Set;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.model.ContentModel;
 import org.alfresco.museum.ucm.UCMConstants;
+import org.alfresco.repo.action.executer.MailActionExecuter;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.repo.site.SiteModel;
+import org.alfresco.service.cmr.action.Action;
+import org.alfresco.service.cmr.action.ActionService;
 import org.alfresco.service.cmr.dictionary.AspectDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.PropertyDefinition;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.model.FileFolderService;
+import org.alfresco.service.cmr.model.FileNotFoundException;
+import org.alfresco.service.cmr.repository.ContentData;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -30,13 +35,19 @@ import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class NodeUtils {
+	private static Log LOGGER = LogFactory.getLog(NodeUtils.class);
+
 	private NodeService nodeService;
 	private FileFolderService fileFolderService;
 	private ContentService contentService;
 	private DictionaryService dictionaryService;
 	private SearchService searchService;
+	private ActionService actionService;
 
 	public NodeRef getOrCreateFolder(NodeRef parentRef, String name, boolean isHidden) {
 		NodeRef result = this.getFileFolderService().searchSimple(parentRef, name);
@@ -72,7 +83,8 @@ public class NodeUtils {
 	}
 
 	public NodeRef createContentNode(NodeRef parent, String name, UCMContentImpl content, QName nodeType) {
-		return createContentNode(parent, name, content.getInputStream(), nodeType, content.getMimetype(), content.getEncoding());
+		return createContentNode(parent, name, content.getInputStream(), nodeType, content.getMimetype(),
+				content.getEncoding());
 	}
 
 	/**
@@ -80,15 +92,17 @@ public class NodeUtils {
 	 * href="http://docs.alfresco.com/5.0/tasks/api-java-content-create.html"
 	 * >documentation</a>
 	 */
-	public NodeRef createContentNode(NodeRef parent, String name, InputStream content, QName nodeType, String mimetype, String encoding) {
+	public NodeRef createContentNode(NodeRef parent, String name, InputStream content, QName nodeType, String mimetype,
+			String encoding) {
 		// Create a map to contain the values of the properties of the node
 		Map<QName, Serializable> props = new HashMap<QName, Serializable>(1);
 		props.put(ContentModel.PROP_NAME, name);
 
 		// use the node service to create a new node
-		NodeRef node = this.getNodeService().createNode(parent, ContentModel.ASSOC_CONTAINS,
-				QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, name), nodeType, props)
-				.getChildRef();
+		NodeRef node = this
+				.getNodeService()
+				.createNode(parent, ContentModel.ASSOC_CONTAINS,
+						QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, name), nodeType, props).getChildRef();
 
 		// Use the content service to set the content onto the newly created
 		// node
@@ -174,7 +188,7 @@ public class NodeUtils {
 	 *
 	 * @return
 	 */
-	//TODO: repository.getCompanyHome() ?
+	// TODO: repository.getCompanyHome() ?
 	public NodeRef getCompanyHomeNodeRef() {
 		StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 		ResultSet rs = searchService.query(storeRef, SearchService.LANGUAGE_XPATH, "/app:company_home");
@@ -189,6 +203,85 @@ public class NodeUtils {
 			rs.close();
 		}
 		return companyHomeNodeRef;
+	}
+
+	public long getNodeSize(NodeRef nodeRef) {
+		long result = 0;
+		Serializable contentData = this.getNodeService().getProperty(nodeRef, ContentModel.PROP_CONTENT);
+		if (contentData instanceof ContentData) {
+			result = ((ContentData) contentData).getSize();
+		}
+		return result;
+	}
+
+	// <site>/system/artifact_attachments/<artist>/<artifact_name>
+	public NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
+		NodeRef site = this.getSiteRefByNode(artifactRef);
+		if (site == null) {
+			LOGGER.error("Can't determine which site node belongs to. Media attachments folder wasn't created.");
+			return null;
+		}
+
+		Serializable artistNameValue = this.getNodeService().getProperty(artifactRef,
+				UCMConstants.PROP_UCM_ARTIST_QNAME);
+		Serializable artifactNameValue = this.getNodeService().getProperty(artifactRef, ContentModel.PROP_NAME);
+
+		if (artistNameValue == null || artifactNameValue == null)
+			return null;
+
+		String artistName = artistNameValue.toString();
+		String artifactName = artifactNameValue.toString();
+
+		NodeRef systemFolder = getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
+
+		// NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary",
+		// false);
+		// NodeRef systemFolder = getOrCreateFolder(doclibFolder,
+		// UCMConstants.SYSTEM_FOLDER_NAME, false);
+		/*
+		 * NodeRef systemFolder = getOrCreateFolder(site,
+		 * UCMConstants.SYSTEM_FOLDER_NAME, true);
+		 */
+		NodeRef mediaFolder = this.getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
+		NodeRef artistFolder = this.getOrCreateFolder(mediaFolder, artistName, false);
+		NodeRef artifactFolder = this.getOrCreateFolder(artistFolder, artifactName, false);
+
+		// set media folder caption
+		this.getNodeService().setProperty(artifactFolder, ContentModel.PROP_TITLE, "Media content for " + artifactName);
+
+		// save reference to folder in artifact association
+		this.getNodeService().addChild(artifactRef, artifactFolder, UCMConstants.ASSOC_UCM_ARTIFACT_CONTAINS_QNAME,
+				QName.createQName(UCMConstants.UCM_NAMESPACE, artifactName));
+
+		return mediaFolder;
+	}
+
+	/**
+	 * See <a href=
+	 * "http://www.codified.com/alfresco-send-emails-using-html-email-template/"
+	 * >link</a>
+	 */
+	public void sendNotificationEmail(String templatePath, String emailSubject, String email, Map<String, Serializable> templateArgs)
+			throws FileNotFoundException {
+		Action mailAction = this.getActionService().createAction(MailActionExecuter.NAME);
+		mailAction.setParameterValue(MailActionExecuter.PARAM_TO, email);
+		mailAction.setParameterValue(MailActionExecuter.PARAM_SUBJECT, emailSubject);
+		// TODO: mailAction.setParameterValue(MailActionExecuter.PARAM_HTML,
+		// "true");
+
+		NodeRef companyHome = this.getCompanyHomeNodeRef();
+		List<String> templatePathTokens = Arrays.asList(StringUtils.split(templatePath, '/'));
+		NodeRef emailTemplate = this.getFileFolderService().resolveNamePath(companyHome, templatePathTokens).getNodeRef();
+		mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE, emailTemplate);
+
+		mailAction.setParameterValue(MailActionExecuter.PARAM_TEMPLATE_MODEL, (Serializable) templateArgs);
+
+		// mailAction.setParameterValue(MailActionExecuter.PARAM_FROM, "TODO!");
+
+		// send mail immediately
+		mailAction.setExecuteAsynchronously(false);
+
+		this.getActionService().executeAction(mailAction, null);
 	}
 
 	public NodeService getNodeService() {
@@ -229,5 +322,13 @@ public class NodeUtils {
 
 	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
+	}
+
+	public ActionService getActionService() {
+		return actionService;
+	}
+
+	public void setActionService(ActionService actionService) {
+		this.actionService = actionService;
 	}
 }

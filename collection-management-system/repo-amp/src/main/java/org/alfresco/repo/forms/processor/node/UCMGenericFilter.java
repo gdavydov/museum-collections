@@ -270,47 +270,6 @@ public class UCMGenericFilter<T> extends AbstractFilter<T, NodeRef> {
 		}
 	}
 
-	// <site>/system/artifact_attachments/<artist>/<artifact_name>
-	protected NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
-		// TODO: LOG
-		NodeRef site = this.getUtils().getSiteRefByNode(artifactRef);
-		if (site == null) {
-			LOGGER.error("Can't determine which site node belongs to. Media attachments folder wasn't created.");
-			return null;
-		}
-
-		Serializable artistNameValue = this.getNodeService().getProperty(artifactRef,
-				UCMConstants.PROP_UCM_ARTIST_QNAME);
-		Serializable artifactNameValue = this.getNodeService().getProperty(artifactRef, ContentModel.PROP_NAME);
-
-		if (artistNameValue == null || artifactNameValue == null)
-			return null;
-
-		String artistName = artistNameValue.toString();
-		String artifactName = artifactNameValue.toString();
-
-		NodeRef systemFolder = this.getUtils().getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
-
-//		NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary", false);
-//		NodeRef systemFolder = getOrCreateFolder(doclibFolder, UCMConstants.SYSTEM_FOLDER_NAME, false);
-		/*
-		 * NodeRef systemFolder = getOrCreateFolder(site,
-		 * UCMConstants.SYSTEM_FOLDER_NAME, true);
-		 */
-		NodeRef mediaFolder = this.getUtils().getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
-		NodeRef artistFolder = this.getUtils().getOrCreateFolder(mediaFolder, artistName, false);
-		NodeRef artifactFolder = this.getUtils().getOrCreateFolder(artistFolder, artifactName, false);
-
-		// set media folder caption
-		this.getNodeService().setProperty(artifactFolder, ContentModel.PROP_TITLE, "Media content for " + artifactName);
-
-		// save reference to folder in artifact association
-		this.getNodeService().addChild(artifactRef, artifactFolder, UCMConstants.ASSOC_UCM_ARTIFACT_CONTAINS_QNAME,
-				QName.createQName(UCMConstants.UCM_NAMESPACE, artifactName));
-
-		return mediaFolder;
-	}
-
 	protected void resolvePossibleFilenameConflict(TypeDefinition item, FormData data) {
 		// firstly, ensure we have a destination to create the node in
 		NodeRef parentRef = null;

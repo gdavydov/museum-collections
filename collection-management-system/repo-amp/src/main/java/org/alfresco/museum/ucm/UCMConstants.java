@@ -80,9 +80,6 @@ public class UCMConstants {
 	public static final String ASPECT_GEOGRAPHICAL = ContentModel.ASPECT_GEOGRAPHIC.getLocalName();
 	public static final QName ASPECT_GEOGRAPHICAL_QNAME = ContentModel.ASPECT_GEOGRAPHIC;
 
-	public static final String TYPE_UCM_MEDIA_ATTACHMENT = "attached_file";
-	public static final QName TYPE_UCM_MEDIA_ATTACHMENT_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_MEDIA_ATTACHMENT);
-
 	public static final String TYPE_UCM_FOLDER = "folder";
 	public static final QName TYPE_UCM_FOLDER_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_FOLDER);
 
@@ -94,6 +91,9 @@ public class UCMConstants {
 
 //	public static final String PROP_UCM_COLLECTION_NAME = "collection_name";
 //	public static final QName PROP_UCM_COLLECTION_NAME_QNAME = QName.createQName(UCM_NAMESPACE, PROP_UCM_COLLECTION_NAME);
+
+	public static final String TYPE_UCM_ATTACHED_FILE = "attached_file";
+	public static final QName TYPE_UCM_ATTACHED_FILE_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_ATTACHED_FILE);
 
 	public static final String TYPE_UCM_SITE = "site";
 	public static final QName TYPE_UCM_SITE_QNAME = QName.createQName(UCM_NAMESPACE, TYPE_UCM_SITE);
@@ -128,6 +128,9 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED = "site_aspect_contact_tweed";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_TWEED);
 
+	public static final String ASPECT_PROP_UCM_SITE_ASPECT_ADMIN = "site_aspect_admin";
+	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_ADMIN);
+
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL = "site_aspect_admin_email";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL);
 
@@ -142,6 +145,18 @@ public class UCMConstants {
 
 	public static final String ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX = "site_aspect_contact_fax";
 	public static final QName ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_UCM_SITE_ASPECT_CONTACT_FAX);
+
+	public static final String ASPECT_SITE_SIZE_QUOTA = "site_size_quota_aspect";
+	public static final QName ASPECT_SITE_SIZE_LIMITED_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_SITE_SIZE_QUOTA);
+
+	public static final String ASPECT_PROP_SITE_CONTENT_SIZE = "site_content_size";
+	public static final QName ASPECT_PROP_SITE_CONTENT_SIZE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_CONTENT_SIZE);
+
+	public static final String ASPECT_PROP_SITE_SCAN_DATE = "site_size_scan_date";
+	public static final QName ASPECT_PROP_SITE_SCAN_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SCAN_DATE);
+
+	public static final String ASPECT_PROP_SITE_SIZE_WARNING_DATE = "site_warning_email_date";
+	public static final QName ASPECT_PROP_SITE_SIZE_WARNING_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SIZE_WARNING_DATE);
 
 	public static final Set<QName> INHERITABLE_ASPECTS = CollectionUtils.unmodifiableSet(ASPECT_SITE_QNAME,
 			ASPECT_MUSEUM_ARTIFACT_QNAME, ASPECT_ARTIST_QNAME);

@@ -15,7 +15,7 @@ public class UCMCreateMediaAttachment extends UCMGenericFilter<TypeDefinition> {
 	 */
 	@Override
 	public void beforePersist(TypeDefinition item, FormData data) {
-		boolean isMedia = item.getName().equals(UCMConstants.TYPE_UCM_MEDIA_ATTACHMENT_QNAME);
+		boolean isMedia = item.getName().equals(UCMConstants.TYPE_UCM_ATTACHED_FILE_QNAME);
 		if (isMedia) {
 			resolvePossibleFilenameConflict(item, data);
 		}
@@ -27,7 +27,7 @@ public class UCMCreateMediaAttachment extends UCMGenericFilter<TypeDefinition> {
 	 */
 	@Override
 	public void afterPersist(TypeDefinition item, FormData data, NodeRef persistedObject) {
-		boolean isMedia = item.getName().equals(UCMConstants.TYPE_UCM_MEDIA_ATTACHMENT_QNAME);
+		boolean isMedia = item.getName().equals(UCMConstants.TYPE_UCM_ATTACHED_FILE_QNAME);
 		if (isMedia) {
 			writeContent(item, data, persistedObject);
 			this.resizeImage(persistedObject, 510);

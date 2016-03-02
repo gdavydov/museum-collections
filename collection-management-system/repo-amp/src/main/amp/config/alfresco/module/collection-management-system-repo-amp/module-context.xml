@@ -36,6 +36,7 @@
 		<property name="contentService" ref="ContentService" />
 		<property name="dictionaryService" ref="DictionaryService" />
 		<property name="searchService" ref="SearchService" />
+		<property name="actionService" ref="ActionService" />
 	</bean>
 
 	<bean id="ucm.createArtifactFilter" class="org.alfresco.museum.ucm.formfilters.UCMCreateArtifact" parent="ucm.baseFormFilter">
@@ -73,7 +74,6 @@
 		<property name="dictionaryService" ref="DictionaryService" />
 		<property name="nodeService" ref="NodeService" />
 		<property name="mimetypeService" ref="MimetypeService" />
-		<property name="actionService" ref="ActionService" />
 		<property name="remote" ref="webscripts.script.remote" />
 		<property name="utils" ref="ucm.nodeUtils" />
 		<property name="properties" ref="global-properties" />
@@ -118,5 +118,44 @@
 		<property name="policyComponent" ref="policyComponent" />
 		<property name="nodeService" ref="NodeService" />
 		<property name="utils" ref="ucm.nodeUtils" />
+	</bean>
+
+	<bean id="ucm.siteSizeLimitsBean" class="org.alfresco.museum.ucm.sizelimits.SiteSizeLimitsBean" init-method="init">
+		<property name="nodeService" ref="NodeService" />
+		<property name="policyComponent" ref="policyComponent" />
+		<property name="sizeUpdFactory" ref="ucm.siteSizeUpdaterFactory" />
+		<property name="utils" ref="ucm.nodeUtils" />
+	</bean>
+
+	<bean id="ucm.artifactBehaviorBean" class="org.alfresco.museum.ucm.ArtifactBehaviorBean" init-method="init">
+		<property name="createArtifactFilter" ref="ucm.createArtifactFilter" />
+		<property name="nodeService" ref="NodeService" />
+		<property name="policyComponent" ref="policyComponent" />
+		<property name="utils" ref="ucm.nodeUtils" />
+	</bean>
+
+	<bean id="ucm.siteSizeUpdaterFactory" class="org.alfresco.museum.ucm.sizelimits.SiteSizeUpdaterFactory">
+		<property name="nodeService" ref="NodeService" />
+		<property name="transactionService" ref="TransactionService" />
+		<property name="utils" ref="ucm.nodeUtils" />
+		<property name="sizeLimit" value="#{200*1024*1024}" />
+		<property name="warningThresholdPercents" value="95" />
+	</bean>
+
+	<bean name="ucm.siteLimitsUpdateJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="org.alfresco.museum.ucm.sizelimits.SiteUpdaterJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="nodeService" value-ref="NodeService" />
+				<entry key="sizeUpdFactory" value-ref="ucm.siteSizeUpdaterFactory" />
+				<entry key="utils" value-ref="ucm.nodeUtils" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="ucm.siteLimitsUpdateTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="ucm.siteLimitsUpdateJobDetail" />
+		<property name="repeatInterval" value="#{15*60*1000}" />
+		<property name="startDelay" value="#{60*1000}" />
 	</bean>
 </beans>

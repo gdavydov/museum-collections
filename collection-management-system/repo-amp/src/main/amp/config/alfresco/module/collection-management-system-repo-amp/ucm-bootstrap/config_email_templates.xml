@@ -29,6 +29,25 @@
 				</view:properties>
 				<view:associations></view:associations>
 			</cm:content>
+			<cm:content view:childName="cm:site_limits_exceeded_warning.html.ftl">
+				<view:aspects>
+					<cm:titled />
+					<cm:author />
+					<app:inlineeditable />
+				</view:aspects>
+				<view:properties>
+					<cm:name>site_limits_exceeded_warning.html.ftl</cm:name>
+					<sys:node-uuid>03987ebe-5d85-478a-a48e-6fa314bca453</sys:node-uuid>
+					<app:editInline>true</app:editInline>
+					<cm:description>Warning about exceeding of site size limits.
+					</cm:description>
+					<cm:content>contentUrl=classpath:alfresco/module/collection-management-system-repo-amp/ucm-bootstrap/site_limits_exceeded_warning.html.ftl|mimetype=text/plain|size=|encoding=UTF-8|locale=en_US_
+					</cm:content>
+					<cm:title>Warning about exceeding of site size limits</cm:title>
+					<cm:author>UCM</cm:author>
+				</view:properties>
+				<view:associations></view:associations>
+			</cm:content>
 		</cm:contains>
 	</cm:folder>
 </view:view>

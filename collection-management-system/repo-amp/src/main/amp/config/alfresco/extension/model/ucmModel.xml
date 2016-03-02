@@ -676,6 +676,11 @@
 					</constraints>
 				</property>
 
+				<property name="ucm:site_aspect_admin">
+					<title>Site Admin</title>
+					<type>d:noderef</type>
+				</property>
+
 				<property name="ucm:site_aspect_admin_email">
 					<title>Site Admin Email</title>
 					<type>d:text</type>
@@ -729,6 +734,25 @@
 							</parameter>
 						</constraint>
 					</constraints>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="ucm:site_size_quota_aspect">
+			<title>Site Size Quota</title>
+			<properties>
+				<property name="ucm:site_content_size">
+					<title>Site Content Size</title>
+					<type>d:long</type>
+					<default>0</default>
+				</property>
+				<property name="ucm:site_size_scan_date">
+					<title>Date of Last Scan</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="ucm:site_warning_email_date">
+					<title>Warning Email Date</title>
+					<type>d:datetime</type>
 				</property>
 			</properties>
 		</aspect>
