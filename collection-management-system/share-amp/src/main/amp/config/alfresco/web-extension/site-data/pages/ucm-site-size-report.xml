@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>UCM Site Site Details</title>
+   <title-id>page.ucmSiteSizeReport.title</title-id>
+   <description>UCM Site Site Details</description>
+   <description-id>page.ucmSiteSizeReport.description</description-id>
+   <template-instance>ucm-site-size-report</template-instance>
+   <authentication>user</authentication>
+</page>

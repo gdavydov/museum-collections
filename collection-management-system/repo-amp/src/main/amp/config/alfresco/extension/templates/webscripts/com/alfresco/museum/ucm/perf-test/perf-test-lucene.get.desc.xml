@@ -2,10 +2,10 @@
 	<shortname>Get size of content inside node</shortname>
 	<description>Table of sizes of items inside node
 	</description>
-	<url>/ucm/site-size-report?nodeRef={nodeRef}</url>
+	<url>/ucm/perf-test-lucene?nodeRef={nodeRef}</url>
 	<arg>
 		<shortname>nodeRef</shortname>
-		<description><![CDATA[Reference to the site node.]]></description>
+		<description><![CDATA[Reference to the artifact node.]]></description>
 	</arg>
 	<format default="json"/>
 	<authentication>guest</authentication>

@@ -354,7 +354,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 		// TODO: use empty endpoint and build complete URL with Share protocol,
 		// host and port from "share.*" properties?
-		ScriptRemoteConnector connector = remote.connect(SHARE_ENDPOINT_ID);
+		ScriptRemoteConnector connector = this.getRemote().connect(SHARE_ENDPOINT_ID);
 		response = connector.call(path);
 
 		return (response != null) ? new JSONObject(response.getText()) : null;
@@ -453,7 +453,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 
 		// TODO: use empty endpoint and build complete URL with Share protocol,
 		// host and port from "share.*" properties?
-		ScriptRemoteConnector connector = remote.connect(SHARE_ENDPOINT_ID);
+		ScriptRemoteConnector connector = this.getRemote().connect(SHARE_ENDPOINT_ID);
 		response = connector.call(path);
 
 		return (response != null) ? new JSONObject(response.getText()) : null;
@@ -637,7 +637,7 @@ public class UCMCreateSite extends DeclarativeWebScript {
 	// add visitor to site consumers group
 	public UCMSite giveAccessToVisitor(UCMSite site) throws JSONException {
 		if (!site.isPrivate) {
-			ScriptRemoteConnector connector = remote.connect();
+			ScriptRemoteConnector connector = this.getRemote().connect();
 			Response response = connector.call(UCMConstants.ANONIMOUS_USER_DETAILS_WEBSCRIPT_PATH);
 			if (response != null) {
 				JSONObject visitorUserDetails = new JSONObject(response.getText());

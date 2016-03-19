@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<template-instance>
+	<!-- THIS LINE SHOULDN'T BE AUTOFORMATTED! -->
+	<template-type>com/alfresco/museum/ucm/ucm-site-size-report</template-type>
+	<properties>
+		<pageFamily>documentlibrary</pageFamily>
+		<container>documentLibrary</container>
+	</properties>
+	<components>
+		<component>
+			<region-id>title</region-id>
+			<url>/components/title/collaboration-title</url>
+		</component>
+
+		<component>
+			<region-id>ucm-site-size-report</region-id>
+			<url>/ucm/components/ucm-site-size-report</url>
+		</component>
+	</components>
+</template-instance>

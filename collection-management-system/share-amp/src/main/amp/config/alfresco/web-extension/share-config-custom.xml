@@ -3,12 +3,11 @@
 	<!-- Global config section -->
 	<config replace="true">
 		<flags>
-			<!-- Developer debugging setting to turn on DEBUG mode for client scripts
-				in the browser -->
+			<!-- Developer debugging setting to turn on DEBUG mode for client scripts in the browser -->
 			<client-debug>true</client-debug>
 
-			<!-- LOGGING can always be toggled at runtime when in DEBUG mode (Ctrl,
-				Ctrl, Shift, Shift). This flag automatically activates logging on page load. -->
+			<!-- LOGGING can always be toggled at runtime when in DEBUG mode (Ctrl, Ctrl, Shift, Shift). This flag automatically activates logging on
+				page load. -->
 			<client-debug-autologging>false</client-debug-autologging>
 		</flags>
 	</config>
@@ -16,67 +15,51 @@
 	<config evaluator="string-compare" condition="WebFramework">
 		<web-framework>
 			<!-- SpringSurf Autowire Runtime Settings -->
-			<!-- Developers can set mode to 'development' to disable; SpringSurf caches,
-				FreeMarker template caching and Rhino JavaScript compilation. -->
+			<!-- Developers can set mode to 'development' to disable; SpringSurf caches, FreeMarker template caching and Rhino JavaScript compilation. -->
 			<autowire>
 				<!-- Pick the mode: "production" or "development" -->
 				<mode>production</mode>
 			</autowire>
 
-			<!-- Allows extension modules with <auto-deploy> set to true to be automatically
-				deployed -->
+			<!-- Allows extension modules with <auto-deploy> set to true to be automatically deployed -->
 			<module-deployment>
 				<mode>manual</mode>
-				<enable-auto-deploy-modules>true</enable-auto-deploy-modules>f
+				<enable-auto-deploy-modules>true</enable-auto-deploy-modules>
 			</module-deployment>
 		</web-framework>
 	</config>
 
-   <!-- Document Library config section -->
-   <config evaluator="string-compare" condition="DocumentLibrary" replace="true">
+	<!-- Document Library config section -->
+	<config evaluator="string-compare" condition="DocumentLibrary" replace="true">
 
-      <!-- Document List -->
-      <doclist>
-         <!--
-            Bean that implements DoclistDataUrlResolver interface to resolve which url that the surf-doclist webscript
-            shall use when asking the repository for nodes.
-          -->
-         <data-url-resolver>resolver.doclib.doclistDataUrl</data-url-resolver>
+		<!-- Document List -->
+		<doclist>
+			<!-- Bean that implements DoclistDataUrlResolver interface to resolve which url that the surf-doclist webscript shall use when asking the
+				repository for nodes. -->
+			<data-url-resolver>resolver.doclib.doclistDataUrl</data-url-resolver>
 
 
-      </doclist>
+		</doclist>
 
-      <!-- This defines a set of modes for pickers (e.g. the copy/move to picker, etc) that should be hidden.
-           The mode names correlate to values in the Alfresco.module.DoclibGlobalFolder JavaScript widget.
-           By default no view modes will be hidden, each view mode should be added as the value of it's own
-           <mode> element.
-        -->
-      <hidden-picker-view-modes></hidden-picker-view-modes>
+		<!-- This defines a set of modes for pickers (e.g. the copy/move to picker, etc) that should be hidden. The mode names correlate to values
+			in the Alfresco.module.DoclibGlobalFolder JavaScript widget. By default no view modes will be hidden, each view mode should be added as the value
+			of it's own <mode> element. -->
+		<hidden-picker-view-modes></hidden-picker-view-modes>
 
-      <tree>
-         <!--
-            Whether the folder Tree component should enumerate child folders or not.
-            This is a relatively expensive operation, so should be set to "false" for Repositories with broad folder structures.
-         -->
-         <evaluate-child-folders>true</evaluate-child-folders>
+		<tree>
+			<!-- Whether the folder Tree component should enumerate child folders or not. This is a relatively expensive operation, so should be set to
+				"false" for Repositories with broad folder structures. -->
+			<evaluate-child-folders>true</evaluate-child-folders>
 
-         <!--
-            Optionally limit the number of folders shown in treeview throughout Share.
-         -->
-         <maximum-folder-count>-1</maximum-folder-count>
+			<!-- Optionally limit the number of folders shown in treeview throughout Share. -->
+			<maximum-folder-count>-1</maximum-folder-count>
 
-         <!--
-            Default timeout in milliseconds for folder Tree component to recieve response from Repository
-         -->
-         <timeout>7000</timeout>
-      </tree>
+			<!-- Default timeout in milliseconds for folder Tree component to recieve response from Repository -->
+			<timeout>7000</timeout>
+		</tree>
 
-      <!--
-         Used by the "Manage Aspects" action and Rules pages
-
-         For custom aspects, remember to also add the relevant i18n string(s)
-            aspect.cm_myaspect=My Aspect
-      -->
+		<!-- Used by the "Manage Aspects" action and Rules pages For custom aspects, remember to also add the relevant i18n string(s) aspect.cm_myaspect=My
+			Aspect -->
 		<aspects>
 			<!-- Aspects that a user can see -->
 			<visible>
@@ -103,20 +86,9 @@
 			</removeable>
 		</aspects>
 
-      <!--
-         Used by the "Change Type" action.
-         Used by Rules:
-          - parent types are the listed types for rule's "is-subtype" action condition
-          - sub types are the listed types for rule's "specialise-type" action
-
-         Define valid subtypes using the following example:
-            <type name="cm:content">
-               <subtype name="cm:mysubtype" />
-            </type>
-
-         Remember to also add the relevant i18n string(s):
-            type.cm_mysubtype=My SubType
-      -->
+		<!-- Used by the "Change Type" action. Used by Rules: - parent types are the listed types for rule's "is-subtype" action condition - sub types
+			are the listed types for rule's "specialise-type" action Define valid subtypes using the following example: <type name="cm:content"> <subtype
+			name="cm:mysubtype" /> </type> Remember to also add the relevant i18n string(s): type.cm_mysubtype=My SubType -->
 		<types>
 			<type name="cm:content">
 				<subtype name="ucm:artifact" />
@@ -124,10 +96,6 @@
 
 			<type name="cm:folder">
 				<subtype name="ucm:collection" />
-			</type>
-
-			<type name="cm:folder">
-				<subtype name="ucm:artist" />
 				<subtype name="ucm:artist" />
 			</type>
 
@@ -135,194 +103,169 @@
 				<subtype name="ucm:artist" />
 			</type>
 
-			<type name="ucm:artifact"></type>
-<!--
-			<type name="ucm:collection"></type>
-
-			<type name="cm:folder"></type>
--->
-			<type name="cm:content">
-				<subtype name="ucm:artifact" />
-			</type>
-
 			<type name="trx:transferTarget">
 				<subtype name="trx:fileTransferTarget" />
 			</type>
 		</types>
 
-      <!--
-         Create Content menu items, can be of 3 types matching the usual doclib action config:
+		<!-- If set, will present a WebDAV link for the current item on the Document and Folder details pages. -->
+		<!-- <repository-url>http://localhost:8080/alfresco</repository-url> -->
 
-         * "link" - accepts a "href" param that will be passed a nodeRef token for substitution, used for external links
-         * "pagelink" - accepts a "page" param that will be passed a nodeRef token for substitution, used for Share links
-         * "javascript" - accepts & "function" param of an action that will get the current folder item as first argument.
+		<!-- File upload configuration -->
+		<file-upload>
+			<!-- Adobe Flash??? In certain environments, an HTTP request originating from Flash cannot be authenticated using an existing session. See:
+				http://bugs.adobe.com/jira/browse/FP-4830 For these cases, it is useful to disable the Flash-based uploader for Share Document Libraries. -->
+			<adobe-flash-enabled>true</adobe-flash-enabled>
 
-         I.e.
-         <content id="plain-text" label="create-content.text" icon="text" type="pagelink">
-            <param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/plain</param>
-            <permissions>
-               <permission allow="true">SomeUserPermissions</permission>
-            </permissions>
-         </content>
+			<!-- In order to support drag-and-drop file upload a browser must be able to support the HTML5 drag-and-drop events, however if the browser
+				does not support the FormData type (that allows streamed multipart file uploads) then all files need to be loaded into the browser's memory before
+				being uploaded to the server. In order to prevent potential memory related errors, a limit is set for the sum of all file sizes being uploaded
+				in a single operation (specified in bytes). As of April 2011, the only known browser that requires this restriction is Firefox 3.6. -->
+			<in-memory-limit>262144000</in-memory-limit>
+			<!-- The maximum number of bytes per file that Share will allow to be uploaded. A value of 0 means that any size is allowed. -->
+			<maximum-file-size-limit>0</maximum-file-size-limit>
+		</file-upload>
 
-         Note that the "CreateChildren" permission is always required and will disable the entire menu if no granted for a folder.
+		<!-- Sorting Options The 'sort' config element contains the name of the content model field to sort against and can be of the form: - short
+			QName string e.g. "cm:name" - any other valid sortable fts-alfresco special field e.g. "TYPE" The field can be optionally followed by |true or
+			|false to indicate sort direction, where true = ascending, false = descending -->
+		<sorting>
+			<sort label="label.name">cm:name|true</sort>
+			<sort label="label.popularity">cm:likesRatingSchemeCount|false</sort>
+			<sort label="label.title">cm:title</sort>
+			<sort label="label.description">cm:description</sort>
+			<sort label="label.created">cm:created</sort>
+			<sort label="label.creator">cm:creator</sort>
+			<sort label="label.modified">cm:modified</sort>
+			<sort label="label.modifier">cm:modifier</sort>
+			<sort label="label.size">cm:content.size</sort>
+			<sort label="label.mimetype">cm:content.mimetype</sort>
+			<sort label="label.type">TYPE</sort>
+		</sorting>
 
-         Also note that the old/untyped simple config still is allowed, the config snippet below will automatically be
-         converted to a "pagelink" as in the example above.
-         <content id="plain-text" label="create-content.text" icon="text" itemid="cm:content" mimetype="text/plain" permission="SomeUserPermissions"/>
-      -->
-		<create-content>
-			<content id="artifact" mimetype="image/jpeg" label="menu.create-content.ucm_artifact" itemid="ucm:artifact" />
+		<!-- Filter configurations -->
+		<filters>
+			<!-- The maximum number of tags to display in the Tags filter, can be set to -1 for all tags -->
+			<maximum-tag-count>100</maximum-tag-count>
+		</filters>
 
-			<content id="collection" label="menu.create-content.ucm_collection" index="2" type="javascript">
-				<param name="function">onNewCollection</param>
-			</content>
+		<!-- Status Indicators -->
+		<indicators>
+			<!-- Being edited by current user -->
+			<indicator id="editing" index="10">
+				<evaluator>evaluator.doclib.indicator.editing</evaluator>
+			</indicator>
+			<!-- Locked by current user -->
+			<indicator id="lock-owner" index="10">
+				<evaluator>evaluator.doclib.indicator.lockOwner</evaluator>
+			</indicator>
+			<!-- Locked with owner identified by cm:owner property -->
+			<indicator id="locked" index="10" icon="lock-owner-16.png">
+				<evaluator>evaluator.doclib.indicator.lockedOwner</evaluator>
+				<labelParam index="0">{jsNode.properties.owner.displayName}</labelParam>
+				<labelParam index="1">{jsNode.properties.owner.userName}</labelParam>
+			</indicator>
+			<!-- Locked with owner identified by cm:lockOwner property -->
+			<indicator id="nodeLock" index="10" icon="lock-owner-16.png" label="status.locked">
+				<evaluator>evaluator.doclib.indicator.nodeLocked</evaluator>
+				<labelParam index="0">{jsNode.properties.cm_lockOwner.displayName}</labelParam>
+				<labelParam index="1">{jsNode.properties.cm_lockOwner.userName}</labelParam>
+				<override>locked</override>
+			</indicator>
+			<!-- Workflows -->
+			<indicator id="active-workflows" index="20">
+				<evaluator>evaluator.doclib.indicator.activeWorkflows</evaluator>
+				<labelParam index="0">{activeWorkflows}</labelParam>
+			</indicator>
+			<indicator id="simple-workflow" index="30">
+				<evaluator>evaluator.doclib.indicator.simpleWorkflow</evaluator>
+			</indicator>
+			<!-- Everything Else -->
+			<indicator id="rules" index="40">
+				<evaluator>evaluator.doclib.indicator.rules</evaluator>
+			</indicator>
+			<indicator id="exif" index="40">
+				<evaluator>evaluator.doclib.indicator.exifMetadata</evaluator>
+			</indicator>
+			<indicator id="geographic" index="50">
+				<evaluator>evaluator.doclib.indicator.geographicMetadata</evaluator>
+			</indicator>
+			<indicator id="transferred-node" index="60">
+				<evaluator>evaluator.doclib.indicator.transferredNode</evaluator>
+			</indicator>
+			<indicator id="cloud-synced" index="70" action="onCloudSyncIndicatorAction">
+				<evaluator>evaluator.doclib.indicator.isSynced</evaluator>
+			</indicator>
+			<indicator id="cloud-sync-failed" index="80" action="onCloudSyncFailedIndicatorAction">
+				<evaluator>evaluator.doclib.indicator.isSyncFailed</evaluator>
+				<override>cloud-synced</override>
+			</indicator>
+			<indicator id="cloud-indirect-sync" index="90" action="onCloudIndirectSyncIndicatorAction">
+				<evaluator>evaluator.doclib.indicator.isIndirectSync</evaluator>
+				<override>cloud-synced</override>
+			</indicator>
+			<indicator id="cloud-indirect-sync-failed" index="90" action="onCloudIndirectSyncFailedIndicatorAction">
+				<evaluator>evaluator.doclib.indicator.isIndirectSyncFailed</evaluator>
+				<override>cloud-sync-failed</override>
+				<override>cloud-indirect-sync</override>
+			</indicator>
+		</indicators>
 
-			<content id="artist" label="menu.create-content.ucm_artist" index="3" type="javascript">
-				<param name="function">onNewArtist</param>
-			</content>
-		</create-content>
-
-      <!--
-         If set, will present a WebDAV link for the current item on the Document and Folder details pages.
-      -->
-      <!--
-      <repository-url>http://localhost:8080/alfresco</repository-url>
-      -->
-
-      <!--
-         File upload configuration
-      -->
-      <file-upload>
-         <!--
-            Adobe Flash???
-            In certain environments, an HTTP request originating from Flash cannot be authenticated using an existing session.
-            See: http://bugs.adobe.com/jira/browse/FP-4830
-            For these cases, it is useful to disable the Flash-based uploader for Share Document Libraries.
-         -->
-         <adobe-flash-enabled>true</adobe-flash-enabled>
-
-         <!--
-            In order to support drag-and-drop file upload a browser must be able to support the HTML5 drag-and-drop events, however
-            if the browser does not support the FormData type (that allows streamed multipart file uploads) then all files need to be
-            loaded into the browser's memory before being uploaded to the server. In order to prevent potential memory related errors,
-            a limit is set for the sum of all file sizes being uploaded in a single operation (specified in bytes).
-            As of April 2011, the only known browser that requires this restriction is Firefox 3.6.
-          -->
-         <in-memory-limit>262144000</in-memory-limit>
-         <!--
-            The maximum number of bytes per file that Share will allow to be uploaded.
-            A value of 0 means that any size is allowed.
-         -->
-         <maximum-file-size-limit>0</maximum-file-size-limit>
-      </file-upload>
-
-      <!--
-         Sorting Options
-
-         The 'sort' config element contains the name of the content model field to sort against and can be of the form:
-         - short QName string e.g. "cm:name"
-         - any other valid sortable fts-alfresco special field e.g. "TYPE"
-
-         The field can be optionally followed by |true or |false to indicate sort direction,
-         where true = ascending, false = descending
-      -->
-      <sorting>
-         <sort label="label.name">cm:name|true</sort>
-         <sort label="label.popularity">cm:likesRatingSchemeCount|false</sort>
-         <sort label="label.title">cm:title</sort>
-         <sort label="label.description">cm:description</sort>
-         <sort label="label.created">cm:created</sort>
-         <sort label="label.creator">cm:creator</sort>
-         <sort label="label.modified">cm:modified</sort>
-         <sort label="label.modifier">cm:modifier</sort>
-         <sort label="label.size">cm:content.size</sort>
-         <sort label="label.mimetype">cm:content.mimetype</sort>
-         <sort label="label.type">TYPE</sort>
-      </sorting>
-
-      <!--
-         Filter configurations
-      -->
-      <filters>
-         <!--
-            The maximum number of tags to display in the Tags filter, can be set to -1 for all tags
-         -->
-         <maximum-tag-count>100</maximum-tag-count>
-      </filters>
-
-      <!--
-         Status Indicators
-      -->
-      <indicators>
-         <!-- Being edited by current user -->
-         <indicator id="editing" index="10">
-            <evaluator>evaluator.doclib.indicator.editing</evaluator>
-         </indicator>
-         <!-- Locked by current user -->
-         <indicator id="lock-owner" index="10">
-            <evaluator>evaluator.doclib.indicator.lockOwner</evaluator>
-         </indicator>
-         <!-- Locked with owner identified by cm:owner property -->
-         <indicator id="locked" index="10" icon="lock-owner-16.png">
-            <evaluator>evaluator.doclib.indicator.lockedOwner</evaluator>
-            <labelParam index="0">{jsNode.properties.owner.displayName}</labelParam>
-            <labelParam index="1">{jsNode.properties.owner.userName}</labelParam>
-         </indicator>
-         <!-- Locked with owner identified by cm:lockOwner property -->
-         <indicator id="nodeLock" index="10" icon="lock-owner-16.png" label="status.locked">
-            <evaluator>evaluator.doclib.indicator.nodeLocked</evaluator>
-            <labelParam index="0">{jsNode.properties.cm_lockOwner.displayName}</labelParam>
-            <labelParam index="1">{jsNode.properties.cm_lockOwner.userName}</labelParam>
-            <override>locked</override>
-         </indicator>
-         <!-- Workflows -->
-         <indicator id="active-workflows" index="20">
-            <evaluator>evaluator.doclib.indicator.activeWorkflows</evaluator>
-            <labelParam index="0">{activeWorkflows}</labelParam>
-         </indicator>
-         <indicator id="simple-workflow" index="30">
-            <evaluator>evaluator.doclib.indicator.simpleWorkflow</evaluator>
-         </indicator>
-         <!-- Everything Else -->
-         <indicator id="rules" index="40">
-            <evaluator>evaluator.doclib.indicator.rules</evaluator>
-         </indicator>
-         <indicator id="exif" index="40">
-            <evaluator>evaluator.doclib.indicator.exifMetadata</evaluator>
-         </indicator>
-         <indicator id="geographic" index="50">
-            <evaluator>evaluator.doclib.indicator.geographicMetadata</evaluator>
-         </indicator>
-         <indicator id="transferred-node" index="60">
-            <evaluator>evaluator.doclib.indicator.transferredNode</evaluator>
-         </indicator>
-         <indicator id="cloud-synced" index="70" action="onCloudSyncIndicatorAction">
-            <evaluator>evaluator.doclib.indicator.isSynced</evaluator>
-         </indicator>
-         <indicator id="cloud-sync-failed" index="80" action="onCloudSyncFailedIndicatorAction">
-            <evaluator>evaluator.doclib.indicator.isSyncFailed</evaluator>
-            <override>cloud-synced</override>
-         </indicator>
-         <indicator id="cloud-indirect-sync" index="90" action="onCloudIndirectSyncIndicatorAction">
-            <evaluator>evaluator.doclib.indicator.isIndirectSync</evaluator>
-            <override>cloud-synced</override>
-         </indicator>
-         <indicator id="cloud-indirect-sync-failed" index="90" action="onCloudIndirectSyncFailedIndicatorAction">
-            <evaluator>evaluator.doclib.indicator.isIndirectSyncFailed</evaluator>
-            <override>cloud-sync-failed</override>
-            <override>cloud-indirect-sync</override>
-         </indicator>
-      </indicators>
-
-<!--  http://sharextras.org/jsdoc/share/community-head/symbols/Alfresco.QuickShare.html--> -->
+		<!-- http://sharextras.org/jsdoc/share/community-head/symbols/Alfresco.QuickShare.html -->
+		-->
 		<metadata-templates>
+			<!-- Default (fallback) -->
+			<template id="default">
+				<banner index="10" id="lockBanner" evaluator="evaluator.doclib.metadata.hasLockBanner">{lockBanner}</banner>
+				<banner index="20" id="syncTransientError" evaluator="evaluator.doclib.metadata.hasSyncTransientErrorBanner">{syncTransientError}</banner>
+				<banner index="30" id="syncFailed" evaluator="evaluator.doclib.metadata.hasSyncFailedBanner">{syncFailed}</banner>
+				<line index="10" id="date">{date}{size}</line>
+				<line index="20" id="description" view="detailed">{description}</line>
+				<line index="30" id="tags" view="detailed">{tags}</line>
+				<line index="40" id="categories" view="detailed" evaluator="evaluator.doclib.metadata.hasCategories">{categories}</line>
+				<line index="50" id="social" view="detailed">{social}</line>
+			</template>
+
+			<!-- Working Copies -->
+			<template id="isWorkingCopy">
+				<evaluator>evaluator.doclib.metadata.isWorkingCopy</evaluator>
+				<banner index="10" id="lockBanner" evaluator="evaluator.doclib.metadata.hasLockBanner">{lockBanner}</banner>
+				<banner index="20" id="syncTransientError" evaluator="evaluator.doclib.metadata.hasSyncTransientErrorBanner">{syncTransientError}</banner>
+				<banner index="30" id="syncFailed" evaluator="evaluator.doclib.metadata.hasSyncFailedBanner">{syncFailed}</banner>
+				<line index="10" id="date">{date}{size}</line>
+				<line index="20" id="description" view="detailed">{description}</line>
+			</template>
+
+			<!-- Dictionary Models -->
+			<template id="dictionaryModel">
+				<evaluator>evaluator.doclib.metadata.isDictionaryModel</evaluator>
+				<banner index="10" id="lockBanner" evaluator="evaluator.doclib.metadata.hasLockBanner">{lockBanner}</banner>
+				<banner index="20" id="syncTransientError" evaluator="evaluator.doclib.metadata.hasSyncTransientErrorBanner">{syncTransientError}</banner>
+				<banner index="30" id="syncFailed" evaluator="evaluator.doclib.metadata.hasSyncFailedBanner">{syncFailed}</banner>
+				<line index="10" id="date">{date}</line>
+				<line index="20" id="description" view="detailed">{description}</line>
+				<line index="30" id="dictionaryModel" simpleView="true">{modelActive label.modelActive}{modelName label.modelName}{modelDescription
+					label.modelDescription}</line>
+			</template>
+
+			<!-- Replication Transfer Targets -->
+			<template id="transferTarget">
+				<evaluator>evaluator.doclib.metadata.isTransferTarget</evaluator>
+				<banner index="10" id="lockBanner" evaluator="evaluator.doclib.metadata.hasLockBanner">{lockBanner}</banner>
+				<banner index="20" id="syncTransientError" evaluator="evaluator.doclib.metadata.hasSyncTransientErrorBanner">{syncTransientError}</banner>
+				<banner index="30" id="syncFailed" evaluator="evaluator.doclib.metadata.hasSyncFailedBanner">{syncFailed}</banner>
+				<line index="10" id="date">{date}</line>
+				<line index="20" id="description" view="detailed">{description}</line>
+				<line index="30" id="transferTarget" simpleView="true">{trx_enabled label.trx_enabled}{trx_endpointhost
+					label.trx_endpointhost}{trx_endpointport label.trx_endpointport}</line>
+			</template>
+
 			<template id="isArtifact">
 				<evaluator>evaluator.doclib.metadata.isArtifact</evaluator>
 				<line index="10" id="date" view="detailed">{date}{size}{artifact_date}</line>
 				<line index="20" id="social" view="detailed">{social}</line>
- 				<line index="30" id="description" view="detailed">{description}</line>
- 			</template>
+				<line index="30" id="description" view="detailed">{description}</line>
+			</template>
 			<template id="isArtist">
 				<evaluator>evaluator.doclib.metadata.isArtist</evaluator>
 				<line index="10" id="date" view="detailed">{date}</line>
@@ -330,13 +273,44 @@
 			</template>
 		</metadata-templates>
 
-      <create-content-by-template>true</create-content-by-template>
+		<!-- Create Content menu items, can be of 3 types matching the usual doclib action config: * "link" - accepts a "href" param that will be passed
+			a nodeRef token for substitution, used for external links * "pagelink" - accepts a "page" param that will be passed a nodeRef token for substitution,
+			used for Share links * "javascript" - accepts & "function" param of an action that will get the current folder item as first argument. I.e. <content
+			id="plain-text" label="create-content.text" icon="text" type="pagelink"> <param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/plain</param>
+			<permissions> <permission allow="true">SomeUserPermissions</permission> </permissions> </content> Note that the "CreateChildren" permission is
+			always required and will disable the entire menu if no granted for a folder. Also note that the old/untyped simple config still is allowed, the
+			config snippet below will automatically be converted to a "pagelink" as in the example above. <content id="plain-text" label="create-content.text"
+			icon="text" itemid="cm:content" mimetype="text/plain" permission="SomeUserPermissions"/> -->
+		<create-content>
+			<content id="plain-text" label="create-content.text" type="pagelink" index="10" icon="text">
+				<param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/plain</param>
+			</content>
+			<content id="html" label="create-content.html" type="pagelink" index="20">
+				<param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/html</param>
+			</content>
+			<content id="xml" label="create-content.xml" type="pagelink" index="30">
+				<param name="page">create-content?destination={nodeRef}&amp;itemId=cm:content&amp;mimeType=text/xml</param>
+			</content>
+			<content id="folder" label="create-content.folder" icon="folder" index="5" type="javascript">
+				<param name="function">onNewFolder</param>
+			</content>
+
+			<content id="artifact" mimetype="image/jpeg" label="menu.create-content.ucm_artifact" itemid="ucm:artifact" />
+			<content id="collection" label="menu.create-content.ucm_collection" index="2" type="javascript">
+				<param name="function">onNewCollection</param>
+			</content>
+			<content id="artist" label="menu.create-content.ucm_artist" index="3" type="javascript">
+				<param name="function">onNewArtist</param>
+			</content>
+		</create-content>
+
+		<create-content-by-template>false</create-content-by-template>
 
 		<folder-types>
 			<type name="ucm:collection" display-label="FCollection" display-label-id="fcollection" icon="folder" itemid="ucm:collection" />
 		</folder-types>
 
-      <multi-select>
+		<multi-select>
 			<action type="action-link" id="onActionDownload" icon="document-download" label="menu.selected-items.download" />
 			<action type="action-link" id="onActionCopyTo" icon="document-copy-to" permission="Delete" label="menu.selected-items.copy" />
 			<action type="action-link" id="onActionMoveTo" icon="document-move-to" permission="Delete" label="menu.selected-items.move" />
@@ -349,8 +323,8 @@
 				label="menu.selected-items.cloudSync" notAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
 			<action type="action-link" id="onActionCloudSyncRequest" icon="document-request-sync" label="menu.selected-items.cloudRequestSync"
 				hasAspect="sync:syncSetMemberNode" syncMode="ON_PREMISE" />
-      </multi-select>
-   </config>
+		</multi-select>
+	</config>
 
 	<!-- ucm:collection type (creating nodes) -->
 	<config evaluator="model-type" condition="ucm:collection">
@@ -594,14 +568,8 @@
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 
 					<!-- cm:dublincore aspect -->
-					<!--<show id="cm:publisher" />
-					<show id="cm:contributor" />
-					<show id="cm:type" />
-					<show id="cm:identifier" />
-					<show id="cm:dcsource" />
-					<show id="cm:coverage" />
-					<show id="cm:rights" />
-					<show id="cm:subject" /> -->
+					<!--<show id="cm:publisher" /> <show id="cm:contributor" /> <show id="cm:type" /> <show id="cm:identifier" /> <show id="cm:dcsource" />
+						<show id="cm:coverage" /> <show id="cm:rights" /> <show id="cm:subject" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artifactMain" appearance="fieldset" label="Main artifact properties" />
@@ -634,7 +602,7 @@
 					<field id="ucm:artifact_technique" set="artifactMain" />
 					<field id="ucm:artifact_dimension" set="artifactMain" />
 					<field id="ucm:artifact_status" set="artifactMain" />
-					<field id="ucm:artifact_copyright" set="artifactMain"/>
+					<field id="ucm:artifact_copyright" set="artifactMain" />
 
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
@@ -801,14 +769,8 @@
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 
 					<!-- cm:dublincore aspect -->
-					<!--<show id="cm:publisher" />
-					<show id="cm:contributor" />
-					<show id="cm:type" />
-					<show id="cm:identifier" />
-					<show id="cm:dcsource" />
-					<show id="cm:coverage" />
-					<show id="cm:rights" />
-					<show id="cm:subject" /> -->
+					<!--<show id="cm:publisher" /> <show id="cm:contributor" /> <show id="cm:type" /> <show id="cm:identifier" /> <show id="cm:dcsource" />
+						<show id="cm:coverage" /> <show id="cm:rights" /> <show id="cm:subject" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artifactMain" appearance="fieldset" label="Artifact properties" />
@@ -838,13 +800,7 @@
 						</control>
 					</field>
 
-<!--
-					<field id="cm:content" label-id="">
-						<control>
-							<control-param name="editorAppearance">explorer</control-param>
-						</control>
-					</field>
--->
+					<!-- <field id="cm:content" label-id=""> <control> <control-param name="editorAppearance">explorer</control-param> </control> </field> -->
 
 					<field id="ucm:artifact_name" set="artifactAdditional" />
 					<field id="ucm:artist_name" set="artifactAdditional" />
@@ -857,16 +813,9 @@
 					<!-- <field id="ucm:artifact_comments" set="artifactAdditional"> -->
 
 					<field id="ucm:artifact_status" set="artifactAdditional" />
-					<!--
-					field id="ucm:artifact_contains" set="artifactMain">
-			        	<control template="/org/alfresco/components/form/controls/association.ftl">
-							<control-param name="">items</control-param>
-							<control-param name="displayMode">items</control-param>
-							<control-param name="showTargetLink">true</control-param>
-							<control-param name="compactMode">true</control-param>
-						</control>
-					</field
-					-->
+					<!-- field id="ucm:artifact_contains" set="artifactMain"> <control template="/org/alfresco/components/form/controls/association.ftl"> <control-param
+						name="">items</control-param> <control-param name="displayMode">items</control-param> <control-param name="showTargetLink">true</control-param>
+						<control-param name="compactMode">true</control-param> </control> </field -->
 
 					<field id="ucm:artifact_location" set="artifactAdditional" />
 					<field id="ucm:artifact_collection" set="artifactAdditional" />
@@ -952,10 +901,7 @@
 				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
-<!--
-					<show id="cm:name" />
-					<show id="cm:title" />
--->
+					<!-- <show id="cm:name" /> <show id="cm:title" /> -->
 					<!-- <show id="cm:content" /> -->
 					<!-- <show id="ucm:artifact_name"/> -->
 					<show id="ucm:artist_name" />
@@ -978,28 +924,15 @@
 					<!-- <show id="ucm:museum_artifact_gallery_location" /> -->
 
 					<!-- cm:geographic aspect -->
-<!--
-	                <show id="cm:latitude" />
-	                <show id="cm:longitude" />
--->
+					<!-- <show id="cm:latitude" /> <show id="cm:longitude" /> -->
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artistMain" appearance="fieldset" label="About Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
-<!--
-					<field id="cm:name">
-						<control>
-							<control-param name="maxLength">255</control-param>
-						</control>
-					</field>
--->
-<!--
-					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
--->
+					<!-- <field id="cm:name"> <control> <control-param name="maxLength">255</control-param> </control> </field> -->
+					<!-- <field id="cm:content"> <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" /> </field> -->
 					<!-- <field id="ucm:artifact_name" label="Known As (Name)"/> -->
 					<field id="ucm:artist_name" label="Given Name" />
 					<field id="cm:description">
@@ -1007,18 +940,11 @@
 							<control-param name="activateLinks">true</control-param>
 						</control>
 					</field>
-<!--
-					<field id="ucm:artifact_status" set="artifactMain" />
--->
+					<!-- <field id="ucm:artifact_status" set="artifactMain" /> -->
 
-					<!--field id="ucm:artifact_contains" set="artifactMain">
-			        	<control template="/org/alfresco/components/form/controls/association.ftl">
-							<control-param name="">items</control-param>
-							<control-param name="displayMode">items</control-param>
-							<control-param name="showTargetLink">true</control-param>
-							<control-param name="compactMode">true</control-param>
-						</control>
-					</field-->
+					<!--field id="ucm:artifact_contains" set="artifactMain"> <control template="/org/alfresco/components/form/controls/association.ftl"> <control-param
+						name="">items</control-param> <control-param name="displayMode">items</control-param> <control-param name="showTargetLink">true</control-param>
+						<control-param name="compactMode">true</control-param> </control> </field -->
 
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
 
@@ -1032,11 +958,8 @@
 					<field id="ucm:artist_period" set="artistMain" />
 					<!-- <field id="ucm:museum_artifact_gallery_location" set="artistMain" /> -->
 					<field id="ucm:artifact_comments" set="artistMain" />
-<!--
-					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
-					<field id="cm:latitude" set="artifactMuseum"/>
-	                <field id="cm:longitude" set="artifactMuseum"/>
--->
+					<!-- <field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" /> <field id="cm:latitude" set="artifactMuseum"/> <field id="cm:longitude"
+						set="artifactMuseum"/> -->
 				</appearance>
 			</form>
 
@@ -1044,10 +967,7 @@
 				<view-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<edit-form template="/com/alfresco/museum/ucm/form/ucm-artist-props-form.ftl" />
 				<field-visibility>
-<!--
-					<show id="cm:name" />
-					<show id="cm:title" />
--->
+					<!-- <show id="cm:name" /> <show id="cm:title" /> -->
 					<!-- <show id="cm:content" /> -->
 					<show id="ucm:artifact_name" />
 					<show id="ucm:artist_name" />
@@ -1069,48 +989,27 @@
 					<!-- <show id="ucm:museum_artifact_gallery_location" /> -->
 
 					<!-- cm:geographic aspect -->
-<!--
-	                <show id="cm:latitude" />
-	                <show id="cm:longitude" />
--->
+					<!-- <show id="cm:latitude" /> <show id="cm:longitude" /> -->
 					<!-- <show id="ucm:artifact_referenced_objects" /> -->
 				</field-visibility>
 				<appearance>
 					<set id="artistMain" appearance="fieldset" label="Artist" />
 
 					<!-- TODO: rest of aspects. And properties? -->
-<!--
-					<field id="cm:name">
-						<control>
-							<control-param name="maxLength">255</control-param>
-						</control>
-					</field>
--->
-<!--
-					<field id="cm:title" />
-					<field id="cm:content">
-		               <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" />
-		            </field>
--->
+					<!-- <field id="cm:name"> <control> <control-param name="maxLength">255</control-param> </control> </field> -->
+					<!-- <field id="cm:title" /> <field id="cm:content"> <control template="/com/alfresco/museum/ucm/form/controls/ucm-file-upload.ftl" /> </field> -->
 					<field id="ucm:artifact_name" label="Known As (Name)" />
 					<field id="ucm:artist_name" set="artistMain" label="Given Name" />
-<!--
-					<field id="ucm:artifact_status" set="artifactMain" />
--->
+					<!-- <field id="ucm:artifact_status" set="artifactMain" /> -->
 					<field id="cm:description">
 						<control>
 							<control-param name="activateLinks">true</control-param>
 						</control>
 					</field>
 
-					<!--field id="ucm:artifact_contains" set="artifactMain">
-			        	<control template="/org/alfresco/components/form/controls/association.ftl">
-							<control-param name="">items</control-param>
-							<control-param name="displayMode">items</control-param>
-							<control-param name="showTargetLink">true</control-param>
-							<control-param name="compactMode">true</control-param>
-						</control>
-					</field-->
+					<!--field id="ucm:artifact_contains" set="artifactMain"> <control template="/org/alfresco/components/form/controls/association.ftl"> <control-param
+						name="">items</control-param> <control-param name="displayMode">items</control-param> <control-param name="showTargetLink">true</control-param>
+						<control-param name="compactMode">true</control-param> </control> </field -->
 
 					<!--field id="ucm:artifact_referenced_objects" set="artifactAdditional" / -->
 
@@ -1125,11 +1024,8 @@
 					<field id="ucm:museum_artifact_gallery_location" set="artistMain" />
 					<field id="cm:title" set="artistMain" label="Comments" />
 					<field id="ucm:artifact_comments" set="artistMain" />
-<!--
-					<field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" />
-					<field id="cm:latitude" set="artifactMuseum"/>
-	                <field id="cm:longitude" set="artifactMuseum"/>
--->
+					<!-- <field id="ucm:museum_artifact_gallery_location" set="artifactMuseum" /> <field id="cm:latitude" set="artifactMuseum"/> <field id="cm:longitude"
+						set="artifactMuseum"/> -->
 				</appearance>
 			</form>
 		</forms>
@@ -1232,11 +1128,9 @@
 			<display-web-preview>true</display-web-preview>
 		</document-details>
 
-		<!-- Sorting Options The 'sort' config element contains the name of the
-			content model field to sort against and can be of the form: - short QName
-			string e.g. "cm:name" - any other valid sortable fts-alfresco special field
-			e.g. "TYPE" The field can be optionally followed by |true or |false to indicate
-			sort direction, where true = ascending, false = descending -->
+		<!-- Sorting Options The 'sort' config element contains the name of the content model field to sort against and can be of the form: - short
+			QName string e.g. "cm:name" - any other valid sortable fts-alfresco special field e.g. "TYPE" The field can be optionally followed by |true or
+			|false to indicate sort direction, where true = ascending, false = descending -->
 		<sorting>
 			<sort label="label.name">cm:name|true</sort>
 			<sort label="label.popularity">cm:likesRatingSchemeCount|false</sort>
@@ -1254,22 +1148,19 @@
 
 	<!-- Document Library config section -->
 	<config evaluator="string-compare" condition="DocumentLibraryViews" replace="true">
-         <!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and
-              Repository pages. This list can be added to or removed to control the views displayed. Use the a module
-              that provides evaluated configuration to have the options change based on criteria (e.g. site name,
-              site preset, user group, etc)
-
-              Remember to include all dependencies, even those duplicated by another view - Surf will ensure only
-              one version of each is loaded - but if a view is removed that depends on a dependency defined in another
-              view then it will cause an error.
-           -->
+		<!-- The view renderers that will be available as options in DocumentLibrary, My Files, Shared Files and Repository pages. This list can be
+			added to or removed to control the views displayed. Use the a module that provides evaluated configuration to have the options change based on
+			criteria (e.g. site name, site preset, user group, etc) Remember to include all dependencies, even those duplicated by another view - Surf will
+			ensure only one version of each is loaded - but if a view is removed that depends on a dependency defined in another view then it will cause
+			an error. -->
 		<view-renderers>
 			<view-renderer id="detailed" iconClass="detailed" label="button.view.detailed" index="20" widget="Alfresco.DocumentListViewRenderer">
 				<dependencies>
 					<js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
 				</dependencies>
 			</view-renderer>
-         <view-renderer id="gallery" iconClass="gallery" label="button.view.gallery" index="30" widget="Alfresco.DocumentListGalleryViewRenderer">
+			<view-renderer id="gallery" iconClass="gallery" label="button.view.gallery" index="30"
+				widget="Alfresco.DocumentListGalleryViewRenderer">
 				<dependencies>
 					<js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
 					<js src="components/documentlibrary/ucm-documentlist-view-gallery.js" />
@@ -1286,16 +1177,8 @@
 	</config>
 
 
-       <!-- Commented because normal users should not see this aspect
-         It should only be used through the admin interface
-        <config evaluator="string-compare" condition="DocumentLibrary">
-            <aspects>
-                <visible>
-                    <aspect name="up:UploadFolder"/>
-                </visible>
-            </aspects>
-        </config>
-    -->
+	<!-- Commented because normal users should not see this aspect It should only be used through the admin interface <config evaluator="string-compare"
+		condition="DocumentLibrary"> <aspects> <visible> <aspect name="up:UploadFolder"/> </visible> </aspects> </config> -->
 
 	<config evaluator="aspect" condition="up:UploadFolder">
 		<forms>
@@ -1324,24 +1207,15 @@
 
 	<!-- Document Library Custom Code config section -->
 	<config evaluator="string-compare" condition="DocLibCustom">
-      <!--
-         Custom Code dependencies.
-
-         Note: files specified in the "src" attribute resolve relative to the /share/res/ servlet context.
-         <dependencies>
-            <css src="my-custom-action.css" />
-            <js src="my-custom-action.js" />
-         </dependencies>
-      -->
+		<!-- Custom Code dependencies. Note: files specified in the "src" attribute resolve relative to the /share/res/ servlet context. <dependencies>
+			<css src="my-custom-action.css" /> <js src="my-custom-action.js" /> </dependencies> -->
 		<dependencies />
 	</config>
 
 	<!-- Document Library Actions config section -->
 	<config evaluator="string-compare" condition="DocLibActions" replace="true">
 
-      <!--
-         Action definitions
-      -->
+		<!-- Action definitions -->
 		<actions>
 			<!-- Download document -->
 			<action id="document-download" type="link" label="actions.document.download">
@@ -1468,49 +1342,49 @@
 			<!-- Upload new version -->
 			<action id="document-upload-new-version" type="javascript" label="actions.document.upload-new-version">
 				<param name="function">onActionUploadNewVersion</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.upload</evaluator>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-            <evaluator negate="true">evaluator.doclib.metadata.isLocked</evaluator>
-         </action>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.upload</evaluator>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+				<evaluator negate="true">evaluator.doclib.metadata.isLocked</evaluator>
+			</action>
 
-         <!-- Inline edit -->
-         <action id="document-inline-edit" type="pagelink" label="actions.document.inline-edit">
-            <param name="page">inline-edit?nodeRef={node.nodeRef}</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <!-- aspect check (app:inlineeditable), mimetype check (text/plain, text/html, text/xml) -->
-            <evaluator>evaluator.doclib.action.inlineEdit</evaluator>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
-         </action>
+			<!-- Inline edit -->
+			<action id="document-inline-edit" type="pagelink" label="actions.document.inline-edit">
+				<param name="page">inline-edit?nodeRef={node.nodeRef}</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<!-- aspect check (app:inlineeditable), mimetype check (text/plain, text/html, text/xml) -->
+				<evaluator>evaluator.doclib.action.inlineEdit</evaluator>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+			</action>
 
-         <!-- Edit online -->
-         <action id="document-edit-online" type="javascript" label="actions.document.edit-online">
-            <param name="function">onActionEditOnline</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <!-- vti module check, mimetype check, userAgent check -->
-            <evaluator>evaluator.doclib.action.onlineEdit</evaluator>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isAosOnlineEditAvailable</evaluator>
-         </action>
+			<!-- Edit online -->
+			<action id="document-edit-online" type="javascript" label="actions.document.edit-online">
+				<param name="function">onActionEditOnline</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<!-- vti module check, mimetype check, userAgent check -->
+				<evaluator>evaluator.doclib.action.onlineEdit</evaluator>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isAosOnlineEditAvailable</evaluator>
+			</action>
 
-         <!-- Edit online AOS -->
-         <action id="document-edit-online-aos" type="javascript" label="actions.document.edit-online" icon="document-edit-online">
-            <param name="function">onActionEditOnlineAos</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.isAosOnlineEditAvailable</evaluator>
-            <evaluator>evaluator.doclib.action.notEditBrowser</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isLockedForAos</evaluator>
-            <evaluator>evaluator.doclib.action.isMimetypeEditableAos</evaluator>
+			<!-- Edit online AOS -->
+			<action id="document-edit-online-aos" type="javascript" label="actions.document.edit-online" icon="document-edit-online">
+				<param name="function">onActionEditOnlineAos</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.isAosOnlineEditAvailable</evaluator>
+				<evaluator>evaluator.doclib.action.notEditBrowser</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isLockedForAos</evaluator>
+				<evaluator>evaluator.doclib.action.isMimetypeEditableAos</evaluator>
 			</action>
 
 			<!-- Edit offline -->
@@ -1518,95 +1392,92 @@
 				<param name="function">onActionEditOffline</param>
 				<permissions>
 					<permission allow="true">Write</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.offlineEdit</evaluator>
-            <evaluator>evaluator.doclib.action.hasContent</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.notEditable</evaluator>
-         </action>
+				</permissions>
+				<evaluator>evaluator.doclib.action.offlineEdit</evaluator>
+				<evaluator>evaluator.doclib.action.hasContent</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.notEditable</evaluator>
+			</action>
 
-         <!-- Copy to -->
-         <action id="document-copy-to" type="javascript" label="actions.document.copy-to">
-            <param name="function">onActionCopyTo</param>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-         </action>
+			<!-- Copy to -->
+			<action id="document-copy-to" type="javascript" label="actions.document.copy-to">
+				<param name="function">onActionCopyTo</param>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+			</action>
 
-         <!-- Move to -->
-         <action id="document-move-to" type="javascript" label="actions.document.move-to">
-            <param name="function">onActionMoveTo</param>
-            <permissions>
-               <permission allow="true">Delete</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-         </action>
+			<!-- Move to -->
+			<action id="document-move-to" type="javascript" label="actions.document.move-to">
+				<param name="function">onActionMoveTo</param>
+				<permissions>
+					<permission allow="true">Delete</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+			</action>
 
-         <!-- Delete -->
-         <action id="document-delete" type="javascript" label="actions.document.delete">
-            <param name="function">onActionDelete</param>
-            <permissions>
-               <permission allow="true">Delete</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
-            <evaluator>evaluator.doclib.action.isNotPartOfHybridWorklfow</evaluator>
-            <evaluator>evaluator.doclib.action.isDeletable</evaluator>
-         </action>
+			<!-- Delete -->
+			<action id="document-delete" type="javascript" label="actions.document.delete">
+				<param name="function">onActionDelete</param>
+				<permissions>
+					<permission allow="true">Delete</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+				<evaluator>evaluator.doclib.action.isNotPartOfHybridWorklfow</evaluator>
+				<evaluator>evaluator.doclib.action.isDeletable</evaluator>
+			</action>
 
 			<!-- Assign workflow -->
-			<!--
-			<action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow">
-				<param name="function">onActionAssignWorkflow</param>
-			</action>
-			-->
+			<!-- <action id="document-assign-workflow" type="javascript" label="actions.document.assign-workflow"> <param name="function">onActionAssignWorkflow</param>
+				</action> -->
 
 			<!-- Manage permissions (granular permissions) -->
 			<action id="document-manage-granular-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
 				<param name="href">{managePermissionsUrl}</param>
 				<permissions>
-               <permission allow="true">ChangePermissions</permission>
-            </permissions>
-            <evaluator>evaluator.doclib.action.siteBased</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
-         </action>
+					<permission allow="true">ChangePermissions</permission>
+				</permissions>
+				<evaluator>evaluator.doclib.action.siteBased</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
+			</action>
 
-         <!-- Manage permissions (repository roles) -->
-         <action id="document-manage-repo-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
-            <param name="href">{managePermissionsUrl}</param>
-            <permissions>
-               <permission allow="true">ChangePermissions</permission>
-            </permissions>
-            <evaluator negate="true">evaluator.doclib.action.siteBased</evaluator>
-            <evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
-         </action>
+			<!-- Manage permissions (repository roles) -->
+			<action id="document-manage-repo-permissions" type="link" icon="document-manage-permissions" label="actions.document.manage-permissions">
+				<param name="href">{managePermissionsUrl}</param>
+				<permissions>
+					<permission allow="true">ChangePermissions</permission>
+				</permissions>
+				<evaluator negate="true">evaluator.doclib.action.siteBased</evaluator>
+				<evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
+			</action>
 
-         <!-- Manage aspects -->
+			<!-- Manage aspects -->
 			<action id="document-manage-aspects" type="javascript" label="actions.document.manage-aspects">
 				<param name="function">onActionManageAspects</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
-         </action>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+			</action>
 
-         <!-- Change type -->
-         <action id="document-change-type" type="javascript" label="actions.document.change-type">
-            <param name="function">onActionChangeType</param>
-            <permissions>
-               <permission allow="true">Write</permission>
-            </permissions>
-            <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
-         </action>
+			<!-- Change type -->
+			<action id="document-change-type" type="javascript" label="actions.document.change-type">
+				<param name="function">onActionChangeType</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+			</action>
 
-         <!-- View original (of a Working Copy pair) -->
-         <action id="document-view-original" type="pagelink" label="actions.document.view-original">
-            <param name="page">document-details?nodeRef={workingCopy.sourceNodeRef}</param>
-            <!-- cm:workingcopy aspect -->
-            <evaluator>evaluator.doclib.action.isWorkingCopy</evaluator>
-         </action>
+			<!-- View original (of a Working Copy pair) -->
+			<action id="document-view-original" type="pagelink" label="actions.document.view-original">
+				<param name="page">document-details?nodeRef={workingCopy.sourceNodeRef}</param>
+				<!-- cm:workingcopy aspect -->
+				<evaluator>evaluator.doclib.action.isWorkingCopy</evaluator>
+			</action>
 
-         <!-- View working copy (of a Working Copy pair) -->
-         <action id="document-view-working-copy" type="pagelink" label="actions.document.view-working-copy">
-            <param name="page">document-details?nodeRef={workingCopy.workingCopyNodeRef}</param>
-            <!-- cm:workingcopy aspect -->
-            <evaluator>evaluator.doclib.action.hasWorkingCopy</evaluator>
+			<!-- View working copy (of a Working Copy pair) -->
+			<action id="document-view-working-copy" type="pagelink" label="actions.document.view-working-copy">
+				<param name="page">document-details?nodeRef={workingCopy.workingCopyNodeRef}</param>
+				<!-- cm:workingcopy aspect -->
+				<evaluator>evaluator.doclib.action.hasWorkingCopy</evaluator>
 			</action>
 
 			<!-- Cancel editing -->
@@ -1690,101 +1561,71 @@
 				<param name="function">onActionFolderDownload</param>
 			</action>
 
-      </actions>
+		</actions>
 
 
-      <!--
-         Action Group resolver - decides which action group id to use for a node
-      -->
-      <actionGroupResolver>resolver.doclib.actionGroup</actionGroupResolver>
+		<!-- Action Group resolver - decides which action group id to use for a node -->
+		<actionGroupResolver>resolver.doclib.actionGroup</actionGroupResolver>
 
-      <!--
-         Action Group definitions
-      -->
-      <actionGroups>
-         <actionGroup id="empty"/>
+		<!-- Action Group definitions -->
+		<actionGroups>
+			<actionGroup id="empty" />
 
-         <actionGroup id="document-browse">
-            <action index="100" id="document-download" />
-            <action index="110" id="document-view-content" />
-            <action index="120" id="document-locate" />
-            <action index="130" id="document-edit-properties" />
-            <action index="140" id="document-upload-new-version" />
-<!--
-            <action index="150" id="document-view-original" />
-            <action index="160" id="document-view-working-copy" />
-
-            <action index="170" id="document-approve" />
-            <action index="180" id="document-reject" />
-            <action index="190" id="document-inline-edit" />
-            <action index="200" id="document-edit-online" />
-            <action index="201" id="document-edit-online-aos" />
-            <action index="210" id="document-edit-offline" />
--->
-            <action index="250" id="document-copy-to" />
+			<actionGroup id="document-browse">
+				<action index="100" id="document-download" />
+				<action index="110" id="document-view-content" />
+				<action index="120" id="document-locate" />
+				<action index="130" id="document-edit-properties" />
+				<action index="140" id="document-upload-new-version" />
+				<!-- <action index="150" id="document-view-original" /> <action index="160" id="document-view-working-copy" /> <action index="170" id="document-approve"
+					/> <action index="180" id="document-reject" /> <action index="190" id="document-inline-edit" /> <action index="200" id="document-edit-online"
+					/> <action index="201" id="document-edit-online-aos" /> <action index="210" id="document-edit-offline" /> -->
+				<action index="250" id="document-copy-to" />
 				<action index="260" id="document-move-to" />
-            <action index="270" id="document-delete" />
-<!--
-            <action index="280" id="document-assign-workflow" />
--->
-            <action index="290" id="document-cancel-editing" />
-            <action index="295" id="document-cancel-editing-unlock" icon="document-cancel-editing"/>
-            <action index="297" id="document-manage-granular-permissions" />
+				<action index="270" id="document-delete" />
+				<!-- <action index="280" id="document-assign-workflow" /> -->
+				<action index="290" id="document-cancel-editing" />
+				<action index="295" id="document-cancel-editing-unlock" icon="document-cancel-editing" />
+				<action index="297" id="document-manage-granular-permissions" />
 
-            <action index="298" id="document-manage-repo-permissions" />
-            <action index="310" id="document-view-googlemaps" />
-<!--
-            <action index="320" id="document-view-in-source-repository" />
-            <action index="330" id="document-cloud-sync" />
-            <action index="340" id="document-cloud-unsync" />
-            <action index="350" id="document-view-in-cloud" />
-            <action index="360" id="document-request-sync"/>
--->
-         </actionGroup>
+				<action index="298" id="document-manage-repo-permissions" />
+				<action index="310" id="document-view-googlemaps" />
+				<!-- <action index="320" id="document-view-in-source-repository" /> <action index="330" id="document-cloud-sync" /> <action index="340" id="document-cloud-unsync"
+					/> <action index="350" id="document-view-in-cloud" /> <action index="360" id="document-request-sync"/> -->
+			</actionGroup>
 
-         <actionGroup id="document-details">
-            <action index="100" id="document-download" />
-            <action index="110" id="document-view-content" />
-            <action index="120" id="document-edit-metadata" />
-            <action index="130" id="document-upload-new-version" />
-            <action index="140" id="document-view-original" />
-            <action index="150" id="document-view-working-copy" />
-<!--
-            <action index="160" id="document-approve" />
-            <action index="170" id="document-reject" />
--->
-            <action index="180" id="document-inline-edit" />
-            <action index="190" id="document-edit-online" />
+			<actionGroup id="document-details">
+				<action index="100" id="document-download" />
+				<action index="110" id="document-view-content" />
+				<action index="120" id="document-edit-metadata" />
+				<action index="130" id="document-upload-new-version" />
+				<action index="140" id="document-view-original" />
+				<action index="150" id="document-view-working-copy" />
+				<!-- <action index="160" id="document-approve" /> <action index="170" id="document-reject" /> -->
+				<action index="180" id="document-inline-edit" />
+				<action index="190" id="document-edit-online" />
 
-            <action index="191" id="document-edit-online-aos" />
-            <action index="200" id="document-edit-offline" />
+				<action index="191" id="document-edit-online-aos" />
+				<action index="200" id="document-edit-offline" />
 
-            <action index="240" id="document-copy-to" />
-            <action index="250" id="document-move-to" />
-            <action index="260" id="document-delete" />
-<!--
-            <action index="270" id="document-assign-workflow" />
--->
-            <action index="280" id="document-cancel-editing" />
-            <action index="285" id="document-cancel-editing-unlock" icon="document-cancel-editing"/>
-            <action index="290" id="document-manage-granular-permissions" />
-            <action index="300" id="document-manage-repo-permissions" />
-            <action index="310" id="document-manage-aspects" />
+				<action index="240" id="document-copy-to" />
+				<action index="250" id="document-move-to" />
+				<action index="260" id="document-delete" />
+				<!-- <action index="270" id="document-assign-workflow" /> -->
+				<action index="280" id="document-cancel-editing" />
+				<action index="285" id="document-cancel-editing-unlock" icon="document-cancel-editing" />
+				<action index="290" id="document-manage-granular-permissions" />
+				<action index="300" id="document-manage-repo-permissions" />
+				<action index="310" id="document-manage-aspects" />
 
-            <action index="320" id="document-change-type" />
-<!--
-            <action index="330" id="document-view-in-source-repository" />
--->
-            <action index="350" id="document-view-googlemaps" />
-<!--
-            <action index="360" id="document-cloud-sync" />
-            <action index="370" id="document-cloud-unsync" />
-            <action index="380" id="document-view-in-cloud" />
-            <action index="390" id="document-request-sync"/>
--->
-         </actionGroup>
+				<action index="320" id="document-change-type" />
+				<!-- <action index="330" id="document-view-in-source-repository" /> -->
+				<action index="350" id="document-view-googlemaps" />
+				<!-- <action index="360" id="document-cloud-sync" /> <action index="370" id="document-cloud-unsync" /> <action index="380" id="document-view-in-cloud"
+					/> <action index="390" id="document-request-sync"/> -->
+			</actionGroup>
 
-		<actionGroup id="folder-browse">
+			<actionGroup id="folder-browse">
 				<action index="100" id="folder-download" />
 				<action index="105" id="folder-view-details" />
 				<action index="110" id="document-edit-properties" icon="folder-edit-properties" label="actions.folder.edit-metadata" />
@@ -1798,44 +1639,34 @@
 				<action index="190" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
 				<action index="200" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
 				<action index="210" id="document-manage-aspects" label="actions.folder.manage-aspects" />
-            <action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
-            <action index="310" id="document-view-googlemaps" />
-<!--
-            <action index="360" id="document-cloud-sync" />
-            <action index="370" id="document-cloud-unsync" />
-            <action index="380" id="document-view-in-cloud" />
-            <action index="390" id="document-request-sync"/>
--->
-         </actionGroup>
+				<action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
+				<action index="310" id="document-view-googlemaps" />
+				<!-- <action index="360" id="document-cloud-sync" /> <action index="370" id="document-cloud-unsync" /> <action index="380" id="document-view-in-cloud"
+					/> <action index="390" id="document-request-sync"/> -->
+			</actionGroup>
 
-         <actionGroup id="folder-details">
-            <action index="100" id="folder-download"/>
-            <action index="105" id="document-edit-metadata" icon="folder-edit-metadata" label="actions.folder.edit-metadata" />
-            <action index="110" id="document-approve" icon="folder-approve" />
-            <action index="120" id="document-reject" icon="folder-reject" />
-            <action index="130" id="document-copy-to" icon="folder-copy-to" label="actions.folder.copy-to" />
-            <action index="140" id="document-move-to" icon="folder-move-to" label="actions.folder.move-to" />
-            <action index="150" id="folder-manage-rules" />
-            <action index="160" id="document-delete" icon="folder-delete" label="actions.folder.delete" />
-            <action index="170" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
-            <action index="180" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
-            <action index="190" id="document-manage-aspects" label="actions.folder.manage-aspects" />
+			<actionGroup id="folder-details">
+				<action index="100" id="folder-download" />
+				<action index="105" id="document-edit-metadata" icon="folder-edit-metadata" label="actions.folder.edit-metadata" />
+				<action index="110" id="document-approve" icon="folder-approve" />
+				<action index="120" id="document-reject" icon="folder-reject" />
+				<action index="130" id="document-copy-to" icon="folder-copy-to" label="actions.folder.copy-to" />
+				<action index="140" id="document-move-to" icon="folder-move-to" label="actions.folder.move-to" />
+				<action index="150" id="folder-manage-rules" />
+				<action index="160" id="document-delete" icon="folder-delete" label="actions.folder.delete" />
+				<action index="170" id="document-manage-granular-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
+				<action index="180" id="document-manage-repo-permissions" icon="folder-manage-permissions" label="actions.folder.manage-permissions" />
+				<action index="190" id="document-manage-aspects" label="actions.folder.manage-aspects" />
 
-<!--
-            <action index="200" id="document-change-type" label="actions.folder.change-type" />
--->
-            <action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
-            <action index="350" id="document-view-googlemaps" />
-<!--
-            <action index="360" id="document-cloud-sync" />
-            <action index="370" id="document-cloud-unsync" />
-            <action index="380" id="document-view-in-cloud" />
-            <action index="390" id="document-request-sync"/>
--->
-         </actionGroup>
+				<!-- <action index="200" id="document-change-type" label="actions.folder.change-type" /> -->
+				<action index="220" id="document-view-in-source-repository" label="actions.folder.view-source-repository" />
+				<action index="350" id="document-view-googlemaps" />
+				<!-- <action index="360" id="document-cloud-sync" /> <action index="370" id="document-cloud-unsync" /> <action index="380" id="document-view-in-cloud"
+					/> <action index="390" id="document-request-sync"/> -->
+			</actionGroup>
 
-         <actionGroup id="document-link-browse">
-            <action index="100" id="document-locate" label="actions.link.locate">
+			<actionGroup id="document-link-browse">
+				<action index="100" id="document-locate" label="actions.link.locate">
 					<evaluator />
 				</action>
 				<action index="110" id="document-delete" label="actions.link.delete" />

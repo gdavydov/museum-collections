@@ -1,0 +1,7 @@
+<webscript>
+	<shortname>UCM Site Size Report</shortname>
+	<description>UCM site size report component</description>
+	<url>/ucm/components/ucm-site-size-report</url>
+	<format default="html"/>
+	<authentication>user</authentication>
+</webscript>

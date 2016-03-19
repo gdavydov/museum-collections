@@ -1,0 +1,13 @@
+<webscript>
+	<shortname>Get size of content inside node</shortname>
+	<description>Table of sizes of items inside node
+	</description>
+	<url>/ucm/site-size-report?nodeRef={nodeRef}</url>
+	<arg>
+		<shortname>nodeRef</shortname>
+		<description><![CDATA[Reference to the site node.]]></description>
+	</arg>
+	<format default="json"/>
+	<authentication runas="admin">none</authentication>
+	<transaction>none</transaction>
+</webscript>

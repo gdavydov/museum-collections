@@ -23,9 +23,17 @@ import org.springframework.extensions.surf.util.Content;
  *  Alternative is to use temporary file
  */
 public class UCMContentImpl implements Content {
+	private static final String DEFAULT_ENCODING_NAME = StandardCharsets.UTF_8.name();
+
 	private final byte[] content;
 	private final String mimetype;
 	private final String encoding;
+
+	public UCMContentImpl(byte[] content, String mimetype, String encoding) {
+		this.content = content;
+		this.mimetype = mimetype;
+		this.encoding = ObjectUtils.firstNonNull(encoding, DEFAULT_ENCODING_NAME);
+	}
 
 	/**
 	 * Constructs content impl from FormField implementation used in web scripts.
@@ -54,7 +62,7 @@ public class UCMContentImpl implements Content {
 	 */
 	public UCMContentImpl(MimetypeService mimetypeService, org.alfresco.repo.forms.FormData.FieldData contentField) throws IOException {
 		// org.alfresco.repo.forms.FormData doesn't contain encoding information
-		this.encoding = StandardCharsets.UTF_8.name();
+		this.encoding = DEFAULT_ENCODING_NAME;
 		this.content = IOUtils.toByteArray(contentField.getInputStream());
 		this.mimetype = mimetypeService.guessMimetype(contentField.getName(), this.getInputStream());
 	}
@@ -64,7 +72,7 @@ public class UCMContentImpl implements Content {
 	 */
 	public UCMContentImpl(org.alfresco.repo.forms.FormData.FieldData contentField, String mimetype) throws IOException {
 		// org.alfresco.repo.forms.FormData doesn't contain encoding information
-		this.encoding = StandardCharsets.UTF_8.name();
+		this.encoding = DEFAULT_ENCODING_NAME;
 		this.content = IOUtils.toByteArray(contentField.getInputStream());
 		this.mimetype = ObjectUtils.defaultIfNull(mimetype, MimetypeMap.MIMETYPE_TEXT_PLAIN);
 	}

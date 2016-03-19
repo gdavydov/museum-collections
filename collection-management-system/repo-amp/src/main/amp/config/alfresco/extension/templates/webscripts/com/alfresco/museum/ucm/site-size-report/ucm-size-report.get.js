@@ -23,7 +23,11 @@ function getAttachFolder(artifactNode) {
 }
 
 function main() {
-	var docLibRef = search.findNode(args["nodeRef"]).childByNamePath("documentLibrary");
+	var siteNode = search.findNode(args["nodeRef"]);
+	var shortName = siteNode.properties["cm:name"];
+	var title = siteNode.properties["cm:title"];
+
+	var docLibNode = siteNode.childByNamePath("documentLibrary");
 
 	var results = {};
 
@@ -33,7 +37,7 @@ function main() {
 		}
 	}
 
-	traverse(docLibRef, [], function processArtifact(artifactNode, context) {
+	traverse(docLibNode, [], function processArtifact(artifactNode, context) {
 		if (artifactNode.isSubType("ucm:artifact")) {
 			var artifactName = artifactNode.name;
 			var artifactPath = context.join("/") + "/" + artifactName;
@@ -52,7 +56,9 @@ function main() {
 		}
 	});
 
-	model.json = jsonUtils.toJSONString(results);
+	model.name = jsonUtils.toJSONString(shortName);
+	model.title = jsonUtils.toJSONString(title);
+	model.data = jsonUtils.toJSONString(results);
 }
 
 main();

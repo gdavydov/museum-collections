@@ -158,4 +158,10 @@
 		<property name="repeatInterval" value="#{15*60*1000}" />
 		<property name="startDelay" value="#{60*1000}" />
 	</bean>
+
+	<bean id="webscript.com.alfresco.museum.ucm.site-size-report.ucm-xls-report.get" class="org.alfresco.museum.ucm.sizelimits.UCMSiteSizeXlsReport" parent="webscript.org.alfresco.repository.content.stream">
+		<property name="connectorService" ref="connector.service" />
+		<property name="nodeService" ref="NodeService" />
+		<property name="utils" ref="ucm.nodeUtils" />
+	</bean>
 </beans>

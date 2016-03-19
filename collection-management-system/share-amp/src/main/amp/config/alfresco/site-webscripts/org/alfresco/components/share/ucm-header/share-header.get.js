@@ -6,6 +6,8 @@ function hideItemById() {
 	}
 }
 
+var siteData = getSiteData();
+
 /*  determine user type  */
 
 var isAdmin = user.isAdmin;
@@ -14,7 +16,6 @@ var isSiteAdmin = false;
 var isPrivateSite = true;
 
 if (!isAdmin) {
-	var siteData = getSiteData();
 	if (siteData != null) {
 		//"Public" UCM site has actually "MODERATED" visibility under the hood
 		isPrivateSite = (siteData.profile == null || siteData.profile.visibility !== "MODERATED");
@@ -50,6 +51,30 @@ if (isVisitor) {
 		sitesMenu.config.showRecentSites = false;
 		//hides "add" and "remove" buttons as well as "Favourites" button itself
 		sitesMenu.config.showFavourites = false;
+	}
+}
+
+/* Add site size report action */
+
+if (siteData != null) {
+	var siteNodeRef = siteData.profile.nodeRef;
+	var siteConfig = widgetUtils.findObject(model.jsonModel, "id", "HEADER_SITE_CONFIGURATION_DROPDOWN");
+	if (siteConfig != null) {
+	if (user.isAdmin || siteData.userIsSiteManager) {
+		// Add widget representing "Site size report" item to the beginning of site configuration dropdown
+		siteConfig.config.widgets.unshift({
+			id : "HEADER_SITE_SIZE_REPORT",
+			name : "alfresco/menus/AlfMenuItem",
+			config : {
+				id : "HEADER_SITE_SIZE_REPORT",
+				label : "link.ucmSiteSizeReport",
+				title: "link.ucmSiteSizeReport",
+				iconAltText: "link.ucmSiteSizeReport",
+				iconClass : "alf-tableview-icon",
+				targetUrl : "site/" + page.url.templateArgs.site + "/ucm-site-size-report"
+			}
+		});
+		}
 	}
 }
 
