@@ -1,0 +1,14 @@
+<webscript>
+  <shortname>UCM Site Size Report</shortname>
+  <description>UCM site size report in form of XLS document</description>
+  <url>/ucm/site-size-report-xls?nodeRef={nodeRef}</url>
+  <authentication>user</authentication>
+  <transaction>none</transaction>
+  <format default="">argument</format>
+  	<args>
+		<arg>
+			<name>nodeRef</name>
+			<description>NodeRef of site root node</description>
+		</arg>
+ 	</args>
+</webscript>

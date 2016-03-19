@@ -1,7 +1,0 @@
-<webscript >
-	<shortname>UCM Site Size XLS Report</shortname>
-	<description>UCM site size report in form of .xls document</description>
-	<url>/ucm/ucm-site-size-xls-report/{filename}?nodeRef={nodeRef}</url>
-	<format default="xls">extension</format>
-	<authentication>user</authentication>
-</webscript>
