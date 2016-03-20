@@ -204,12 +204,14 @@ function ucmEditFile(mediaFile, element, containerSelector, parentNodeRef) {
 				'Edit Properties: <span class="light">' + Alfresco.util.encodeHTML(mediaFile.name || "") + '</span>' ]);
 
 		// Edit metadata link button
-		Alfresco.util.ComponentManager.findFirst('Alfresco.module.SimpleDialog').editMetadata = Alfresco.util.createYUIButton(p_dialog,
+		p_dialog.editMetadata = Alfresco.util.createYUIButton(p_dialog,
 				"editMetadata", null, {
 					type : "link",
 					label : "All properties",
 					href : Alfresco.util.siteURL("edit-metadata?nodeRef=" + mediaFile.nodeRef)
 				});
+		// do not redirect anywhere after pressing "OK" or "Cancel" buttons
+		Alfresco.component.FormManager.prototype.navigateForward = function () {};
 	};
 
 	var templateUrl = YAHOO.lang
