@@ -155,11 +155,20 @@
 
 	<bean id="ucm.siteLimitsUpdateTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="ucm.siteLimitsUpdateJobDetail" />
-		<property name="repeatInterval" value="#{15*60*1000}" />
+		<property name="repeatInterval" value="#{30*60*1000}" />
 		<property name="startDelay" value="#{60*1000}" />
 	</bean>
 
-	<bean id="webscript.com.alfresco.museum.ucm.site-size-report.ucm-xls-report.get" class="org.alfresco.museum.ucm.sizelimits.UCMSiteSizeXlsReport" parent="webscript.org.alfresco.repository.content.stream">
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="ucm.siteLimitsUpdateTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="webscript.com.alfresco.museum.ucm.site-size-report.ucm-xls-report.get" class="org.alfresco.museum.ucm.sizelimits.UCMSiteSizeXlsReport"
+		parent="webscript.org.alfresco.repository.content.stream">
 		<property name="connectorService" ref="connector.service" />
 		<property name="nodeService" ref="NodeService" />
 		<property name="utils" ref="ucm.nodeUtils" />
