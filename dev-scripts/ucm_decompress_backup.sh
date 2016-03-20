@@ -1,0 +1,1 @@
+sudo tar --extract --file /opt/alfresco-5.0.d.bak.tar.bz --preserve-permissions --gzip /opt/alfresco-5.0.d.bak/

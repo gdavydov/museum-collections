@@ -1,0 +1,1 @@
+sudo GZIP=-1 tar --create --file /opt/alfresco-5.0.d.bak.tar.bz --preserve-permissions --gzip --remove-files /opt/alfresco-5.0.d.bak/
