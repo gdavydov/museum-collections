@@ -1,11 +1,21 @@
 .fs-upload-target {
 	width: 504px;
-	height: 60px;
+	height: 110px;
 	padding: 3px;
+}
+
+.fs-upload-dropping .fs-upload-target, .fs-upload-target:hover {
+	border: 3px dashed orange;
+	background-color: lightyellow;
 }
 
 .fs-upload-input {
 	display: none;
+}
+
+.fs-upload-hint {
+	height: 50px;
+	padding-top: 25px;
 }
 
 .ucm-media-wrapper {
@@ -16,7 +26,7 @@
 	margin-bottom:3px;
     color: blue;
     font-style: italic;
-	
+
 }
 
 .ucm-media-wrapper.ucm-audio-wrapper {
@@ -74,7 +84,7 @@
 	text-decoration: none;
 	color: blue;
 	font-weight: bold !important;
-	font-style: italic;	
+	font-style: italic;
 }
 .ucm-media-pdf, .ucm-media-video, .ucm-media-link, .ucm-media-other {
 	color: blue;
@@ -93,6 +103,10 @@
 	vertical-align: baseline;
 }
 
+.ucm-media-url-button:hover {
+	cursor: pointer;
+}
+
 .ucm-media-url-input {
 	width: 400px !important;
 	height: 25px;
@@ -100,7 +114,7 @@
 
 .inline-input-description {
 	color: #666666;
-	font-style: italic;	
+	font-style: italic;
 }
 
 .ucm-media-right {

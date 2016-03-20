@@ -1,0 +1,6 @@
+<!-- This is modified version of alfresco/site-webscripts/org/alfresco/components/document-details/document-links.get.desc.xml -->
+<webscript>
+  <shortname>UCM Document Links</shortname>
+  <description>Links to document content</description>
+  <url>/components/ucm-document-link</url>
+</webscript>

@@ -264,7 +264,7 @@
       <!-- Document Links -->
        <component>
          <region-id>document-links</region-id>
-         <url>/components/document-details/document-links</url>
+         <url>/components/ucm-document-link</url>
          <properties>
             <nodeRef>{nodeRef}</nodeRef>
          </properties>

@@ -83,17 +83,17 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 
 	/*
 	 * var deleteButton = "&nbsp;"; var deleteButton = "&nbsp;";
-	 * 
+	 *
 	 * if (mediaFile.permission="write") {
-	 * 
+	 *
 	 * deleteButton = $('<button class="ucm-media-file-delete-button"><img
 	 * src="/share/images/delete-16-red.png"/></button>' ).click(function() {
 	 * ucmDeleteFile(mediaFile.nodeRef, wrapper); });
-	 * 
+	 *
 	 * editButton = $('<button class="ucm-media-file-edit-button"><img
 	 * src="/share/images/edit-16.png"/></button>' ).click(function() {
 	 * ucmEditFile(mediaFile.nodeRef, wrapper); }); }
-	 * 
+	 *
 	 */
 
 	var deleteButton = $(
@@ -168,7 +168,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 			href : mediaFile.title,
 			'class' : 'ucm-media-link',
 			target : '_blank',
-			text : nameWithLang
+			text : mediaFile.title
 		});
 		// Some sites can't be opened inside frame.
 		/*
@@ -334,7 +334,7 @@ function ucmAjaxRefreshMediaFileList(containerSelector, nodeRef) {
 function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 	//Uploader can't be used if user has no write permission on the node
 	if (!ucmIsEditable()) return;
-	
+
 	require([ "jquery" ], function($) {
 		jQuery = $;
 		require([ appContext + "/res/js/formstone/core.js" ], function() {
@@ -379,7 +379,7 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 
 				var dropzone = $("#" + elementIdPrefix + "-upload-target")
 						.find(".fs-upload-target");
-				dropzone.css("height", "auto");
+				dropzone.wrapInner( "<div class='fs-upload-hint'></div>");
 
 				dropzone.append("<br/>");
 

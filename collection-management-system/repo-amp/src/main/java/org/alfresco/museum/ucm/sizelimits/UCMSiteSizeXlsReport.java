@@ -1,11 +1,13 @@
 package org.alfresco.museum.ucm.sizelimits;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.museum.ucm.UCMConstants;
 import org.alfresco.museum.ucm.utils.NodeUtils;
 import org.alfresco.museum.ucm.utils.UCMContentImpl;
 import org.alfresco.repo.web.scripts.content.StreamContent;
@@ -32,7 +34,8 @@ public class UCMSiteSizeXlsReport extends StreamContent {
 	private static final Log LOGGER = LogFactory.getLog(UCMSiteSizeXlsReport.class);
 
 	private static final String XLS_MIMETYPE = "application/vnd.ms-excel";
-	private static final String SIZE_REPORTS_FOLDER_NAME = "sizeReports";
+	private static final String SITE_REPORTS_FOLDER_NAME = "size-reports";
+	private static final List<String> SIZE_REPORTS_FOLDER_PATH = Arrays.asList(UCMConstants.SYSTEM_FOLDER_NAME, SITE_REPORTS_FOLDER_NAME);
 
 	public static final String SITE_SIZE_REPORT_WEBSCRIPT_PATH = "/ucm/site-size-report";
 	public static final String ENDPOINT_ID = "alfresco";
@@ -72,7 +75,7 @@ public class UCMSiteSizeXlsReport extends StreamContent {
 	}
 
 	private NodeRef createTempNode(NodeRef siteNodeRef, String name, byte[] content) {
-		NodeRef reportsFolderNodeRef = this.getUtils().getOrCreateFolderByPath(siteNodeRef, Collections.singletonList(SIZE_REPORTS_FOLDER_NAME));
+		NodeRef reportsFolderNodeRef = this.getUtils().getOrCreateFolderByPath(siteNodeRef, SIZE_REPORTS_FOLDER_PATH);
 		UCMContentImpl ucmContent = new UCMContentImpl(content, XLS_MIMETYPE, null);
 		return this.getUtils().createContentNode(reportsFolderNodeRef, name, ucmContent, ContentModel.TYPE_CONTENT);
 	}
