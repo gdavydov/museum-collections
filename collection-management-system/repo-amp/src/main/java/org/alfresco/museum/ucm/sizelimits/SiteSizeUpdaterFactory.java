@@ -39,7 +39,8 @@ import org.apache.commons.logging.LogFactory;
 public class SiteSizeUpdaterFactory {
 	private static Log LOGGER = LogFactory.getLog(SiteSizeUpdaterFactory.class);
 
-	public static final String WARNING_MAIL_TEMPLATE_PATH = "Data Dictionary/Email Templates/UCM email templates/site_limits_exceeded_warning.html.ftl";
+	public static final String FINAL_WARNING_MAIL_TEMPLATE_PATH = "Data Dictionary/Email Templates/UCM email templates/site_limits_exceeded_warning.html.ftl";
+	public static final String PRELIMINARY_WARNING_MAIL_TEMPLATE_PATH = "Data Dictionary/Email Templates/UCM email templates/site_limits_close_warning.html.ftl";
 
 	private NodeService nodeService;
 	private TransactionService transactionService;
@@ -59,7 +60,7 @@ public class SiteSizeUpdaterFactory {
 
 		private SiteSizeUpdater(NodeRef siteRef) {
 			this.siteRef = siteRef;
-		}
+ 		}
 
 		private long getNodeSize(NodeRef nodeRef) {
 			long size = 0;
@@ -127,35 +128,71 @@ public class SiteSizeUpdaterFactory {
 	 */
 	public synchronized void setSiteSize(NodeRef siteRef, long value, boolean isDiff) {
 		if (this.getNodeService().hasAspect(siteRef, UCMConstants.ASPECT_SITE_SIZE_LIMITED_QNAME)) {
+			long currentSize = 0;
+			Serializable currentSizeValue = getNodeService().getProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME);
+			if (currentSizeValue instanceof Long) {
+				currentSize = (Long) currentSizeValue;
+			}
+
 			long newSize = 0;
 			if (isDiff) {
-				Serializable currentSize = getNodeService().getProperty(siteRef,
-						UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME);
-				if (currentSize instanceof Long) {
-					newSize = value + (Long) currentSize;
-				} else {
-					newSize = value;
-				}
+				newSize = value + currentSize;
 			} else {
 				newSize = value;
 			}
 
 			if (newSize > getSizeLimit()) {
-				long currentSize = (long) this.getNodeService().getProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME);
 				try {
-					sendWarningEmail(siteRef, currentSize);
+					sendFinalWarningEmail(siteRef, currentSize);
 				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					LOGGER.warn("Error while sending site limit exceeding warning", e);
 				}
-				// TODO: 95% ???
+
+				//disallow transaction
 				rollbackTransaction(siteRef);
+
+				//notify user
+				throw new SiteSizeLimitExceededException();
 			} else {
+				if (newSize > getWarningLimit()) {
+					try {
+						sendPreliminaryWarningEmail(siteRef, currentSize);
+					} catch (FileNotFoundException e) {
+						LOGGER.warn("Error while sending site limit approaching warning", e);
+					}
+				}
+
 				this.getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME, newSize);
 			}
 		}
 	}
 
-	private void sendWarningEmail(NodeRef siteRef, long siteSize) throws FileNotFoundException {
+	private void sendFinalWarningEmail(NodeRef siteRef, long siteSize) throws FileNotFoundException {
+		Date now = new Date();
+
+		// Set date of preliminary warning email. So user won't receive preliminary warning after final warning.
+		this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME, null, now);
+
+		// Set date of final warning email.
+		boolean isNewDateSet = this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE_QNAME, null, now);
+
+		if (isNewDateSet) {
+			sendWarningEmail(siteRef, siteSize, "Site size limit reached!", FINAL_WARNING_MAIL_TEMPLATE_PATH);
+		}
+	}
+
+	private void sendPreliminaryWarningEmail(NodeRef siteRef, long siteSize) throws FileNotFoundException {
+		Date now = new Date();
+
+		// Set date of preliminary warning email.
+		boolean isNewDateSet = this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME, null, now);
+
+		if (isNewDateSet) {
+			sendWarningEmail(siteRef, siteSize, "Site size limit is close!", PRELIMINARY_WARNING_MAIL_TEMPLATE_PATH);
+		}
+	}
+
+	private void sendWarningEmail(NodeRef siteRef, long siteSize, String subject, String templatePath) throws FileNotFoundException {
 		NodeRef siteAdmin = (NodeRef) this.getNodeService().getProperty(siteRef, UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_QNAME);
 		String siteAdminFirstName = (String) this.getNodeService().getProperty(siteAdmin, ContentModel.PROP_FIRSTNAME);
 		String siteAdminEmail = (String) this.getNodeService().getProperty(siteAdmin, UCMConstants.ASPECT_PROP_UCM_SITE_ASPECT_ADMIN_EMAIL_QNAME);
@@ -169,8 +206,11 @@ public class SiteSizeUpdaterFactory {
 		templateArgs.put("site_short_name", siteShortName);
 
 		// https://loftux.com/en/blog/fixing-the-invite-email-template-in-alfresco-share#sthash.IQx2RxYt.dpbs
-		this.getUtils().sendNotificationEmail(WARNING_MAIL_TEMPLATE_PATH,
-				"Site size limit reached!", siteAdminEmail, templateArgs);
+		this.getUtils().sendNotificationEmail(templatePath, subject, siteAdminEmail, templateArgs);
+	}
+
+	private long getWarningLimit() {
+		return (long) (getSizeLimit()*getWarningThresholdPercents()/100f);
 	}
 
 	public NodeService getNodeService() {

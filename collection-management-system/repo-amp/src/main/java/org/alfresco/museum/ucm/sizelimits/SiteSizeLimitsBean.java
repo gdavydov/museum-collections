@@ -1,5 +1,7 @@
 package org.alfresco.museum.ucm.sizelimits;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import org.alfresco.model.ContentModel;
@@ -27,9 +29,9 @@ import org.alfresco.service.namespace.QName;
  */
 public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy,
 		NodeServicePolicies.BeforeDeleteNodePolicy, ContentServicePolicies.OnContentPropertyUpdatePolicy,
-		NodeServicePolicies.OnMoveNodePolicy {
-	public static QName[] TYPES_TO_CHECK = new QName[] { UCMConstants.TYPE_UCM_ARTIFACT_QNAME,
-			UCMConstants.TYPE_UCM_ATTACHED_FILE_QNAME };
+		NodeServicePolicies.OnMoveNodePolicy, NodeServicePolicies.OnSetNodeTypePolicy {
+	public static List<QName> TYPES_TO_CHECK = Arrays.asList(UCMConstants.TYPE_UCM_ARTIFACT_QNAME,
+			UCMConstants.TYPE_UCM_ATTACHED_FILE_QNAME );
 
 	private NodeService nodeService;
 	private PolicyComponent policyComponent;
@@ -47,6 +49,8 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 		Behaviour onMoveNode = new JavaBehaviour(this, "onMoveNode", Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
 		Behaviour onAddAspect = new JavaBehaviour(this, "onAddAspect",
 				Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
+		Behaviour onSetNodeType = new JavaBehaviour(this, "onSetNodeType",
+				Behaviour.NotificationFrequency.FIRST_EVENT);
 
 		for (QName type : TYPES_TO_CHECK) {
 			this.getPolicyComponent().bindClassBehaviour(ContentServicePolicies.OnContentPropertyUpdatePolicy.QNAME,
@@ -54,6 +58,8 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 			this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.BeforeDeleteNodePolicy.QNAME, type,
 					beforeDeleteNode);
 			this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.OnMoveNodePolicy.QNAME, type, onMoveNode);
+			this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.OnSetNodeTypePolicy.QNAME, type,
+					onSetNodeType);
 		}
 
 		this.getPolicyComponent().bindClassBehaviour(NodeServicePolicies.OnAddAspectPolicy.QNAME,
@@ -115,6 +121,16 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 				// add content size to new site size
 				getSizeUpdFactory().setSiteSize(newSiteRef, size, true);
 			}
+		}
+	}
+
+	@Override
+	public void onSetNodeType(NodeRef nodeRef, QName oldType, QName newType) {
+		boolean isNewContent = !(TYPES_TO_CHECK.contains(oldType));
+		if (isNewContent) {
+			NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
+			long size = getUtils().getNodeSize(nodeRef);
+			getSizeUpdFactory().setSiteSize(siteRef, size, true);
 		}
 	}
 

@@ -534,7 +534,7 @@
          {
             parent = container;
          }
-		 
+
          Alfresco.util.PopupManager.displayPrompt(
          {
             title: this.msg("actions." + content + ".delete"),
@@ -1786,16 +1786,16 @@
        */
       onActionChangeTypeToArtifact: function dlA_onActionChangeTypeToArtifact(records)
       {
-      for (var recno in records) 
+      for (var recno in records)
       {
          record = records[recno];
          var jsNode = record.jsNode;
          var currentType = jsNode.type,
             displayName = record.displayName,
             actionUrl = Alfresco.constants.PROXY_URI + $combine("slingshot/doclib/type/node", jsNode.nodeRef.uri);
-  		
+
 //		remote.call(actionUrl);
-		
+
         Alfresco.util.Ajax.jsonPost(
         {
         	url: actionUrl,
@@ -1803,7 +1803,7 @@
             {
             	type: "ucm:artifact"
             },
-            onSuccess:
+            successCallback:
             {
             	fn: function dlA_onActionChangeType_success(response)
                 {
@@ -1818,19 +1818,27 @@
                 },
                 scope: this
             },
-            onFailure:
+            failureCallback:
             {
             	fn: function dlA_onActionChangeType_failure(response)
                 {
+            		var message = this.msg("message.change-type.failure", "(" + currentType + ") " + displayName);
+            		//This type of exception typically appears if transaction was cancelled due to exceeding size limits
+            		var isExceededSize = (response.json.exception.search("Transaction is already completed - do not call commit or rollback more than once per transaction") != -1);
+            		if (isExceededSize) {
+            			//TODO: i18n?
+            			message = "Site size limit exceeded. Can't convert \"" + displayName + "\" to artifact.";
+            		}
+
             		Alfresco.util.PopupManager.displayMessage(
                     {
-                    	text: this.msg("message.change-type.failure", "("+type+") "+displayName)
+                    	text: message
                     });
                 },
                 scope: this
             }
        });
-      } // this is for each            
+      } // this is for each
       },
 
       /**

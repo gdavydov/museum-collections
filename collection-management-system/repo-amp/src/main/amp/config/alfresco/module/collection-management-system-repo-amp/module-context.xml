@@ -159,7 +159,7 @@
 		<property name="startDelay" value="#{60*1000}" />
 	</bean>
 
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<bean id="ucm.schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="ucm.siteLimitsUpdateTrigger" />

@@ -750,8 +750,12 @@
 					<title>Date of Last Scan</title>
 					<type>d:datetime</type>
 				</property>
-				<property name="ucm:site_warning_email_date">
-					<title>Warning Email Date</title>
+				<property name="ucm:site_preliminary_warning_email_date">
+					<title>Date of email about approaching to site size limit</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="ucm:site_final_warning_email_date">
+					<title>Date of email about exceeding site size limit</title>
 					<type>d:datetime</type>
 				</property>
 			</properties>

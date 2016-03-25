@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.alfresco.error.AlfrescoRuntimeException;
@@ -282,6 +283,18 @@ public class NodeUtils {
 		mailAction.setExecuteAsynchronously(false);
 
 		this.getActionService().executeAction(mailAction, null);
+	}
+
+	public boolean compareAndSetProperty(NodeRef siteRef, QName property, Serializable expected, Serializable newValue) {
+		boolean result = false;
+		synchronized (siteRef) {
+			Serializable currentValue = this.getNodeService().getProperty(siteRef, property);
+			if (Objects.equals(currentValue, expected)) {
+				this.getNodeService().setProperty(siteRef, property, newValue);
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	public NodeService getNodeService() {

@@ -261,31 +261,29 @@ function ucmEditFile(mediaFile, element, containerSelector, parentNodeRef) {
 }
 
 function ucmDeleteFile(mediaFile, element, containerSelector, parentNodeRef) {
-	require(
-			[ "jquery" ],
-			function($) {
-				jQuery = $;
-				var deleteUrl = appContext
-						+ "/proxy/alfresco/slingshot/doclib/action/files?alf_method=delete";
-				var headers = {};
-				headers[Alfresco.util.CSRFPolicy.getParameter()] = Alfresco.util.CSRFPolicy
-						.getToken();
+	var deleteUrl = appContext + "/proxy/alfresco/slingshot/doclib/action/files?alf_method=delete";
 
-				var request = $.ajax({
-					url : deleteUrl,
-					method : 'POST',
-					contentType : 'application/json',
-					headers : headers,
-					data : JSON.stringify({
-						nodeRefs : [ mediaFile.nodeRef ]
-					}),
-					dataType : 'json'
+	Alfresco.util.Ajax.jsonPost({
+    	url: deleteUrl,
+        dataObj: {
+        	nodeRefs : [ mediaFile.nodeRef ]
+        },
+        successCallback: {
+        	fn: function(response) {
+        		element.remove();
+            },
+            scope: this
+        },
+        failureCallback: {
+        	fn: function(response) {
+				console.error("Can't delete attachment: " + error);
+				Alfresco.util.PopupManager.displayMessage({
+					text : "Error: can't delete attachment!"
 				});
-
-				request.done(function(msg) {
-					element.remove();
-				});
-			});
+            },
+            scope: this
+        }
+   });
 }
 
 function isAudioFile(file) {
@@ -309,28 +307,28 @@ function ucmRefreshMediaFileList(containerSelector, mediaFiles, nodeRef) {
 }
 
 function ucmAjaxRefreshMediaFileList(containerSelector, nodeRef) {
-	// TODO: sync: true ?
-	require([ "jquery" ], function($) {
-		jQuery = $;
-		$.ajax(ucmMediaServiceUrl(), {
-			method : 'GET',
-			contentType : false,
-			processData : true,
-			data : {
-				nodeRef : nodeRef
-			},
-			success : function(e, file, response) {
-				ucmRefreshMediaFileList(containerSelector,
-						response.responseJSON.mediaFiles, nodeRef);
-			},
-			error : function(xhr, status, error) {
+	// TODO: sync: true?
+	Alfresco.util.Ajax.jsonGet({
+    	url: ucmMediaServiceUrl(),
+        dataObj: {
+        	nodeRef : nodeRef
+        },
+        successCallback: {
+        	fn: function(response) {
+				ucmRefreshMediaFileList(containerSelector, response.json.mediaFiles, nodeRef);
+            },
+            scope: this
+        },
+        failureCallback: {
+        	fn: function(response) {
 				console.error("Media file list update error: " + error);
 				Alfresco.util.PopupManager.displayMessage({
 					text : "Error: can't update list of attachments!"
 				});
-			}
-		});
-	});
+            },
+            scope: this
+        }
+   });
 }
 
 function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
@@ -377,6 +375,13 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 				}
 				function onFileError(e, file, error) {
 					console.error("File Error: " + error);
+
+					//This type of exception typically appears if transaction was cancelled due to exceeding size limits
+					var isExceededSize = (file.transfer.responseJSON.exception === "java.lang.IllegalStateException - Cannot deactivate transaction synchronization - not active");
+					if (isExceededSize) {
+						//TODO: i18n?
+						Alfresco.util.PopupManager.displayMessage("Can't create attachment: Site size limit exceeded.");
+					}
 				}
 
 				var dropzone = $("#" + elementIdPrefix + "-upload-target")

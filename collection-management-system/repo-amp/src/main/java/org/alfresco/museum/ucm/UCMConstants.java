@@ -155,8 +155,11 @@ public class UCMConstants {
 	public static final String ASPECT_PROP_SITE_SCAN_DATE = "site_size_scan_date";
 	public static final QName ASPECT_PROP_SITE_SCAN_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SCAN_DATE);
 
-	public static final String ASPECT_PROP_SITE_SIZE_WARNING_DATE = "site_warning_email_date";
-	public static final QName ASPECT_PROP_SITE_SIZE_WARNING_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SIZE_WARNING_DATE);
+	public static final String ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE = "site_preliminary_warning_email_date";
+	public static final QName ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE);
+
+	public static final String ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE = "ucm:site_final_warning_email_date";
+	public static final QName ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE_QNAME = QName.createQName(UCM_NAMESPACE, ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE);
 
 	public static final Set<QName> INHERITABLE_ASPECTS = CollectionUtils.unmodifiableSet(ASPECT_SITE_QNAME,
 			ASPECT_MUSEUM_ARTIFACT_QNAME, ASPECT_ARTIST_QNAME);

@@ -4,6 +4,7 @@ function getArtifactFolder(artifactRef) {
 		var node = search.findNode(artifactRef);
 		if (node != null) {
 			var artifactContents = node.childAssocs["ucm:artifact_contains"];
+			//TODO: create folder if absent
 			if (artifactContents != null && artifactContents.length > 0) {
 				var mediaFolder = artifactContents[0];
 				if (mediaFolder != null && mediaFolder.isContainer) {
@@ -15,7 +16,7 @@ function getArtifactFolder(artifactRef) {
 	return result;
 }
 
-function getMediaFiles(artifactRef) 
+function getMediaFiles(artifactRef)
 {
 /*
   for each(permission in node.fullPermissions) {
@@ -23,7 +24,7 @@ function getMediaFiles(artifactRef)
       logger.log(node.displayPath + "/" + node.name + ";" + permission);
     }
   }
-getPermissions(noderef) 
+getPermissions(noderef)
 */
 	var mediaFiles = [];
 	var mediaFolder = getArtifactFolder(artifactRef);

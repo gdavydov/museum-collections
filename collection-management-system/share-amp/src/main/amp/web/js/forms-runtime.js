@@ -4,7 +4,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
 /**
  * Class to represent the forms runtime.
- * 
+ *
  * @namespace Alfresco.forms
  * @class Alfresco.forms.Form
  */
@@ -20,7 +20,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
    /**
     * Constructor for a form.
-    * 
+    *
     * @param {String} formId The HTML id of the form to be managed
     * @return {Alfresco.forms.Form} The new Form instance
     * @constructor
@@ -73,7 +73,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * HTML id of the form being represented.
-       * 
+       *
        * @property formId
        * @type string
        */
@@ -81,16 +81,16 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * List of ids and/or elements being used to submit the form.
-       * 
+       *
        * @property submitElements
        * @type object[]
        */
       submitElements: null,
-      
+
       /**
        * Flag to determine whether the submit elements dynamically update
        * their state depending on the current values in the form.
-       * 
+       *
        * @property showSubmitStateDynamically
        * @type boolean
        */
@@ -107,17 +107,17 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * Flag to determine whether the form will be submitted using an AJAX request.
-       * 
+       *
        * @property ajaxSubmit
        * @type boolean
        */
       ajaxSubmit: null,
-      
+
       /**
-       * String representing where errors should be displayed. 
-       * If the value is not "alert" it's presumed the string is the id of an 
+       * String representing where errors should be displayed.
+       * If the value is not "alert" it's presumed the string is the id of an
        * HTML object to be used as the error container.
-       * 
+       *
        * @property errorContainer
        * @type string
        */
@@ -130,13 +130,13 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
        * @type boolean
        */
       showMultipleErrors: false,
-      
+
       /**
        * Object literal containing the abstract function for pre-submission form processing.
        *   fn: function, // The override function.
        *   obj: object, // An object to pass back to the function.
        *   scope: object // The object to use for the scope of the function.
-       * 
+       *
        * @property doBeforeFormSubmit
        * @type object
        */
@@ -146,14 +146,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          obj: null,
          scope: this
       },
-      
+
       /**
        * Object literal containing the abstract function for intercepting AJAX form submission.
        * Returning false from the override will prevent the Forms Runtime from submitting the data.
        *   fn: function, // The override function.
        *   obj: object, // An object to pass back to the function.
        *   scope: object // The object to use for the scope of the function.
-       * 
+       *
        * @property doBeforeAjaxRequest
        * @type object
        */
@@ -166,23 +166,23 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          obj: null,
          scope: this
       },
-      
+
       /**
        * Object holding the callback handlers and messages for AJAX submissions.
        * The callback handlers are themselves an object of the form:
        *   fn: function, // The handler to call when the event fires.
        *   obj: object, // An object to pass back to the handler.
        *   scope: object // The object to use for the scope of the handler.
-       * 
+       *
        * @property ajaxSubmitHandlers
        * @type object
        */
       ajaxSubmitHandlers: null,
-      
+
       /**
        * String representing the http method to be used for the
        * ajax call. Default is POST.
-       * 
+       *
        * @property ajaxSubmitMethod
        * @type String
        */
@@ -201,19 +201,19 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
        * @default null
        */
       ajaxNoReloadOnAuthFailure: null,
-      
+
       /**
-       * Flag to determine whether the form data should be submitted 
+       * Flag to determine whether the form data should be submitted
        * represented by a JSON structure.
-       * 
+       *
        * @property submitAsJSON
        * @type boolean
        */
       submitAsJSON: null,
-      
+
       /**
        * List of validations to execute when the form is submitted.
-       * 
+       *
        * @property validations
        * @type object[]
        */
@@ -256,7 +256,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       /**
        * Sets up the required event handlers and prepares the form for use.
        * NOTE: This must be called after all other setup methods.
-       * 
+       *
        * @method init
        */
       init: function()
@@ -274,14 +274,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                   form.setAttribute("onsubmit", "return false;");
                }
             }
-            
+
             // determine if the AJAX and JSON submission should be enabled
             if (form.getAttribute("enctype") && form.getAttribute("enctype") == "application/json")
             {
                this.ajaxSubmit = true;
                this.submitAsJSON = true;
             }
-            
+
             // find the default submit elements if there are no submitIds set
             if (this.submitElements && this.submitElements.length == 0)
             {
@@ -320,7 +320,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          }
          else
          {
-            this._showInternalError("form with id of '" + this.formId + 
+            this._showInternalError("form with id of '" + this.formId +
                   "' could not be located, ensure the form is created after the form element is available.");
          }
       },
@@ -342,7 +342,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
        * All forms are always validated before submit
        *
        * Enables or disables validation when the form is submitted.
-       * 
+       *
        * @method setValidateOnSubmit
        * @param validate {boolean} true to validate on submission, false
        *        to avoid validation
@@ -350,14 +350,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       setValidateOnSubmit: function(validate)
       {
       },
-      
+
       /**
        * Deprecated!
        *
        * All fields are now always validated.
        *
        * Sets whether all fields are validated when the form is submitted.
-       * 
+       *
        * @method setValidateAllOnSubmit
        * @param validate {boolean} true to validate all fields on submission, false
        *        to stop after the first validation failure
@@ -365,12 +365,12 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       setValidateAllOnSubmit: function(validateAll)
       {
       },
-      
+
       /**
        * Sets the list of ids and/or elements being used to submit the form.
        * By default the forms runtime will look for and use the first
        * input field of type submit found in the form being managed.
-       * 
+       *
        * @method setSubmitElements
        * @param submitElements {object | object[]} Single object or array of objects
        */
@@ -385,14 +385,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
             this.submitElements = submitElements;
          }
       },
-      
+
       /**
        * Sets the container where errors will be displayed.
-       * 
+       *
        * @method setErrorContainer
        * @param container {string} String representing where errors should
-       *        be displayed. If the value is not "alert" it's presumed the 
-       *        string is the id of an HTML object to be used as the error 
+       *        be displayed. If the value is not "alert" it's presumed the
+       *        string is the id of an HTML object to be used as the error
        *        container
        */
       setErrorContainer: function(container)
@@ -430,7 +430,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
        * their state depending on the current values in the form.
        * The visibility of errors can be controlled via the
        * showErrors parameter.
-       * 
+       *
        * @method setShowSubmitStateDynamically
        * @param showState {boolean} true to have the elements update dynamically
        */
@@ -453,20 +453,20 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * Enables or disables whether the form submits via an AJAX call.
-       * 
+       *
        * @method enableAJAXSubmit
        * @param ajaxSubmit {boolean} true to submit using AJAX, false to submit
        *        using the browser's default behaviour
-       * @param callbacks {object} Optional object representing callback handlers 
+       * @param callbacks {object} Optional object representing callback handlers
        *        or messages to use, for example
-       *        { 
+       *        {
        *           successCallback: yourHandlerObject,
        *           failureCallback: yourHandlerObject,
        *           successMessage: yourMessage,
        *           failureMessage: yourMessage
        *        }
        *        Callback handler objects are of the form:
-       *        { 
+       *        {
        *           fn: function, // The handler to call when the event fires.
        *           obj: object, // An object to pass back to the handler.
        *           scope: object // The object to use for the scope of the handler.
@@ -477,14 +477,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          this.ajaxSubmit = ajaxSubmit;
          this.ajaxSubmitHandlers = callbacks;
       },
-      
+
       /**
        * Enables or disables submitting the form data in JSON format.
        * Setting the enctype attribute of the form to "application/json"
        * in Firefox will achieve the same result.
-       * 
+       *
        * @method setSubmitAsJSON
-       * @param submitAsJSON {boolean} true to submit the form data as JSON, 
+       * @param submitAsJSON {boolean} true to submit the form data as JSON,
        *        false to submit one of the standard types "multipart/form-data"
        *        or "application/x-www-form-urlencoded" depending on the enctype
        *        attribute on the form
@@ -496,7 +496,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * Set the http method to use for the AJAX call.
-       * 
+       *
        * @method setAjaxSubmitMethod
        * @param ajaxSubmitMethod {string} the http method to use for the AJAX call
        */
@@ -519,7 +519,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       {
          this.ajaxNoReloadOnAuthFailure = noReloadOnAuthFailure;
       },
-      
+
       /**
        * Adds validation for a specific field on the form.
        * Use the when parameter to define when validation shall be triggered.
@@ -528,15 +528,15 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
        *
        * @method addValidation
        * @param fieldId {string} Id of the field the validation is for
-       * @param validationHandler {function} Function to call to handle the 
+       * @param validationHandler {function} Function to call to handle the
        *        actual validation
-       * @param validationArgs {object} Optional object representing the 
+       * @param validationArgs {object} Optional object representing the
        *        arguments to pass to the validation handler function
        * @param when {string} Name of the event when validation shall be triggered, i.e. "keyup", "blur"
        *        If null, the validation will
        * @param message {string|object|function|null} Message to be displayed to the user when validation fails,
        *        if a function it will be invoked and shall return a string, which may contain HTML,
-       *        if an object different values may be provided for rendering a HTML or text message as necessary 
+       *        if an object different values may be provided for rendering a HTML or text message as necessary
        *        in the 'html' and 'text' property values, which may themselves be strings, functions or null,
        *        if omitted or null the default message in the handler is used
        * @param config {object|function} Contains advanced instructions for the form, i.e. tooltip behaviour when widgets are used
@@ -550,7 +550,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          {
             if (Alfresco.logger.isDebugEnabled())
                Alfresco.logger.debug("Ignoring validation for field with id of '" + fieldId + "' as it could not be located.");
-            
+
             return;
          }
          else
@@ -561,20 +561,20 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                Alfresco.util.generateDomId(field, "form-field-")
             }
          }
-         
+
          if (validationHandler === undefined || validationHandler === null)
          {
             if (Alfresco.logger.isDebugEnabled())
                Alfresco.logger.debug("Ignoring validation for field with id of '" + fieldId + "' as a validationHandler was not provided.");
-            
+
             return;
          }
-         
+
          if (message === undefined)
          {
             message = null;
          }
-         
+
          // create object representation of validation
          var validation =
          {
@@ -586,16 +586,16 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
             event: when,
             config: config
          };
-         
+
          // add to list of validations
          this.validations.push(validation);
-         
+
          if (Alfresco.logger.isDebugEnabled())
             Alfresco.logger.debug("Added submit validation for field: " + fieldId +
-                                  ", using handler: " + 
-                                  (validationHandler.name || YAHOO.lang.dump(validationHandler)) + 
+                                  ", using handler: " +
+                                  (validationHandler.name || YAHOO.lang.dump(validationHandler)) +
                                   ", args: " + YAHOO.lang.dump(validationArgs));
-      
+
          // if an event has been specified attach an event handler
          if (when && when.length > 0)
          {
@@ -646,13 +646,13 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                          ", on event: " + when);
          }
       },
-      
+
       /**
        * NOTE! Deprecated. The form runtime now handles error displays by itself.
        * Kept to make sure custom validation handlers calling this method won't break.
        *
        * Adds an error to the form.
-       * 
+       *
        * @method addError
        * @param msg {string} The error message to display
        * @param field {object} The element representing the field the error occurred on
@@ -661,11 +661,11 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       {
 
       },
-      
+
       /**
        * Adds the given submitElement to the list of submit elements
        * for the form.
-       * 
+       *
        * @method addSubmitElement
        * @param submitElement Object or string representing the submit element
        */
@@ -683,10 +683,10 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
             }
          }
       },
-      
+
       /**
        * Retrieves the label text for a field
-       * 
+       *
        * @method getFieldLabel
        * @param fieldId {string} The id of the field to get the label for
        * @return {string} The label for the field or the fieldId if a label could not be found
@@ -694,7 +694,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       getFieldLabel: function(fieldId)
       {
          var label = null;
-         
+
          // lookup the label using the "for" attribute (use the first if multiple found)
          var nodes = Selector.query('label');
          // NOTE: there seems to be a bug in getting label using 'for' or 'htmlFor'
@@ -711,32 +711,32 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                }
             }
          }
-         
+
          // default to the field id if the label element was not found
          if (label == null)
          {
             label = fieldId;
          }
-         
+
          return label;
       },
-      
+
       /**
        * Retrieves fields by type
-       * 
+       *
        * @method getFieldsByType
        * @param type {string} The type
        * @return {string} fields by type
-       */	  
+       */
       getFieldsByType: function(type)
       {
          var nodes = Selector.query(type);
          return nodes;
       },
-	  
+
       /**
        * Retrieves the data currently held by the form.
-       * 
+       *
        * @method getFormData
        * @return An object representing the form data
        */
@@ -744,11 +744,11 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       {
          // get the form element
          var form = Dom.get(this.formId);
-         
+
          // build object representation of the form data
          return this._buildAjaxForSubmit(form);
       },
-      
+
       /**
        * Applies a Key Listener to input fields to ensure tabbing only targets elements
        * that specifically set a "tabindex" attribute.
@@ -764,7 +764,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
              * Ensure the Tab key only focusses relevant fields
              */
             var form = Dom.get(this.formId);
-            
+
             var fnTabFix = function(id, keyEvent)
             {
                var event = keyEvent[1];
@@ -779,7 +779,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                   }
                }
             };
-            
+
             var tabListener = new KeyListener(form,
             {
                keys: KeyListener.KEY.TAB
@@ -849,14 +849,14 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
               {
                  // TODO: for now if an object is passed presume it's a YUI button
                  currentItem.set("disabled", !enabled);
-              }              
+              }
             }
          }
       },
-      
+
       /**
        * Event handler called when a validation event is fired by any registered field.
-       * 
+       *
        * @method _validationEventFired
        * @param event {object} The event
        * @param fieldId {String}
@@ -974,7 +974,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * Event handler called when the form is submitted.
-       * 
+       *
        * @method _submitInvoked
        * @param event {object} The event
        * @private
@@ -1037,7 +1037,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                   }
 
                   form.target = iframe.name;
-                  
+
                   // UCM-customization: handle response
 
                   function ucmCommonFormProcessing(scope, isSuccess) {
@@ -1061,6 +1061,16 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                      }
                   }
 
+                  function ucmProcessErrorResponse(response) {
+                	  //This type of exception typically appears if transaction was cancelled due to exceeding size limits
+                	  var isExceededSize = (response.json.exception === "java.lang.IllegalStateException - Cannot deactivate transaction synchronization - not active");
+                	  if (isExceededSize) {
+                		  //TODO: i18n?
+                		  //Hack response to make error message more comprehensible
+                		  response.json.message = "Site size limit exceeded.";
+                	  }
+                  }
+
                   var config = {};
                   var submitHandlers = this.ajaxSubmitHandlers || {};
                   if (submitHandlers)
@@ -1072,26 +1082,27 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                            successCallback.fn.call(successCallback.scope || this, response);
                         }
                         if (submitHandlers.successMessage) {
-                           Alfresco.util.PopupManager.displayMessage(successMessage);
+                        	Alfresco.util.PopupManager.displayMessage({text: successMessage});
                         }
                      };
                      config.failureCallback = function(response) {
                         ucmCommonFormProcessing(this, false);
-                        var failureCallback = submitHandlers.failureCallback;
-                        if (failureCallback && failureCallback.fn) {
-                           failureCallback.fn.call(failureCallback.scope || this, response);
-                        }
-                        if (submitHandlers.failureMessage) {
-                            Alfresco.util.PopupManager.displayMessage(failureMessage);
-                         }
+                        ucmProcessErrorResponse(response);
+                    	var failureCallback = submitHandlers.failureCallback;
+                    	if (failureCallback && failureCallback.fn) {
+                    		failureCallback.fn.call(failureCallback.scope || this, response);
+                    	}
+                    	if (submitHandlers.failureMessage) {
+                    		Alfresco.util.PopupManager.displayMessage({text: failureMessage});
+                    	}
                      };
                   }
-                  
+
                   var dataObj = {};
                   for(var i = 0; i < form.elements.length; ++i) {
-                      dataObj[form.elements[i].name] = form.elements[i].value; 
+                      dataObj[form.elements[i].name] = form.elements[i].value;
                   }
-                  
+
                   iframe.onload = function UCM_createContentFrameLoad()
                   {
                       var jsonText = YAHOO.util.Dom.getFirstChild(iframe.contentWindow.document.body).innerHTML;
@@ -1108,7 +1119,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                           }
                       }
                   };
-                  
+
                   form.submit();
                   return;
                }
@@ -1236,10 +1247,10 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                Alfresco.logger.debug("Submission prevented as validation failed");
          }
       },
-      
+
       /**
        * Builds a JSON representation of the current form
-       * 
+       *
        * @method _buildAjaxForSubmit
        * @param form {object} The form object to build the JSON for
        * @private
@@ -1317,7 +1328,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                   }
                }
             }
-            
+
             return formData;
          }
       },
@@ -1556,7 +1567,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
                            field.setAttribute(this._VALIDATION_MSG_ATTR, errorsByField[valFieldId][0]);
                         }
                      }
-                     
+
                      allErrors.push({ id: valFieldId, msg: fieldMsg });
                      errorsByField[valFieldId].push(message);
                      errorsByFieldText[valFieldId].push(textMessage);
@@ -1772,11 +1783,11 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       /**
        * Displays an internal form error message.
-       * 
+       *
        * @method _showInternalError
        * @param msg {string} The error message to display
        * @param field {object} The element representing the field the error occurred on
-       * @private 
+       * @private
        */
       _showInternalError: function(msg, field)
       {
@@ -1885,7 +1896,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
    /**
     * Validate that the content of a password adheres to the policy provided in the supplied configuration
-    * 
+    *
     * @method passwordContent
     * @param field {object} The element representing the field the validation is for
     * @param args {object} Object providing the password content policy
@@ -1917,7 +1928,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
             minNumeric: 0,
             minSymbols: 0
          }, args),
-         password = field.value, 
+         password = field.value,
          DIGITS = /\d/g,
          SPECIAL_CHARS = /([!,@,#,$,%,^,&,*,?,_,~])/g,
          numeric = (password.match(DIGITS) || []).length,
@@ -1972,7 +1983,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          includeWhitespace: true,
          ignoreEmpty: false
       }, args);
-      
+
       if (YAHOO.lang.trim(field.value).length == 0 && myArgs.ignoreEmpty)
       {
          return true;
@@ -2169,7 +2180,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
       return Alfresco.forms.validation.regexMatch(field, args, event, form);
    };
-  
+
       /**
     * File name validation handler, tests that the given field's value is a valid
     * name for a node in the repository.
@@ -2220,7 +2231,7 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
       {
          args = {};
       }
-      
+
       args.pattern = /([#\\\?\/\|]+)|([\.]?[\.]+$)/;
       args.match = false;
 
@@ -2302,11 +2313,11 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
          {
          	args.pattern = /^("[-A-Za-z0-9\xc0-\xff\(\)<>\[\]\\:,;@\".\" *"!#$%&'*+\/=?^_`{}~|]*")+@([\.A-Za-z0-9_-])*[A-Za-z0-9_-]$/;
          }
-         else 
+         else
          {
          	args.pattern = /^([-A-Za-z0-9\xc0-\xff!#$%&'*+\/=?^_`{}~|]+\.)*[-A-Za-z0-9\xc0-\xff!#$%&'*+\/=?^_`{}|~_]+@([\.A-Za-z0-9_-])*[A-Za-z0-9_-]$/;
          }
-         
+
          args.match = true;
 
          valid = Alfresco.forms.validation.regexMatch(field, args, event, form);
