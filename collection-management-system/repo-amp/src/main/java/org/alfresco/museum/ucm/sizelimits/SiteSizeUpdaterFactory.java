@@ -103,7 +103,7 @@ public class SiteSizeUpdaterFactory {
 
 					LOGGER.info(String.format("Site %s have content of size %d on %s", siteName, siteSize, now.toString()));
 
-					setSiteSize(siteRef, siteSize, false);
+					setSiteSize(siteRef, siteSize, false, true);
 					getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SCAN_DATE_QNAME, now);
 					return null;
 				}
@@ -126,7 +126,7 @@ public class SiteSizeUpdaterFactory {
 	/**
 	 * Single synchronized entry point for setting value to site size property.
 	 */
-	public synchronized void setSiteSize(NodeRef siteRef, long value, boolean isDiff) {
+	public synchronized void setSiteSize(NodeRef siteRef, long value, boolean isDiff, boolean isBackgroundUpdate) {
 		if (this.getNodeService().hasAspect(siteRef, UCMConstants.ASPECT_SITE_SIZE_LIMITED_QNAME)) {
 			long currentSize = 0;
 			Serializable currentSizeValue = getNodeService().getProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME);
@@ -151,11 +151,14 @@ public class SiteSizeUpdaterFactory {
 					}
 				}
 
-				//disallow transaction
-				rollbackTransaction(siteRef);
+				// if new site size is being set by background job then there is no need to discard transaction. New site size should be set even if it exceeds limit.
+				if (!isBackgroundUpdate) {
+					//disallow transaction
+					rollbackTransaction(siteRef);
 
-				//notify user
-				throw new SiteSizeLimitExceededException();
+					//notify user
+					throw new SiteSizeLimitExceededException();
+				}
 			} else {
 				//only send email when we cross warning limit
 				if (getWarningLimit() >= currentSize && getWarningLimit() < newSize) {
@@ -165,9 +168,9 @@ public class SiteSizeUpdaterFactory {
 						LOGGER.warn("Error while sending site limit approaching warning", e);
 					}
 				}
-
-				this.getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME, newSize);
 			}
+
+			this.getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_CONTENT_SIZE_QNAME, newSize);
 		}
 	}
 

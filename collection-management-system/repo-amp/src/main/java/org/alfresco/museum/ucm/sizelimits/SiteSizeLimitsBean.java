@@ -87,7 +87,7 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 		NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
 		if (siteRef != null) {
 			// reduce file size by size of deleted content
-			getSizeUpdFactory().setSiteSize(siteRef, -size, true);
+			getSizeUpdFactory().setSiteSize(siteRef, -size, true, false);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 		NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
 		if (siteRef != null) {
 			// add content size change to site size
-			getSizeUpdFactory().setSiteSize(siteRef, newSize - oldSize, true);
+			getSizeUpdFactory().setSiteSize(siteRef, newSize - oldSize, true, false);
 		}
 	}
 
@@ -114,12 +114,12 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 		if (!Objects.equals(oldSiteRef, newSiteRef)) {
 			if (oldSiteRef != null) {
 				// subtract content size from old site size
-				getSizeUpdFactory().setSiteSize(oldSiteRef, -size, true);
+				getSizeUpdFactory().setSiteSize(oldSiteRef, -size, true, false);
 			}
 
 			if (newSiteRef != null) {
 				// add content size to new site size
-				getSizeUpdFactory().setSiteSize(newSiteRef, size, true);
+				getSizeUpdFactory().setSiteSize(newSiteRef, size, true, false);
 			}
 		}
 	}
@@ -130,7 +130,7 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 		if (isNewContent) {
 			NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
 			long size = getUtils().getNodeSize(nodeRef);
-			getSizeUpdFactory().setSiteSize(siteRef, size, true);
+			getSizeUpdFactory().setSiteSize(siteRef, size, true, false);
 		}
 	}
 
