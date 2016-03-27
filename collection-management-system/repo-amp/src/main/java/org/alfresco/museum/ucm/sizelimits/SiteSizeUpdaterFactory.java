@@ -142,10 +142,13 @@ public class SiteSizeUpdaterFactory {
 			}
 
 			if (newSize > getSizeLimit()) {
-				try {
-					sendFinalWarningEmail(siteRef, currentSize);
-				} catch (FileNotFoundException e) {
-					LOGGER.warn("Error while sending site limit exceeding warning", e);
+				// No need to notify user each time background job discovers that limit is exceeded. Only if site size was somehow increased since last time.
+				if (newSize > currentSize) {
+					try {
+						sendFinalWarningEmail(siteRef, currentSize);
+					} catch (FileNotFoundException e) {
+						LOGGER.warn("Error while sending site limit exceeding warning", e);
+					}
 				}
 
 				//disallow transaction
@@ -154,7 +157,8 @@ public class SiteSizeUpdaterFactory {
 				//notify user
 				throw new SiteSizeLimitExceededException();
 			} else {
-				if (newSize > getWarningLimit()) {
+				//only send email when we cross warning limit
+				if (getWarningLimit() >= currentSize && getWarningLimit() < newSize) {
 					try {
 						sendPreliminaryWarningEmail(siteRef, currentSize);
 					} catch (FileNotFoundException e) {
@@ -170,26 +174,19 @@ public class SiteSizeUpdaterFactory {
 	private void sendFinalWarningEmail(NodeRef siteRef, long siteSize) throws FileNotFoundException {
 		Date now = new Date();
 
-		// Set date of preliminary warning email. So user won't receive preliminary warning after final warning.
-		this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME, null, now);
-
 		// Set date of final warning email.
-		boolean isNewDateSet = this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE_QNAME, null, now);
+		this.getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_FINAL_WARNING_DATE_QNAME, now);
 
-		if (isNewDateSet) {
-			sendWarningEmail(siteRef, siteSize, "Site size limit reached!", FINAL_WARNING_MAIL_TEMPLATE_PATH);
-		}
+		sendWarningEmail(siteRef, siteSize, "Site size limit reached!", FINAL_WARNING_MAIL_TEMPLATE_PATH);
 	}
 
 	private void sendPreliminaryWarningEmail(NodeRef siteRef, long siteSize) throws FileNotFoundException {
 		Date now = new Date();
 
 		// Set date of preliminary warning email.
-		boolean isNewDateSet = this.getUtils().compareAndSetProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME, null, now);
+		this.getNodeService().setProperty(siteRef, UCMConstants.ASPECT_PROP_SITE_SIZE_PRELIMINARY_WARNING_DATE_QNAME, now);
 
-		if (isNewDateSet) {
-			sendWarningEmail(siteRef, siteSize, "Site size limit is close!", PRELIMINARY_WARNING_MAIL_TEMPLATE_PATH);
-		}
+		sendWarningEmail(siteRef, siteSize, "Site size limit is close!", PRELIMINARY_WARNING_MAIL_TEMPLATE_PATH);
 	}
 
 	private void sendWarningEmail(NodeRef siteRef, long siteSize, String subject, String templatePath) throws FileNotFoundException {
