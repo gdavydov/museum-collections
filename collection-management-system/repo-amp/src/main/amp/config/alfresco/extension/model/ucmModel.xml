@@ -824,9 +824,9 @@
 			<title>Museum Artifact Aspect</title>
 			<properties>
 				<property name="ucm:museum_number">
-					<title>Museum Number</title>
+					<title>Artifact Number</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 					<!-- TODO: constraints. E.g. "260:1 to 3-1877" -->
 				</property>
 
