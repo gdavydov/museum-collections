@@ -216,7 +216,7 @@ public class NodeUtils {
 	}
 
 	// <site>/system/artifact_attachments/<artist>/<artifact_name>
-	public NodeRef getOrCreateArtistMediaFolder(NodeRef artifactRef) {
+	public NodeRef getOrCreateArtifactMediaFolder(NodeRef artifactRef) {
 		NodeRef site = this.getSiteRefByNode(artifactRef);
 		if (site == null) {
 			LOGGER.error("Can't determine which site node belongs to. Media attachments folder wasn't created.");
@@ -227,22 +227,20 @@ public class NodeUtils {
 				UCMConstants.PROP_UCM_ARTIST_QNAME);
 		Serializable artifactNameValue = this.getNodeService().getProperty(artifactRef, ContentModel.PROP_NAME);
 
-		if (artistNameValue == null || artifactNameValue == null)
-			return null;
+		String artistName = (artistNameValue != null) ? artistNameValue.toString() : UCMConstants.UNKNOWN_ARTIST_NAME;
 
-		String artistName = artistNameValue.toString();
-		String artifactName = artifactNameValue.toString();
+		String artifactName;
+		if (artifactNameValue != null) {
+			artifactName = artifactNameValue.toString();
+		}
+		else {
+			// "workspace://SpacesStore/1bcdb278-acf4-4477-a0ca-8d50d91be8d1" -> "1bcdb278-acf4-4477-a0ca-8d50d91be8d1"
+			String artifactId = artifactRef.toString().replaceAll(".*/", "");
+			artifactName = UCMConstants.UNKNOWN_ARTIFACT_NAME + "_" + artifactId;
+		}
 
 		NodeRef systemFolder = getOrCreateFolder(site, UCMConstants.SYSTEM_FOLDER_NAME, false);
 
-		// NodeRef doclibFolder = getOrCreateFolder(site, "documentLibrary",
-		// false);
-		// NodeRef systemFolder = getOrCreateFolder(doclibFolder,
-		// UCMConstants.SYSTEM_FOLDER_NAME, false);
-		/*
-		 * NodeRef systemFolder = getOrCreateFolder(site,
-		 * UCMConstants.SYSTEM_FOLDER_NAME, true);
-		 */
 		NodeRef mediaFolder = this.getOrCreateFolder(systemFolder, UCMConstants.MEDIA_FOLDER_NAME, false);
 		NodeRef artistFolder = this.getOrCreateFolder(mediaFolder, artistName, false);
 		NodeRef artifactFolder = this.getOrCreateFolder(artistFolder, artifactName, false);

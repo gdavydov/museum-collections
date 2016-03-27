@@ -76,7 +76,7 @@ public class UCMCreateArtist extends UCMGenericFilter<TypeDefinition> {
 			// artist artifact width should be no less than 510 px
 			this.resizeImage(artistArtifactRef, 510);
 			super.getUtils().fillMandatoryProperties(artistArtifactType, artistArtifactRef, MANDATORY_PROP_FILLER);
-			super.getUtils().getOrCreateArtistMediaFolder(artistArtifactRef);
+			super.getUtils().getOrCreateArtifactMediaFolder(artistArtifactRef);
 		}
 		return artistArtifactRef;
 	}

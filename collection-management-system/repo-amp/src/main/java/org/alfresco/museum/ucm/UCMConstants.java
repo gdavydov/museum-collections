@@ -179,4 +179,7 @@ public class UCMConstants {
 	public static final QName DOCLIB_QNAME = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, DOCLIB);
 
 	public static final String ANONIMOUS_USER_DETAILS_WEBSCRIPT_PATH = "/ucm/anonymous-user";
+
+	public static final String UNKNOWN_ARTIFACT_NAME = "UNKNOWN_ARTIFACT";
+	public static final String UNKNOWN_ARTIST_NAME = "UNKNOWN_ARTIST";
 }

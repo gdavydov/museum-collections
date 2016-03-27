@@ -141,31 +141,30 @@ public class SiteSizeUpdaterFactory {
 				newSize = value;
 			}
 
-			if (newSize > getSizeLimit()) {
-				// No need to notify user each time background job discovers that limit is exceeded. Only if site size was somehow increased since last time.
-				if (newSize > currentSize) {
+			if (newSize > currentSize) {
+				if (newSize > getSizeLimit()) {
 					try {
 						sendFinalWarningEmail(siteRef, currentSize);
 					} catch (FileNotFoundException e) {
 						LOGGER.warn("Error while sending site limit exceeding warning", e);
 					}
-				}
 
-				// if new site size is being set by background job then there is no need to discard transaction. New site size should be set even if it exceeds limit.
-				if (!isBackgroundUpdate) {
-					//disallow transaction
-					rollbackTransaction(siteRef);
+					// if new site size is being set by background job then there is no need to discard transaction. New site size should be set even if it exceeds limit.
+					if (!isBackgroundUpdate) {
+						//disallow transaction
+						rollbackTransaction(siteRef);
 
-					//notify user
-					throw new SiteSizeLimitExceededException();
-				}
-			} else {
-				//only send email when we cross warning limit
-				if (getWarningLimit() >= currentSize && getWarningLimit() < newSize) {
-					try {
-						sendPreliminaryWarningEmail(siteRef, currentSize);
-					} catch (FileNotFoundException e) {
-						LOGGER.warn("Error while sending site limit approaching warning", e);
+						//notify user
+						throw new SiteSizeLimitExceededException();
+					}
+				} else {
+					//only send email when we cross warning limit
+					if (getWarningLimit() >= currentSize && getWarningLimit() < newSize) {
+						try {
+							sendPreliminaryWarningEmail(siteRef, currentSize);
+						} catch (FileNotFoundException e) {
+							LOGGER.warn("Error while sending site limit approaching warning", e);
+						}
 					}
 				}
 			}

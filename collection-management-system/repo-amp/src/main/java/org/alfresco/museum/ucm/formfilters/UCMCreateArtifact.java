@@ -45,7 +45,7 @@ public class UCMCreateArtifact extends UCMGenericFilter<TypeDefinition> {
 		// artifact width should be no less than 510 px
 		this.resizeImage(artifactRef, 510);
 
-		this.getUtils().getOrCreateArtistMediaFolder(artifactRef);
+		this.getUtils().getOrCreateArtifactMediaFolder(artifactRef);
 
 		//set ucm:artifact_name
 		Serializable name = this.getNodeService().getProperty(artifactRef, ContentModel.PROP_NAME);
