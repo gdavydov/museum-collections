@@ -1,0 +1,8 @@
+.about-share .logo-ucm {
+   background-image: url('images/about-ucm-bg.png');
+}
+
+.about-share .copy-ucm {
+    position: absolute;
+    bottom: 10px;
+}

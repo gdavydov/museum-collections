@@ -1,0 +1,5 @@
+<webscript>
+   <shortname>About UCM Share Module</shortname>
+   <description>About UCM Share information dialog</description>
+   <url>/modules/ucm-about-share</url>
+</webscript>
