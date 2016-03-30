@@ -20,7 +20,7 @@ function getArtifactFolder(artifactRef) {
 	return result;
 }
 
-//similar to org.alfresco.museum.ucm.utils.NodeUtils.getSiteRefByNode(NodeRef)
+// similar to org.alfresco.museum.ucm.utils.NodeUtils.getSiteRefByNode(NodeRef)
 function getSiteByNode(node) {
 	while (node != null && !node.isSubType("st:site")) {
 		node = node.parent;
@@ -30,14 +30,16 @@ function getSiteByNode(node) {
 }
 
 
-//similar to org.alfresco.museum.ucm.utils.NodeUtils.getOrCreateFolder(NodeRef, String, boolean)
+// similar to org.alfresco.museum.ucm.utils.NodeUtils.getOrCreateFolder(NodeRef,
+// String, boolean)
 function getOrCreateFolder(parent, name) {
 	var result = parent.childByNamePath(name);
 	if (result == null) result = parent.createFolder(name);
 	return result;
 }
 
-//logic here is similar to org.alfresco.museum.ucm.utils.NodeUtils.getOrCreateArtifactMediaFolder(NodeRef)
+// logic here is similar to
+// org.alfresco.museum.ucm.utils.NodeUtils.getOrCreateArtifactMediaFolder(NodeRef)
 function createArtifactMediaFolder(artifact) {
 	var site = getSiteByNode(artifact);
 	if (site == null) {
@@ -49,7 +51,8 @@ function createArtifactMediaFolder(artifact) {
 
 	var artifactName = artifact.properties['cm:name'];
 	if (!artifactName) {
-		// "workspace://SpacesStore/1bcdb278-acf4-4477-a0ca-8d50d91be8d1" -> "1bcdb278-acf4-4477-a0ca-8d50d91be8d1"
+		// "workspace://SpacesStore/1bcdb278-acf4-4477-a0ca-8d50d91be8d1" ->
+		// "1bcdb278-acf4-4477-a0ca-8d50d91be8d1"
 		var artifactId = artifact.getNodeRef().toString().replaceAll(".*/", "");
 		artifactName = 'UNKNOWN_ARTIFACT_' + artifactId;
 	}
@@ -63,7 +66,7 @@ function createArtifactMediaFolder(artifact) {
 	artifactFolder.properties['cm:title'] = "Media content for " + artifactName;
 	artifactFolder.save;
 
-	//clean up existing associations
+	// clean up existing associations
 	try {
 		var assocs = artifact.childAssocs['ucm:artifact_contains'];
 		for each (var assoc in assocs) {
@@ -81,13 +84,10 @@ function createArtifactMediaFolder(artifact) {
 
 function getMediaFiles(artifactRef) {
 /*
-  for each(permission in node.fullPermissions) {
-    if (/;DIRECT$/.test(permission)) {
-      logger.log(node.displayPath + "/" + node.name + ";" + permission);
-    }
-  }
-getPermissions(noderef)
-*/
+ * for each(permission in node.fullPermissions) { if
+ * (/;DIRECT$/.test(permission)) { logger.log(node.displayPath + "/" + node.name +
+ * ";" + permission); } } getPermissions(noderef)
+ */
 	var mediaFiles = [];
 	var mediaFolder = getArtifactFolder(artifactRef);
 	if (mediaFolder != null) {
@@ -95,17 +95,21 @@ getPermissions(noderef)
 		if (files != null) {
 			for (var i = 0; i < files.length; ++i) {
 				var file = files[i];
-				mediaFiles.push({
-					nodeRef : file.nodeRef,
-					name : file.name,
-					title : (file.properties["cm:title"]) ? file.properties["cm:title"] : "",
-					link : "/" + file.storeType + "/" + file.storeId + "/" + file.id,
-					type : file.mimetype,
-					size : file.size,
-					permission : "",
-					language : (file.properties["ucm:attached_file_language"]) ? file.properties["ucm:attached_file_language"] : "",
-					description : (file.properties["cm:description"]) ? file.properties["cm:description"] : ""
-				});
+				var mediaFile = {
+						nodeRef : file.nodeRef,
+						name : file.name,
+						title : (file.properties["cm:title"]) ? file.properties["cm:title"] : "",
+						link : "/" + file.storeType + "/" + file.storeId + "/" + file.id,
+						type : file.mimetype,
+						size : file.size,
+						permission : "",
+						language : (file.properties["ucm:attached_file_language"]) ? file.properties["ucm:attached_file_language"] : "",
+						description : (file.properties["cm:description"]) ? file.properties["cm:description"] : ""
+					};
+				if (mediaFile.type == 'text/uri-list') {
+					mediaFile['href'] = file.content;
+				}
+				mediaFiles.push(mediaFile);
 			}
 		}
 	}

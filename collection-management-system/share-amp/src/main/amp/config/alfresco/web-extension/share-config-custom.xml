@@ -1036,14 +1036,16 @@
 		<forms>
 			<form id="doclib-common">
 				<field-visibility>
-					<show id="cm:name" />
+					<show id="cm:title" />
 					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
 				<create-form template="../documentlibrary/forms/doclib-common.ftl" />
 				<appearance>
-					<field id="cm:name" />
+					<field id="cm:title">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
 					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
 					<field id="ucm:attached_file_language" />
 					<field id="ucm:attached_file_sequence" />
@@ -1057,13 +1059,15 @@
 		<forms>
 			<form>
 				<field-visibility>
-					<show id="cm:name" />
+					<show id="cm:title" />
 					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
 				<appearance>
-					<field id="cm:name" />
+					<field id="cm:title">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
 					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
 					<field id="ucm:attached_file_language" />
 					<field id="ucm:attached_file_sequence" />
@@ -1073,13 +1077,15 @@
 				<view-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<field-visibility>
-					<show id="cm:name" />
+					<show id="cm:title" />
 					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
 				<appearance>
-					<field id="cm:name" />
+					<field id="cm:title">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
 					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
 					<field id="ucm:attached_file_language" />
 					<field id="ucm:attached_file_sequence" />
@@ -1089,13 +1095,15 @@
 			<!-- Document Library Inline Edit form -->
 			<form id="doclib-inline-edit">
 				<field-visibility>
-					<show id="cm:name" />
+					<show id="cm:title" />
 					<show id="ucm:attached_file_type" />
 					<show id="ucm:attached_file_language" />
 					<show id="ucm:attached_file_sequence" />
 				</field-visibility>
 				<appearance>
-					<field id="cm:name" />
+					<field id="cm:title">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
+					</field>
 					<field id="ucm:attached_file_type" label-id="Attachment Media Type" />
 					<field id="ucm:attached_file_language" />
 					<field id="ucm:attached_file_sequence" />

@@ -165,7 +165,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		break;
 	case 'text/uri-list':
 		var link = $('<a/>', {
-			href : mediaFile.title,
+			href : mediaFile.href,
 			'class' : 'ucm-media-link',
 			target : '_blank',
 			text : mediaFile.title
