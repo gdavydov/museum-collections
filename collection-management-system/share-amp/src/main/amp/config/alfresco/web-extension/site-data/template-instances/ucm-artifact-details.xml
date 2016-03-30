@@ -295,10 +295,14 @@
          <sub-components>
             <sub-component id="default">
                <evaluations>
-                  if in site: Permissions
                   <evaluation id="site">
                      <evaluators>
                         <evaluator type="site.component.evaluator"/>
+						<evaluator type="com.alfresco.museum.ucm.evaluators.edit">
+							<params>
+								<nodeRef>{nodeRef}</nodeRef>
+							</params>
+						</evaluator>
                      </evaluators>
                      <url>/components/document-details/document-permissions</url>
                      <properties>

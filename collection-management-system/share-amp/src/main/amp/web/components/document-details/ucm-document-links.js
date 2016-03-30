@@ -1,4 +1,4 @@
-<!-- This is modified version of components/document-details/document-links.js -->
+/* This is modified version of components/document-details/document-links.js */
 
 /**
  * Show link to document content.
@@ -96,8 +96,8 @@
 
           var nodeRefString = this.options.nodeRef.replace('://', '/');
           var fileName = this.options.fileName;
-
-          var fixedLink = $combine(Alfresco.constants.PROXY_URI, '/slingshot/node/content/' + nodeRefString + '/' + fileName);
+          var proxyNoauthUrl = Alfresco.constants.PROXY_URI.replace(new RegExp('alfresco/$'), 'alfresco-noauth/');
+          var fixedLink = $combine(proxyNoauthUrl, '/ucm/ucm-guest-content/' + nodeRefString + '/' + fileName);
           Dom.get(this.id + "-page").value = fixedLink;
       },
 

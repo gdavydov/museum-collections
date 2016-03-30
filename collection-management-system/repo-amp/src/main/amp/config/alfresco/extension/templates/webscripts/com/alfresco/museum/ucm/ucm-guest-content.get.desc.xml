@@ -1,0 +1,8 @@
+<webscript kind="org.alfresco.repository.content.stream">
+  <shortname>Public access to content of nodes</shortname>
+  <description>Public access to content of nodes</description>
+  <url>/ucm/ucm-guest-content/{store_type}/{store_id}/{id}/{filename}</url>
+  <format default="">argument</format>
+  <authentication runas="user">none</authentication>
+  <transaction>required</transaction>
+</webscript>
