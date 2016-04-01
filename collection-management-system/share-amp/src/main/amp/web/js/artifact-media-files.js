@@ -76,10 +76,9 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 	var url = ucmMediaServiceUrl();
 	var wrapper = $('<div class="ucm-media-wrapper"/>');
 
-	var name = mediaFile.name;
-	var lang = mediaFile.language;
-	var nameWithLang = name + ' (' + lang + ')';
 	var title = mediaFile.title;
+	var lang = mediaFile.language;
+	var titleWithLang = title + ' (' + lang + ')';
 
 	/*
 	 * var deleteButton = "&nbsp;"; var deleteButton = "&nbsp;";
@@ -119,7 +118,7 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 	case 'audio/mpeg':
 	case 'audio/mp3':
 		wrapper.addClass('ucm-audio-wrapper');
-		wrapper.append(nameWithLang);
+		wrapper.append(titleWithLang);
 		var audioSpan = $('<span>', {
 			'class' : 'ucm-media-right'
 		})
@@ -132,9 +131,9 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-pdf'
-		}).html(nameWithLang).click(function(e) {
+		}).html(titleWithLang).click(function(e) {
 			e.preventDefault();
-			ucmShowDialog(contentLink, 600, 600, name);
+			ucmShowDialog(contentLink, 600, 600, title);
 		});
 		wrapper.append(link);
 		ucmAddControlButtons(wrapper, deleteButton, editButton);
@@ -145,9 +144,9 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-pdf'
-		}).html(nameWithLang).click(function(e) {
+		}).html(titleWithLang).click(function(e) {
 			e.preventDefault();
-			ucmShowDialog(contentLink, 600, 600, name);
+			ucmShowDialog(contentLink, 600, 600, title);
 		});
 		wrapper.append(link);
 		ucmAddControlButtons(wrapper, deleteButton, editButton);
@@ -156,9 +155,9 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-video'
-		}).html(nameWithLang + '. Video.').click(function(e) {
+		}).html(titleWithLang + '. Video.').click(function(e) {
 			e.preventDefault();
-			ucmShowVideo(contentLink, 600, 600, name);
+			ucmShowVideo(contentLink, 600, 600, title);
 		});
 		wrapper.append(link);
 		ucmAddControlButtons(wrapper, deleteButton, editButton);
@@ -182,9 +181,9 @@ function ucmCreateMediaFile(mediaFile, containerSelector, parentNodeRef) {
 		var link = $('<a/>', {
 			href : contentLink,
 			'class' : 'ucm-media-other'
-		}).html(name).click(function(e) {
+		}).html(title).click(function(e) {
 			e.preventDefault();
-			ucmShowDialog(contentLink, 600, 600, name);
+			ucmShowDialog(contentLink, 600, 600, title);
 		});
 		wrapper.append(link);
 		ucmAddControlButtons(wrapper, deleteButton, editButton);
@@ -339,14 +338,16 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 		jQuery = $;
 		require([ appContext + "/res/js/formstone/core.js" ], function() {
 			require([ appContext + "/res/js/formstone/upload.js" ], function() {
-				$("#" + elementIdPrefix + "-upload-target").upload({
+				var uploadElement = $("#" + elementIdPrefix + "-upload-target");
+				uploadElement.upload({
 					action : ucmMediaServiceUrl(),
 					postKey : "prop_cm_content",
 					maxQueue : 1,
 					maxSize : 200 * 1024 * 1024,
 					postData : {
 						nodeRef : nodeRef
-					}
+					},
+					beforeSend: onBeforeSend
 				}).on("start.upload", onStart)
 						.on("complete.upload", onComplete).on(
 								"filestart.upload", onFileStart).on(
@@ -371,17 +372,22 @@ function ucmCreateMediaFileUploader(elementIdPrefix, nodeRef) {
 					var containerSelector = '#' + elementIdPrefix
 							+ "-body.document-ucm-media-files";
 					ucmRefreshMediaFileList(containerSelector,
-							response.mediaFiles, nodeRef);
+							Alfresco.util.parseJSON(response).mediaFiles, nodeRef);
 				}
 				function onFileError(e, file, error) {
 					console.error("File Error: " + error);
 
+					var responseJSON = Alfresco.util.parseJSON(file.transfer.responseText);
 					//This type of exception typically appears if transaction was cancelled due to exceeding size limits
-					var isExceededSize = (file.transfer.responseJSON.exception === "java.lang.IllegalStateException - Cannot deactivate transaction synchronization - not active");
+					var isExceededSize = (responseJSON && responseJSON.exception === "java.lang.IllegalStateException - Cannot deactivate transaction synchronization - not active");
 					if (isExceededSize) {
 						//TODO: i18n?
-						Alfresco.util.PopupManager.displayMessage("Can't create attachment: Site size limit exceeded.");
+						Alfresco.util.PopupManager.displayMessage({text: "Can't create attachment: Site size limit exceeded."});
 					}
+				}
+				function onBeforeSend(formData, file) {
+					formData.append("prop_cm_title", file.name);
+					return formData;
 				}
 
 				var dropzone = $("#" + elementIdPrefix + "-upload-target")

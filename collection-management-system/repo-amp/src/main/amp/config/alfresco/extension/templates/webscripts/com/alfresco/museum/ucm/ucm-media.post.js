@@ -19,30 +19,43 @@ function main()
     {
         // N.B. This repoFormData is a different FormData class to that used above.
         var repoFormData = new Packages.org.alfresco.repo.forms.FormData();
+
+        var filename = '';
+        var isTitleSet = false;
         for (var i = 0; i < formdata.fields.length; i++)
         {
-           if (formdata.fields[i].isFile)
+           var field = formdata.fields[i];
+           if (field.isFile)
            {
-              repoFormData.addFieldData(formdata.fields[i]);
-              repoFormData.addFieldData("prop_mimetype", formdata.fields[i].mimetype);
+              repoFormData.addFieldData(field);
+              repoFormData.addFieldData("prop_mimetype", field.mimetype);
+              filename = field.value;
            }
            else
            {
-        	   if (formdata.fields[i].name == "nodeRef") {
-        		   artifactRef = formdata.fields[i].value;
-        		   folderRef = getArtifactFolder(artifactRef).nodeRef;
-        	   }
-        	   else {
+               if (field.name == "nodeRef") {
+                  artifactRef = field.value;
+                  folderRef = getArtifactFolder(artifactRef).nodeRef;
+               }
+               else {
+                  if (field.name == "prop_cm_title") {
+                     isTitleSet = true;
+                  }
+
                   // add field to form data
-                  repoFormData.addFieldData(formdata.fields[i].name, formdata.fields[i].value);
-        	   }
+                  repoFormData.addFieldData(field.name, field.value);
+              }
            }
         }
-        
+
+        if (filename && !isTitleSet) {
+        	repoFormData.addFieldData("prop_cm_title", filename);
+        }
+
         if (folderRef != null) {
         	repoFormData.addFieldData("alf_destination", folderRef.toString());
         	// TODO: repoFormData.addFieldData("prop_cm_name", ???);
-        	
+
         	persistedObject = formService.saveForm(itemKind, itemId, repoFormData);
         }
         else {
@@ -54,27 +67,27 @@ function main()
     catch (error)
     {
         var msg = error.message;
-       
+
         if (logger.isLoggingEnabled())
             logger.log(msg);
-       
+
         // determine if the exception was a FormNotFoundException, if so return
         // 404 status code otherwise return 500
         if (msg.indexOf("FormNotFoundException") != -1)
         {
             status.setCode(404, msg);
-          
+
             if (logger.isLoggingEnabled())
                 logger.log("Returning 404 status code");
         }
         else
         {
             status.setCode(500, msg);
-          
+
             if (logger.isLoggingEnabled())
                 logger.log("Returning 500 status code");
         }
-       
+
         return;
     }
 

@@ -19,10 +19,10 @@ Greg Davydov<br/>
 Dmitry Alexandrov<br/>
                </div>
             </div>
-            <div class="copy-ucm">
+            <div class="copy copy-ucm">
                <span>&copy; Artium Galleries Inc. All rights reserved.</span>
-               <a href="http://www.alfresco.com" target="new">www.alfresco.com</a>
-               <a href="http://www.alfresco.com/legal/agreements/" target="new">Legal and License</a>
+               <a href="http://www.artium-gallery.com" target="new">www.artium-gallery.com</a>
+               <a href="http://www.artium-gallery.com" target="new">Legal and License</a>
             </div>
          </div>
       </div>
