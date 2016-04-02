@@ -200,7 +200,7 @@ function ucmEditFile(mediaFile, element, containerSelector, parentNodeRef) {
 			p_form, p_dialog) {
 		// Dialog title
 		Alfresco.util.populateHTML([ p_dialog.id + "-dialogTitle",
-				'Edit Properties: <span class="light">' + Alfresco.util.encodeHTML(mediaFile.name || "") + '</span>' ]);
+				'Edit Properties: <span class="light">' + Alfresco.util.encodeHTML(mediaFile.title || "") + '</span>' ]);
 
 		// Edit metadata link button
 		p_dialog.editMetadata = Alfresco.util.createYUIButton(p_dialog,
