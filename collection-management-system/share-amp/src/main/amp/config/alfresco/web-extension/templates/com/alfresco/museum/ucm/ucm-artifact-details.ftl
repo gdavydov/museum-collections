@@ -11,8 +11,8 @@
 </@>
 <@markup id="js">
    <#-- JavaScript Dependencies -->
-   <#include "../../../../org/alfresco/components/form/ucm-form.js.ftl"/> 
-   <@script src="${url.context}/components/document-details/document-metadata.js" group="document-details"/> 
+   <#include "../../../../org/alfresco/components/form/ucm-form.js.ftl"/>
+   <@script src="${url.context}/components/document-details/document-metadata.js" group="document-details"/>
 </@>
 
 <@templateBody>
@@ -47,7 +47,7 @@
          <div id="ucm-metadata" class="yui-u ucm-metadata">
 <#--        @region id="document-actions" scope="template"/-->
             <@region id="document-links" scope="template"/>
-<#--			<@region id="document-tags" scope="template"/> -->
+			<@region id="document-tags" scope="template"/>
             <@markup id="bd">
 			    <div id="bd">
 			       <div class="share-form">
@@ -88,18 +88,18 @@
 	        </#if>
 <#--
 			<@region id="comments" scope="template"/>
--->    
+-->
 	        <@region id="actions-common" scope="template"/>
       	</div>
 		<div class="yui-u">
-<#--                 
+<#--
 	            <@region id="document-metadata" scope="template"/>
 	            <@region id="document-sync" scope="template"/>
-	            <@region id="document-workflows" scope="template"/>    
+	            <@region id="document-workflows" scope="template"/>
 	            <@region id="document-versions" scope="template"/>
 				<@region id="document-attachments" scope="template"/>
 	            <@region id="document-permissions" scope="template"/>
--->    
+-->
       	</div>
       </div>
     </div>
@@ -119,4 +119,4 @@
       <@region id="ucm-footer" scope="global"/>
    </div>
    </@>
-</@> 
+</@>

@@ -11,7 +11,7 @@
 </@>
 <@markup id="js">
    <#-- JavaScript Dependencies -->
-   <#include "../../../../org/alfresco/components/form/ucm-form.js.ftl"/> 
+   <#include "../../../../org/alfresco/components/form/ucm-form.js.ftl"/>
    <@script src="${url.context}/components/document-details/document-metadata.js" group="document-details"/>
 </@>
 
@@ -45,7 +45,7 @@
          </div>
 
          <div id="ucm-metadata" class="yui-u ucm-metadata">
-         	<!--@region id="document-actions" scope="template"/-->
+<#--        @region id="document-actions" scope="template"/-->
             <@region id="document-links" scope="template"/>
 			<@region id="document-tags" scope="template"/>
             <@markup id="bd">
@@ -79,26 +79,30 @@
 			       </div>
 			    </div>
 		    </@>
-	        <@region id="actions-common" scope="template"/>
-	        <@region id="document-versions" scope="template"/>
 			<@region id="document-actions" scope="template"/>
+	        <@region id="actions-common" scope="template"/>
+
+		    <#if allowMetaDataUpdate!true>
+	        	<@region id="document-permissions" scope="template"/>
+		     	<@region id="document-versions" scope="template"/>
+	        </#if>
 <#--
 			<@region id="comments" scope="template"/>
--->    
-          </div>
-		  <div class="yui-u">
-<#--                 
-	            <@region id="document-actions" scope="template"/>
+-->
+	        <@region id="actions-common" scope="template"/>
+      	</div>
+		<div class="yui-u">
+<#--
 	            <@region id="document-metadata" scope="template"/>
 	            <@region id="document-sync" scope="template"/>
-	            <@region id="document-permissions" scope="template"/>
-	            <@region id="document-workflows" scope="template"/>    
+	            <@region id="document-workflows" scope="template"/>
 	            <@region id="document-versions" scope="template"/>
 				<@region id="document-attachments" scope="template"/>
--->    
-            </div>
-         </div>
+	            <@region id="document-permissions" scope="template"/>
+-->
+      	</div>
       </div>
+    </div>
 
       <@region id="html-upload" scope="template"/>
       <@region id="flash-upload" scope="template"/>
@@ -115,4 +119,4 @@
       <@region id="ucm-footer" scope="global"/>
    </div>
    </@>
-</@> 
+</@>
