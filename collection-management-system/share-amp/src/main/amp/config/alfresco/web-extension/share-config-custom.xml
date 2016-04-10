@@ -91,6 +91,7 @@
 			name="cm:mysubtype" /> </type> Remember to also add the relevant i18n string(s): type.cm_mysubtype=My SubType -->
 		<types>
 			<type name="cm:content">
+				<subtype name="ucm:document" />
 				<subtype name="ucm:artifact" />
 			</type>
 
@@ -1409,6 +1410,9 @@
 			<!-- Copy to -->
 			<action id="document-copy-to" type="javascript" label="actions.document.copy-to">
 				<param name="function">onActionCopyTo</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
 				<evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
 			</action>
 
