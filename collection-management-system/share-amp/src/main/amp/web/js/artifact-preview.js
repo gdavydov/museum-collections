@@ -1,10 +1,20 @@
 function ucmImageZoom() {
 	require(['jquery'], function($) {
 		jQuery = $;
-		require([appContext + "/res/js/jquery.elevatezoom.js"], function() {
+
+//		require([appContext + "/res/js/jquery.elevatezoom.js"], function() {
+//			var image = $('#ucm-artifact-image').find('img');
+//			image.attr( {'data-zoom-image': image.attr('src')} );
+//			image.elevateZoom( {zoomType: 'inner', cursor: 'crosshair', scrollZoom : true} );
+//		});
+
+		require([appContext + "/res/js/jquery.loupe.min.js"], function() {
 			var image = $('#ucm-artifact-image').find('img');
-			image.attr( {'data-zoom-image': image.attr('src')} );
-			image.elevateZoom( {zoomType: 'inner', cursor: 'crosshair', scrollZoom : true} );
+			image.loupe({
+				width: 250, // width of magnifier
+				height: 250, // height of magnifier
+				loupe: 'loupe' // css class for magnifier
+			});
 		});
 	});
 }
@@ -14,7 +24,7 @@ function ucmImageZoom() {
  * Display the image with zoom. In both cases of image creation ucmImageZoom function is called after it.
  */
 function Image_displayUCM()
-{ 
+{
    var srcMaxSize = this.attributes.srcMaxSize;
    if (!this.attributes.src && srcMaxSize.match(/^\d+$/) && this.wp.options.size > parseInt(srcMaxSize))
    {
@@ -55,7 +65,7 @@ function Image_displayUCM()
          this.wp.widgets.previewerElement.innerHTML = '';
          this.wp.widgets.previewerElement.appendChild(image);
          //UCM customization
-         ucmImageZoom(); 
+         ucmImageZoom();
       };
       image.onerror = function()
       {
