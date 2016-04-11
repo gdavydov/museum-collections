@@ -2,20 +2,29 @@ function ucmImageZoom() {
 	require(['jquery'], function($) {
 		jQuery = $;
 
-//		require([appContext + "/res/js/jquery.elevatezoom.js"], function() {
-//			var image = $('#ucm-artifact-image').find('img');
-//			image.attr( {'data-zoom-image': image.attr('src')} );
-//			image.elevateZoom( {zoomType: 'inner', cursor: 'crosshair', scrollZoom : true} );
-//		});
-
-		require([appContext + "/res/js/jquery.loupe.min.js"], function() {
+		require([appContext + "/res/js/jquery.elevatezoom.js"], function() {
 			var image = $('#ucm-artifact-image').find('img');
-			image.loupe({
-				width: 250, // width of magnifier
-				height: 250, // height of magnifier
-				loupe: 'loupe' // css class for magnifier
+			image.attr( {'data-zoom-image': image.attr('src')} );
+			image.elevateZoom({
+				zoomType: 'lens',
+				lensShape: 'round',
+				lensSize: 250,
+				borderColour: 'white',
+				lensFadeIn: true,
+				lensFadeTrue: true,
+				containLensZoom: true,
+				scrollZoom: true
 			});
 		});
+
+//		require([appContext + "/res/js/jquery.loupe.min.js"], function() {
+//			var image = $('#ucm-artifact-image').find('img');
+//			image.loupe({
+//				width: 250, // width of magnifier
+//				height: 250, // height of magnifier
+//				loupe: 'loupe' // css class for magnifier
+//			});
+//		});
 	});
 }
 
