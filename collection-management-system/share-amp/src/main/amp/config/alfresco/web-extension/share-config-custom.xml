@@ -1176,6 +1176,33 @@
 					<js src="yui/slider/slider.js" />
 				</dependencies>
 			</view-renderer>
+			<view-renderer id="filmstrip" iconClass="filmstrip" label="button.view.filmstrip" index="40" widget="Alfresco.DocumentListFilmstripViewRenderer">
+	            <dependencies>
+	               <js src="components/documentlibrary/ucm-documentlist-view-detailed.js" />
+	               <js src="components/documentlibrary/ucm-documentlist-view-gallery.js" />
+	               <js src="components/documentlibrary/ucm-documentlist-view-filmstrip.js" />
+	               <js src="yui/carousel/carousel.js" />
+	               <js src="components/preview/web-preview.js" />
+	               <js src="components/preview/WebPreviewer.js" />
+	               <js src="js/flash/extMouseWheel.js" />
+	               <js src="components/preview/StrobeMediaPlayback.js" />
+	               <js src="components/preview/Video.js" />
+	               <js src="components/preview/Audio.js" />
+	               <js src="components/preview/Flash.js" />
+	               <js src="components/preview/Image.js" />
+	               <js src="components/preview/PdfJs.js" />
+	               <js src="components/preview/pdfjs/compatibility.js" />
+	               <js src="components/preview/pdfjs/pdf.js" />
+	               <js src="components/preview/pdfjs/pdf.worker.js" />
+	               <js src="components/preview/spin.js" />
+	               <css src="components/preview/web-preview.css" />
+	               <css src="components/preview/WebPreviewerHTML.css" />
+	               <css src="components/preview/Audio.css" />
+	               <css src="components/preview/Image.css" />
+	               <css src="components/preview/viewer-common.css" />
+	               <css src="components/preview/PdfJs.css" />
+	            </dependencies>
+	         </view-renderer>
 		</view-renderers>
 	</config>
 
