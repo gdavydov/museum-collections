@@ -28,6 +28,7 @@ import org.alfresco.service.cmr.model.FileNotFoundException;
 import org.alfresco.service.cmr.repository.ContentData;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
+import org.alfresco.service.cmr.repository.InvalidNodeRefException;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
@@ -164,15 +165,21 @@ public class NodeUtils {
 	public boolean isNodeSubClassOf(NodeRef nodeRef, QName type) {
 		boolean result = false;
 		if (nodeRef != null) {
-			QName nodeType = this.getNodeService().getType(nodeRef);
-			result = this.getDictionaryService().isSubClass(nodeType, type);
+			try {
+				QName nodeType = this.getNodeService().getType(nodeRef);
+				result = this.getDictionaryService().isSubClass(nodeType, type);
+			} catch (InvalidNodeRefException e) {}
 		}
 		return result;
 	}
 
 	public NodeRef getSiteRefByNode(NodeRef nodeRef) {
 		while (nodeRef != null && !isSiteNode(nodeRef)) {
-			nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
+			try {
+				nodeRef = this.getNodeService().getPrimaryParent(nodeRef).getParentRef();
+			} catch (InvalidNodeRefException e) {
+				nodeRef = null;
+			}
 		}
 
 		return nodeRef;

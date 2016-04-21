@@ -94,13 +94,16 @@ public class SiteSizeLimitsBean implements NodeServicePolicies.OnAddAspectPolicy
 	@Override
 	public void onContentPropertyUpdate(NodeRef nodeRef, QName propertyQName, ContentData beforeValue,
 			ContentData afterValue) {
-		long oldSize = (beforeValue != null) ? beforeValue.getSize() : 0;
-		long newSize = (afterValue != null) ? afterValue.getSize() : 0;
+		// NodeRef may be null during uploading of new document version.
+		if (this.getNodeService().exists(nodeRef)) {
+			long oldSize = (beforeValue != null) ? beforeValue.getSize() : 0;
+			long newSize = (afterValue != null) ? afterValue.getSize() : 0;
 
-		NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
-		if (siteRef != null) {
-			// add content size change to site size
-			getSizeUpdFactory().setSiteSize(siteRef, newSize - oldSize, true, false);
+			NodeRef siteRef = getUtils().getSiteRefByNode(nodeRef);
+			if (siteRef != null) {
+				// add content size change to site size
+				getSizeUpdFactory().setSiteSize(siteRef, newSize - oldSize, true, false);
+			}
 		}
 	}
 

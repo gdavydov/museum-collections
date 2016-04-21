@@ -1100,7 +1100,12 @@ Alfresco.forms.validation = Alfresco.forms.validation || {};
 
                   var dataObj = {};
                   for(var i = 0; i < form.elements.length; ++i) {
-                      dataObj[form.elements[i].name] = form.elements[i].value;
+                	  var element = form.elements[i];
+                	  if (element.type === "text") {
+                		  element.value = YAHOO.lang.trim(element.value);
+                	  }
+                	  var value = element.value;
+                      dataObj[element.name] = value;
                   }
 
                   iframe.onload = function UCM_createContentFrameLoad()
