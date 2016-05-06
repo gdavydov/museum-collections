@@ -1,0 +1,32 @@
+<alfresco-config>
+
+	<!-- Document Library Custom Code config section -->
+	<config evaluator="string-compare" condition="DocLibCustom">
+		<!-- Custom Code dependencies. Note: files specified in the "src" attribute resolve relative to the /share/res/ servlet 
+			context. -->
+		<dependencies>
+			<js src="components/documentlibrary/alfdev-actions.js" />
+			<js src="modules/documentlibrary/alfdev-create-link.js" />
+		</dependencies>
+	</config>
+
+	<!-- Document Library Actions config section -->
+	<config evaluator="string-compare" condition="DocLibActions">
+		<actions>
+			<!-- Create Link -->
+			<action id="alfdev-create-link" type="javascript" label="actions.alfdev.create-link">
+				<param name="function">onAlfdevActionCreateLink</param>
+				<evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+			</action>
+		</actions>
+		<actionGroups>
+			<actionGroup id="document-browse">
+				<action index="265" id="alfdev-create-link" />
+			</actionGroup>
+			<actionGroup id="document-details">
+				<action index="255" id="alfdev-create-link" />
+			</actionGroup>
+		</actionGroups>
+	</config>
+
+</alfresco-config>
