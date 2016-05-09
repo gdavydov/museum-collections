@@ -361,12 +361,22 @@
 					<show id="ucm:collection_id" />
 					<show id="ucm:curator" />
 					<show id="cm:description" />
+					<!-- tags and categories -->
+					<show id="cm:taggable" for-mode="edit" force="true" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name" label-id="Collection Name" />
 					<field id="ucm:collection_id" label-id="Collection ID" />
 					<field id="ucm:curator" />
 					<field id="cm:description" />
+					<field id="cm:taggable">
+						<control>
+							<control-param name="compactMode">true</control-param>
+							<control-param name="params">aspect=cm:taggable</control-param>
+							<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
+							<control-param name="createNewItemIcon">tag</control-param>
+						</control>
+					</field>
 				</appearance>
 			</form>
 			<form id="doclib-simple-metadata">
@@ -462,6 +472,8 @@
 					<show id="ucm:artist_live_city" />
 					<show id="ucm:artist_period" />
 					<show id="ucm:artist_comments" />
+					<!-- tags and categories -->
+					<show id="cm:taggable" for-mode="edit" force="true" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:content">
@@ -478,6 +490,14 @@
 					<field id="ucm:artist_live_city" />
 					<field id="ucm:artist_period" />
 					<field id="ucm:artist_comments" />
+					<field id="cm:taggable">
+						<control>
+							<control-param name="compactMode">true</control-param>
+							<control-param name="params">aspect=cm:taggable</control-param>
+							<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
+							<control-param name="createNewItemIcon">tag</control-param>
+						</control>
+					</field>
 				</appearance>
 			</form>
 			<!-- Document Library pop-up Edit Metadata form -->
