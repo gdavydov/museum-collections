@@ -25,7 +25,7 @@ public class UCMCreateCollection extends UCMGenericFilter<TypeDefinition> {
 
 	public static final List<String> ALLOWED_TYPES = new ArrayList<String>() {
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = -2540740835163382240L;
 
@@ -47,8 +47,8 @@ public class UCMCreateCollection extends UCMGenericFilter<TypeDefinition> {
 			afterCreateCollection(persistedObject, this.getNodeService());
 		}
 	}
-	
+
 	public static void afterCreateCollection(NodeRef collection, NodeService nodeService) {
-		nodeService.setProperty(collection, UCMConstants.PROP_UPLOADER_ALLOWED_TYPES, (Serializable) ALLOWED_TYPES);
+		//nodeService.setProperty(collection, UCMConstants.PROP_UPLOADER_ALLOWED_TYPES, (Serializable) ALLOWED_TYPES);
 	}
 }
