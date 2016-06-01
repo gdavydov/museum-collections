@@ -2,7 +2,8 @@
 INSTALLDIR=/Applications/alfresco-5.0.d
 GITROOT=/Users/`whoami`/GitHub/
 #
-export LOCALAMPDIR=$GITROOT/museum-collections/collection-management-system
+##export LOCALAMPDIR=$GITROOT/museum-collections/collection-management-system
+export LOCALAMPDIR=/Users/gdavydov/Downloads/alfresco-share-create-link-v1.0.0
 export ALF_HOME=$INSTALLDIR
 export CATALINA_HOME=$ALF_HOME/tomcat
 
@@ -10,8 +11,12 @@ cd $INSTALLDIR/amps
 #wget https://github.com/gdavydov/museum-collections/raw/master/release_amps/collection-management-system-repo-amp.amp -O collection-management-system-repo-amp.amp
 #wget https://github.com/gdavydov/museum-collections/raw/master/release_amps/uploader-plus-repo-1.2.amp -O uploader-plus-repo-1.2.amp
 echo 'copy colelction-managment amp files'
-cp $LOCALAMPDIR/repo-amp/target/collection-management-system-repo-amp.amp .
-cp $LOCALAMPDIR/share-amp/target/collection-management-system-share-amp.amp .
+###cp $LOCALAMPDIR/repo-amp/target/collection-management-system-repo-amp.amp .
+cp $LOCALAMPDIR/create-link-repo.amp .
+
+cd $INSTALLDIR/amps_share
+###cp $LOCALAMPDIR/share-amp/target/collection-management-system-share-amp.amp .
+cp $LOCALAMPDIR/create-link-share.amp .
 
 
 if [ ! -d "$INSTALLDIR/wars.orig" ]; then
@@ -68,4 +73,4 @@ $_java -jar $ALF_HOME/bin/alfresco-mmt.jar list $CATALINA_HOME/webapps/share.war
     echo
 }
 
-$INSTALLDIR/alfresco.sh start
+##$INSTALLDIR/alfresco.sh start
